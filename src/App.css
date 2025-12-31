@@ -1,0 +1,11 @@
+.bgtransparent{
+     background: rgba(45, 86, 78, 0.8);
+    border: 1px solid rgba(255,255,255,0.12);
+
+}
+.primary-color{
+    color:#ef9b28 ;
+}
+.primary-color-bg{
+    background-color: #ef9b28;
+}
