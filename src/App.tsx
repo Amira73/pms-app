@@ -5,19 +5,18 @@ import AuthLayout from './SharedComponents/Components/AuthLayout/AuthLayout';
 import MasterLayout from './SharedComponents/Components/MasterLayout/MasterLayout';
 import NotFound from './SharedComponents/Components/NotFound/NotFound';
 
-import Welcome from './AuthModule/Components/Welcome/Welcome';
-import Login from './AuthModule/Components/Login/Login';
-import Register from './AuthModule/Components/Register/Register';
-import VerifyAccount from './AuthModule/Components/VerifyAccount/VerifyAccount';
+import Welcome from './Modules/AuthModule/Components/Welcome/Welcome';
+import Login from './Modules/AuthModule/Components/Login/Login';
+import Register from './Modules/AuthModule/Components/Register/Register';
+import VerifyAccount from './Modules/AuthModule/Components/VerifyAccount/VerifyAccount';
 
-import DashBoard from './DashBoardModule/Components/DashBoard/DashBoard';
-import ForgetPassword from './AuthModule/Components/ForgetPassword/ForgetPassword';
-import ChangePassword from './AuthModule/Components/ChangePassword/ChangePassword';
-import ResetPassord from './AuthModule/Components/ResetPassword/ResetPassord';
+import DashBoard from './Modules/DashBoardModule/Components/DashBoard/DashBoard';
+import ForgetPassword from './Modules/AuthModule/Components/ForgetPassword/ForgetPassword';
+import ChangePassword from './Modules/AuthModule/Components/ChangePassword/ChangePassword';
+import ResetPassord from './Modules/AuthModule/Components/ResetPassword/ResetPassord';
 
 function App() {
   const routes = createBrowserRouter([
-    // 1) Welcome لوحده (أول صفحة)
     {
       path: "/",
       element: <Welcome />,

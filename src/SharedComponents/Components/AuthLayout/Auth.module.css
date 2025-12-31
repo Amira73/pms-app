@@ -1,7 +1,9 @@
 .herobg {
   background-color: #0f3b35 !important;
   height: 100vh;
- 
+  /* background-image: url("../../../assets/images/auth1.png");
+ background-repeat: no-repeat;
+ background-position: left bottom; */
 }
 
 
@@ -30,6 +32,7 @@
 
 /* top right */
 .topright {
+  background-size: cover;
   top: -100px;
   right: -100px;
  
@@ -37,6 +40,7 @@
 
 /* bottom left */
 .bottomleft {
+    background-size: cover;
   bottom: -100px;
   left: -100px;
  

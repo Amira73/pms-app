@@ -1,6 +1,6 @@
 import React from 'react'
 import  styles from'./Welcome.module.css'
-import { IMAGES } from "../../../assets/images";
+import { IMAGES } from "../../../../assets/images";
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
