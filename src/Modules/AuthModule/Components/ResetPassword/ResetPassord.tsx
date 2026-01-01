@@ -1,174 +1,122 @@
-import React from "react";
+import axios from "axios";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { USERS_URL } from "../../../../Services/Api/ApisUrls";
+import { http } from "../../../../Services/Api/httpInstance";
+import type { AuthField } from "../../../../SharedComponents/Components/AuthForm/AuthForm";
+import AuthForm from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 
-export default function ResetPassord() {
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    watch,
-  } = useForm();
+type ResetPasswordForm = {
+  email: string;
+  seed: string; // غير otp إلى seed
+  password: string;
+  confirmPassword: string;
+};
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+export default function ResetPassword() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  // مراقبة قيمة الباسورد الأول
-  const password = watch("password");
+  const fields: AuthField<ResetPasswordForm>[] = [
+    {
+      name: "email",
+      label: "E-mail",
+      type: "email",
+      placeholder: "Enter your E-mail",
+      rules: {
+        required: "Email is required",
+        pattern: {
+          value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+          message: "Please enter a valid email address",
+        },
+      },
+    },
+    {
+      name: "seed",
+      label: "OTP Code",
+      type: "text",
+      placeholder: "Enter OTP Code",
+      rules: {
+        required: "OTP code is required",
+        pattern: {
+          value: /^[0-9]+$/,
+          message: "OTP must contain only numbers",
+        },
+      },
+    },
+    {
+      name: "password",
+      label: "New Password",
+      type: "password",
+      placeholder: "Enter your New Password",
+      rules: {
+        required: "Password is required",
+        minLength: {
+          value: 6,
+          message: "Password must be at least 6 characters",
+        },
+      },
+    },
+    {
+      name: "confirmPassword",
+      label: "Confirm Password",
+      type: "password",
+      placeholder: "Confirm New Password",
+      rules: {
+        required: "Please confirm your password",
+        validate: (value, formValues) =>
+          value === formValues.password || "Passwords do not match",
+      },
+    },
+  ];
 
-  const onSubmit = (data: any) => {
-    console.log("Form Data:", data);
+  const onSubmit = async (data: ResetPasswordForm) => {
+    try {
+      setLoading(true);
+
+      // استخدام الـ API endpoint الموجود لديك
+      const res = await http.post(USERS_URL.RESET, data);
+
+      toast.success("Password reset successful ✅");
+      console.log("Reset response:", res.data);
+
+      // توجيه إلى صفحة تسجيل الدخول بعد إعادة التعيين
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+    } catch (err) {
+      let errorMessage = "Password reset failed ❌";
+
+      if (axios.isAxiosError(err)) {
+        // تحسين عرض رسالة الخطأ من الـ API
+        if (err.response?.data?.message) {
+          errorMessage = err.response.data.message;
+        } else if (err.response?.data?.errors) {
+          // إذا كان الـ API يرجع أخطاء في مصفوفة
+          const errors = err.response.data.errors;
+          errorMessage = Object.values(errors).flat().join(", ");
+        } else if (err.response?.status === 400) {
+          errorMessage = "Invalid OTP or email";
+        }
+      }
+
+      toast.error(errorMessage);
+      console.error("Reset error:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="auth-container">
-      <div className="container-fluid">
-        <div className="row justify-content-center align-items-center">
-          <div className="bgtransparent rounded-3 m-1">
-            <div className="form-container m-3">
-              <div className="title-container mb-4">
-                <p className="text-white mb-1">welcome to PMS</p>
-                <h4 className="primary-color mb-1">Reset Password</h4>
-                <hr
-                  className=" ms-0 mt-0"
-                  style={{
-                    width: "15px", // العرض اللي أنت محتاجه
-                    height: "3px", // السُمك
-                    backgroundColor: "#f3a21b", // اللون الأصفر بتاعك
-                    border: "none",
-                    opacity: 1,
-                  }}
-                />
-              </div>
+    <AuthForm<ResetPasswordForm>
+      title="Reset Password"
+      subtitle="Reset your account password"
+      fields={fields}
+      onSubmit={onSubmit}
+      submitLabel="Reset Password"
+      loading={loading}
 
-              <form onSubmit={handleSubmit(onSubmit)}>
-                {/* 1. EMAIL */}
-                <div className="auth-field mb-3">
-                  <label className="auth-label text-white" htmlFor="email">
-                    Email
-                  </label>
-                  <Form.Control
-                    id="email"
-                    type="text"
-                    className="auth-input"
-                    placeholder="Enter your E-mail"
-                    {...register("email", { required: "E-mail is required" })}
-                  />
-                  {errors.email && (
-                    <div className="text-danger mt-1 small">
-                      {String(errors.email.message)}
-                    </div>
-                  )}
-                </div>
-
-                {/* 2. OTP */}
-                <div className="auth-field mb-3">
-                  <label className="auth-label text-white" htmlFor="otp">
-                    OTP Verification
-                  </label>
-                  <Form.Control
-                    id="otp"
-                    type="text"
-                    className="auth-input"
-                    placeholder="Enter Verification"
-                    {...register("otp", { required: "OTP is required" })}
-                  />
-                  {errors.otp && (
-                    <div className="text-danger mt-1 small">
-                      {String(errors.otp.message)}
-                    </div>
-                  )}
-                </div>
-
-                {/* 3. NEW PASSWORD */}
-                <div className="auth-field mb-3">
-                  <label className="auth-label text-white" htmlFor="password">
-                    New Password
-                  </label>
-                  <InputGroup className="auth-inputgroup">
-                    <Form.Control
-                      id="password"
-                      type={showPassword ? "text" : "password"}
-                      className="auth-input"
-                      placeholder="Enter new Password"
-                      {...register("password", {
-                        required: "Password is required",
-                      })}
-                    />
-                    <InputGroup.Text
-                      as="button"
-                      type="button"
-                      className="auth-eye-btn"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      <i
-                        className={`fa-solid ${
-                          showPassword ? "fa-eye-slash" : "fa-eye"
-                        }`}
-                      />
-                    </InputGroup.Text>
-                  </InputGroup>
-                  {errors.password && (
-                    <div className="text-danger mt-1 small">
-                      {String(errors.password.message)}
-                    </div>
-                  )}
-                </div>
-
-                <div className="auth-field mb-3">
-                  <label
-                    className="auth-label text-white"
-                    htmlFor="confirmPassword"
-                  >
-                    Confirm Password
-                  </label>
-                  <InputGroup className="auth-inputgroup">
-                    <Form.Control
-                      id="confirmPassword"
-                      type={showConfirmPassword ? "text" : "password"}
-                      className="auth-input"
-                      placeholder="Confirm your Password"
-                      {...register("confirmPassword", {
-                        required: "Please confirm your password",
-                        validate: (value) =>
-                          value === password || "Passwords do not match",
-                      })}
-                    />
-                    <InputGroup.Text
-                      as="button"
-                      type="button"
-                      className="auth-eye-btn"
-                      onClick={() =>
-                        setShowConfirmPassword(!showConfirmPassword)
-                      }
-                    >
-                      <i
-                        className={`fa-solid ${
-                          showConfirmPassword ? "fa-eye-slash" : "fa-eye"
-                        }`}
-                      />
-                    </InputGroup.Text>
-                  </InputGroup>
-                  {errors.confirmPassword && (
-                    <div className="text-danger mt-1 small">
-                      {String(errors.confirmPassword.message)}
-                    </div>
-                  )}
-                </div>
-
-                <button
-                  type="submit"
-                  className="btn primary-color-bg w-100 mt-4 rounded-5 text-white"
-                >
-                  Save
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    />
   );
 }

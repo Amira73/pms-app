@@ -1,7 +1,6 @@
-import React from 'react'
-import { Outlet,useLocation } from 'react-router-dom'
-import  styles from'./Auth.module.css'
+import { Outlet, useLocation } from 'react-router-dom';
 import { IMAGES } from "../../../assets/images";
+import styles from './Auth.module.css';
 
 export default function AuthLayout() {
 
