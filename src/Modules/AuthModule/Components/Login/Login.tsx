@@ -50,6 +50,7 @@ const onSubmit = async (data: LoginForm) => {
 
     toast.error(msg);
     console.log(err);
+    
   }
 };
 
@@ -57,7 +58,9 @@ const onSubmit = async (data: LoginForm) => {
     <AuthForm<LoginForm>
       fields={fields}
       onSubmit={onSubmit}
-      submitLabel="Login"
+      submitLabel="Loginnn"
+
+    
     />
   );
 }

@@ -15,6 +15,7 @@ export default function AuthLayout() {
     pathname.includes("/auth/forget-password") ? IMAGES.auth2 :
       pathname.includes("/auth/reset-password") ? IMAGES.auth8 :
        pathname.includes("/auth/change-password") ? IMAGES.auth11 :
+       pathname.includes("/auth/verify-account") ? IMAGES.auth11 :
     IMAGES.auth2; 
 
   const bottomImg =
