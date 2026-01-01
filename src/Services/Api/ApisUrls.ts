@@ -4,15 +4,29 @@ type Id = string | number;
 export const baseURL = "https://upskilling-egypt.com:3003/api/v1";
 export const imgBaseURL = "https://upskilling-egypt.com:3006";
 
-// Manager URLs
-export const Manager_URLS = {
+// Users URLs
+
+export const USERS_URL = {
   LOGIN: "/Users/Login",
   REGISTER: "/Users/Register",
-  RESET_REQUEST: "/Users/Reset/Request",
-  RESET: "/Users/Reset",
-  CHANGE_PASSWORD: "/Users/ChangePassword",
-  GET_CURRENT_USER: "/Users/currentUser",
+  CREATE: "/Users/Create", // Create a manager
+  GET_USER: (id: Id) => `/Users/${id}`, // Get user by ID
+  TOGGLE_USER: (id: Id) =>`/Users/${id}`, 
+  GET_ALL_USERS: "/Users", // Get and filter users ..
+  GET_COUNT: "/Users/count", // Get users count by manager
+  GET_MANAGER_USERS: "/Users/Manager", // Get users by manager
+  VERIFY_ACCOUNT: "/Users/verify", // Verify user account
+  GET_CURRENT_USER: "/Users/currentUser", // Get current user
+  UPDATE_PROFILE: "/Users", // Update current user profile
+  CHANGE_PASSWORD: "/Users/ChangePassword", // Update user password
+  RESET_REQUEST: "/Users/Reset/Request", // Request reset if forget
+  RESET: "/Users/Reset", // Reset user password
 };
+
+
+
+
+
 
 // Employee URLs
 export const Employee_URLS = {

@@ -1,22 +1,56 @@
 
 export const getRequiredMessage = (fieldName:String) => `${fieldName} is required`;
-
-// Email Validation using regex
-export const EmailValidation = {
-  required: getRequiredMessage("Email"),
-  pattern: {
-    value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
-    message: "Email is not valid",
+const validation = {
+  USERNAME_VALIDATION: {
+    required: "User Name Is Required",
+    minLength: {
+      value: 4,
+      message: "Minimum 4 characters",
+    },
+    maxLength: {
+      value: 8,
+      message: "Maximum 8 characters",
+    },
+    pattern: {
+      value: /^[A-Za-z]+[A-Za-z0-9]*\d$/,
+      message: "Must end with numbers without spaces",
+    },
   },
+  EMAIL_VALIDATION: {
+    required: "Email is required",
+    pattern: {
+      value: /\S+@\S{3,}\.\S{2,}/,
+      message: "Enter a valid email",
+    },
+  },
+  PASSWORD_VALIDATION: (required: string) => ({
+    required,
+    minLength: {
+      value: 6,
+      message: "Password must be at least 6 characters",
+    },
+    validate: {
+      hasUppercase: (value: string) =>
+        /[A-Z]/.test(value) ||
+        "Password must contain at least one uppercase letter",
+      hasLowercase: (value: string) =>
+        /[a-z]/.test(value) ||
+        "Password must contain at least one lowercase letter",
+      hasNumber: (value: string) =>
+        /\d/.test(value) || "Password must contain at least one number",
+      hasSpecialChar: (value: string) =>
+        /[!@#$%^&*(),.?":{}|<>]/.test(value) ||
+        "Password must contain at least one special character",
+    },
+  }),
+  CONFIRM_PASSWORD_VALIDATION: (
+    getValues: (value: string) => string,
+    newPassword: string
+  ) => ({
+    required: "Confirm Password is required",
+    validate: (value: string) =>
+      value === getValues(newPassword) || "Passwords do not match",
+  }),
 };
 
-// Password Validation using regex
-const PasswordRegEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+=[\]{}|\\:;"'<>,.?/-]).{6,}$/;
-
-export const PasswordValidation = {
-  required: getRequiredMessage("Password"),
-  pattern: {
-    value: PasswordRegEx,
-    message: "At least 6 characters: UPPER/lowercase, numbers, and special characters",
-  },
-};
+export default validation;

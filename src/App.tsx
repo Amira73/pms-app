@@ -7,7 +7,7 @@ import NotFound from './SharedComponents/Components/NotFound/NotFound';
 
 import Welcome from './Modules/AuthModule/Components/Welcome/Welcome';
 import Login from './Modules/AuthModule/Components/Login/Login';
-import Register from './Modules/AuthModule/Components/Register/Register';
+
 import VerifyAccount from './Modules/AuthModule/Components/VerifyAccount/VerifyAccount';
 
 import DashBoard from './Modules/DashBoardModule/Components/DashBoard/DashBoard';
@@ -31,7 +31,7 @@ function App() {
       children: [
         { index: true, element: <Login /> },         
         { path: "login", element: <Login /> },       
-        { path: "register", element: <Register /> }, 
+       
         { path: "forget-password", element: <ForgetPassword /> }, 
         { path: "change-password", element: <ChangePassword /> },
         { path: "reset-password", element: <ResetPassord /> },
