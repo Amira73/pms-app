@@ -7,7 +7,7 @@ export const imgBaseURL = "https://upskilling-egypt.com:3006";
 // Manager URLs
 export const Manager_URLS = {
   LOGIN: "/Users/Login",
-  REGISTER: "/Users/Register",
+  REGISTER: "/Users/Create",
   RESET_REQUEST: "/Users/Reset/Request",
   RESET: "/Users/Reset",
   CHANGE_PASSWORD: "/Users/ChangePassword",
