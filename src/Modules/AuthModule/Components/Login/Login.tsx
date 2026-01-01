@@ -1,12 +1,11 @@
-import React from "react";
-import { http } from "../../../../Services/Api/httpInstance";
-import AuthForm from "../../../../SharedComponents/Components/AuthForm/AuthForm";
-import type { AuthField } from  "../../../../SharedComponents/Components/AuthForm/AuthForm";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import validation from "../../../../Services/Validation";
+import { toast } from "react-toastify";
 import { USERS_URL } from "../../../../Services/Api/ApisUrls";
+import { http } from "../../../../Services/Api/httpInstance";
+import validation from "../../../../Services/Validation";
+import type { AuthField } from "../../../../SharedComponents/Components/AuthForm/AuthForm";
+import AuthForm from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 
 type LoginForm = {
   email: string;
@@ -15,11 +14,11 @@ type LoginForm = {
 
 export default function Login() {
 
-  let navigate=useNavigate()
+  const navigate=useNavigate()
   const fields: AuthField<LoginForm>[] = [
     {
       name: "email",
-      label: "Email",
+      label: "E-mail",
       type: "email",
       placeholder: "Enter your E-mail",
       rules: { required: validation.EMAIL_VALIDATION.required },
@@ -55,9 +54,11 @@ const onSubmit = async (data: LoginForm) => {
 
   return (
     <AuthForm<LoginForm>
+      title="Login"
       fields={fields}
       onSubmit={onSubmit}
       submitLabel="Login"
+      
     />
   );
 }

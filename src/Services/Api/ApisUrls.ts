@@ -1,4 +1,3 @@
-
 type Id = string | number;
 // Base URL for API and Image
 export const baseURL = "https://upskilling-egypt.com:3003/api/v1";

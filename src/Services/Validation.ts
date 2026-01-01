@@ -1,5 +1,6 @@
+export const getRequiredMessage = (fieldName: string) =>
+  `${fieldName} is required`;
 
-export const getRequiredMessage = (fieldName:String) => `${fieldName} is required`;
 const validation = {
   USERNAME_VALIDATION: {
     required: "User Name Is Required",
@@ -51,6 +52,22 @@ const validation = {
     validate: (value: string) =>
       value === getValues(newPassword) || "Passwords do not match",
   }),
+
+  OTP_VALIDATION: {
+    required: "Verification code is required",
+    minLength: {
+      value: 6,
+      message: "OTP must be exactly 6 digits",
+    },
+    maxLength: {
+      value: 6,
+      message: "OTP must be exactly 6 digits",
+    },
+    pattern: {
+      value: /^[0-9]+$/,
+      message: "OTP must be numbers only",
+    },
+  },
 };
 
 export default validation;
