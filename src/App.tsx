@@ -14,6 +14,7 @@ import DashBoard from './Modules/DashBoardModule/Components/DashBoard/DashBoard'
 import ForgetPassword from './Modules/AuthModule/Components/ForgetPassword/ForgetPassword';
 import ChangePassword from './Modules/AuthModule/Components/ChangePassword/ChangePassword';
 import ResetPassord from './Modules/AuthModule/Components/ResetPassword/ResetPassord';
+import CreateNewAccount from './Modules/AuthModule/Components/CreateNewAccount/CreateNewAccount';
 
 function App() {
   const routes = createBrowserRouter([
@@ -30,8 +31,8 @@ function App() {
       errorElement: <NotFound />,
       children: [
         { index: true, element: <Login /> },         
-        { path: "login", element: <Login /> },       
-       
+        { path: "login", element: <Login /> },     
+        { path: "createaccount", element: <CreateNewAccount /> },      
         { path: "forget-password", element: <ForgetPassword /> }, 
         { path: "change-password", element: <ChangePassword /> },
         { path: "reset-password", element: <ResetPassord /> },
