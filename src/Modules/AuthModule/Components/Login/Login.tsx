@@ -5,8 +5,8 @@ import type { AuthField } from  "../../../../SharedComponents/Components/AuthFor
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { EmailValidation } from "../../../../Services/Validation";
-import { Manager_URLS } from "../../../../Services/Api/ApisUrls";
+import validation from "../../../../Services/Validation";
+import { USERS_URL } from "../../../../Services/Api/ApisUrls";
 
 type LoginForm = {
   email: string;
@@ -22,7 +22,7 @@ export default function Login() {
       label: "Email",
       type: "email",
       placeholder: "Enter your E-mail",
-      rules: { required: EmailValidation.required },
+      rules: { required: validation.EMAIL_VALIDATION.required },
     },
     {
       name: "password",
@@ -36,7 +36,7 @@ export default function Login() {
  
 const onSubmit = async (data: LoginForm) => {
   try {
-    const res = await http.post(Manager_URLS.LOGIN, data);
+    const res = await http.post(USERS_URL.LOGIN, data);
 
     toast.success("Login successful ✅");
     console.log(res.data);
