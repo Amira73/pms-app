@@ -3,6 +3,24 @@
     border: 1px solid rgba(255,255,255,0.12);
 
 }
+
+.bgtransparentCreate{
+  width: 70vw;                 /* 🔹 70% of the screen */
+  max-width: none;             /* remove old limit */
+
+  /* 🔹 same color but darker */
+  background: rgba(52, 70, 67, 0.92);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+
+  box-shadow: 0 25px 60px rgba(0,0,0,0.55);
+}
+
+
 .primary-color{
     color:#ef9b28 ;
 }
