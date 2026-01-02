@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+=======
 import React from "react";
 import { http } from "../../../../Services/Api/httpInstance";
 import AuthForm from "../../../../SharedComponents/Components/AuthForm/AuthForm";
@@ -6,7 +11,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import validation from "../../../../Services/Validation";
+>>>>>>> origin/dev
 import { USERS_URL } from "../../../../Services/Api/ApisUrls";
+import { http } from "../../../../Services/Api/httpInstance";
+import validation from "../../../../Services/Validation";
+import type { AuthField } from "../../../../SharedComponents/Components/AuthForm/AuthForm";
+import AuthForm from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 
 type LoginForm = {
   email: string;
@@ -14,11 +24,16 @@ type LoginForm = {
 };
 
 export default function Login() {
+<<<<<<< HEAD
+
+  const navigate=useNavigate()
+=======
   let navigate = useNavigate();
+>>>>>>> origin/dev
   const fields: AuthField<LoginForm>[] = [
     {
       name: "email",
-      label: "Email",
+      label: "E-mail",
       type: "email",
       placeholder: "Enter your E-mail",
       rules: { required: validation.EMAIL_VALIDATION.required },
@@ -55,6 +70,9 @@ export default function Login() {
       fields={fields}
       onSubmit={onSubmit}
       submitLabel="Login"
+<<<<<<< HEAD
+      
+=======
       footer={
         <div className="d-flex justify-content-between mt-3 ">
           <Link to="/auth/createaccount" className="text-decoration-none text-white">
@@ -69,6 +87,7 @@ export default function Login() {
           </Link>
         </div>
       }
+>>>>>>> origin/dev
     />
   );
 }

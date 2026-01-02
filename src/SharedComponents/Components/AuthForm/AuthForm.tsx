@@ -1,8 +1,8 @@
-import React, { useMemo, useState, type ReactNode } from "react";
-import { useForm } from "react-hook-form";
-import type { FieldValues, Path, RegisterOptions } from "react-hook-form";
+import { useMemo, useState, type ReactNode } from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import type { FieldValues, Path, RegisterOptions } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 type InputType = "text" | "email" | "password" | "number" | "tel";
 
@@ -15,14 +15,14 @@ export type AuthField<TForm extends FieldValues> = {
 };
 
 type AuthFormProps<TForm extends FieldValues> = {
-  subtitle?: string;              // welcome to PMS
-  title: string;                  // Log In / Register / Forget Password
+  subtitle?: string; // welcome to PMS
+  title: string; // Log In / Register / Forget Password
   fields: AuthField<TForm>[];
   defaultValues?: Partial<TForm>;
   onSubmit: (data: TForm) => void | Promise<void>;
-  submitLabel?: string;           // Login / Create Account / Send Code
+  submitLabel?: string; // Login / Create Account / Send Code
   hideFields?: Array<Path<TForm>>;
-  footer?: ReactNode;             // links area (Register / Forget ...)
+  footer?: ReactNode; // links area (Register / Forget ...)
   loading?: boolean;
 };
 
@@ -62,7 +62,21 @@ export default function AuthForm<TForm extends FieldValues>({
             <div className="form-container m-3">
               <div className="title-container">
                 <p className="text-white mb-1">{subtitle}</p>
-                <h4 className="primary-color">{title}</h4>
+                <h4 className="primary-color" style={{ marginBottom: 0 }}>
+                  {title}
+                </h4>
+
+                <hr
+                  style={{
+                    width: "18px",
+                    height: "4px",
+                    backgroundColor: "#f3a21b",
+                    border: "none",
+                    opacity: 1,
+                    margin: "4px 0 0 0",
+                    display: "block",
+                  }}
+                />
               </div>
 
               <form onSubmit={handleSubmit(onSubmit)}>
@@ -93,7 +107,9 @@ export default function AuthForm<TForm extends FieldValues>({
                             type="button"
                             className="auth-eye-btn"
                             onClick={() => toggleShow(nameStr)}
-                            aria-label={show ? "Hide password" : "Show password"}
+                            aria-label={
+                              show ? "Hide password" : "Show password"
+                            }
                           >
                             <i
                               className={`fa-solid ${
