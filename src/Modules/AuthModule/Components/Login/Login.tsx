@@ -8,6 +8,7 @@ import validation from "../../../../Services/Validation";
 import axios from "axios";
 import type { AuthField } from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 import AuthForm from "../../../../SharedComponents/Components/AuthForm/AuthForm";
+import { useAuth } from "../../../../Context/AuthContext";
 
 type LoginForm = {
   email: string;
@@ -18,6 +19,7 @@ export default function Login() {
 
 
   let navigate = useNavigate();
+    const { savaLoginData , loginData, isAuthenticated} = useAuth()
 
   const fields: AuthField<LoginForm>[] = [
     {
@@ -42,6 +44,9 @@ export default function Login() {
 
       toast.success("Login successful ✅");
       console.log(res.data);
+        localStorage.setItem("token", res.data.token);
+        console.log(res.data.token)
+      savaLoginData()
       navigate("/dashboard");
     } catch (err) {
       const msg = axios.isAxiosError(err)
