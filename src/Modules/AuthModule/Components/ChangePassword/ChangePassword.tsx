@@ -58,7 +58,7 @@ export default function ChangePassword() {
 
       toast.success("ChangePassword successful ✅");
       console.log(res.data);
-      navigate("/dashboard");
+      navigate("/auth/login");
     } catch (err) {
       const msg = axios.isAxiosError(err)
         ? err.response?.data?.message || "Login failed ❌"
