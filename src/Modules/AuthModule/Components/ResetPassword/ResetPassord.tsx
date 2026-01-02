@@ -9,7 +9,7 @@ import AuthForm from "../../../../SharedComponents/Components/AuthForm/AuthForm"
 
 type ResetPasswordForm = {
   email: string;
-  seed: string; // غير otp إلى seed
+  seed: string;
   password: string;
   confirmPassword: string;
 };
@@ -39,10 +39,6 @@ export default function ResetPassword() {
       placeholder: "Enter OTP Code",
       rules: {
         required: "OTP code is required",
-        pattern: {
-          value: /^[0-9]+$/,
-          message: "OTP must contain only numbers",
-        },
       },
     },
     {
@@ -75,34 +71,19 @@ export default function ResetPassword() {
     try {
       setLoading(true);
 
-      // استخدام الـ API endpoint الموجود لديك
+      // استخدام USERS_URL.RESET (الذي يشير إلى /Users/Reset)
       const res = await http.post(USERS_URL.RESET, data);
 
       toast.success("Password reset successful ✅");
-      console.log("Reset response:", res.data);
 
-      // توجيه إلى صفحة تسجيل الدخول بعد إعادة التعيين
-      setTimeout(() => {
-        navigate("/login");
-      }, 1500);
+      // التوجه لصفحة تسجيل الدخول
+      navigate("/login");
     } catch (err) {
       let errorMessage = "Password reset failed ❌";
-
       if (axios.isAxiosError(err)) {
-        // تحسين عرض رسالة الخطأ من الـ API
-        if (err.response?.data?.message) {
-          errorMessage = err.response.data.message;
-        } else if (err.response?.data?.errors) {
-          // إذا كان الـ API يرجع أخطاء في مصفوفة
-          const errors = err.response.data.errors;
-          errorMessage = Object.values(errors).flat().join(", ");
-        } else if (err.response?.status === 400) {
-          errorMessage = "Invalid OTP or email";
-        }
+        errorMessage = err.response?.data?.message || errorMessage;
       }
-
       toast.error(errorMessage);
-      console.error("Reset error:", err);
     } finally {
       setLoading(false);
     }
@@ -111,12 +92,10 @@ export default function ResetPassword() {
   return (
     <AuthForm<ResetPasswordForm>
       title="Reset Password"
-      subtitle="Reset your account password"
       fields={fields}
       onSubmit={onSubmit}
       submitLabel="Reset Password"
       loading={loading}
-
     />
   );
 }
