@@ -1,18 +1,17 @@
-import { createContext, useContext, } from "react";
+import { createContext, useContext, type PropsWithChildren } from "react";
 import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 
-
-export const AuthContext = createContext(null);
-
+export const AuthContext = createContext<any>(null);
 
 
-export default function AuthContextProvider({ children }) {
-  const [loginData, setLoginData] = useState(null);
+
+export default function AuthContextProvider({ children }: PropsWithChildren) {
+  const [loginData, setLoginData] = useState<any>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const savaLoginData = () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
       if (!token) {
       setLoginData(null);
       setIsAuthenticated(false);
@@ -20,7 +19,7 @@ export default function AuthContextProvider({ children }) {
     }
 
     try {
-      const decoded= jwtDecode(token); 
+      const decoded: any = jwtDecode(token); 
       setLoginData(decoded);
       setIsAuthenticated(true);
      console.log("decoded token => ", decoded);
