@@ -1,14 +1,17 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
-const ProtectedRoute = ({ element }) => {
-  const { loginData, isAuthenticated } = useAuth();
-  const token = localStorage.getItem('accessToken');  // تحقق من التوثيق
+type ProtectedRouteProps = {
+  children: React.ReactNode;
+};
 
-  const allowed = !!token ;
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
-  return allowed ? element : <Navigate to="/login" />;  // إذا كان المستخدم مسجل دخوله يعرض الـ element، وإذا لا يوجهه للـ login
+  const token = localStorage.getItem("token");
+  const allowed = Boolean(token);
+
+  return allowed ? <>{children}</> : <Navigate to="/auth/login" replace />;
 };
 
 export default ProtectedRoute;
