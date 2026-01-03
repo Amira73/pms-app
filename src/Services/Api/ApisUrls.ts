@@ -20,6 +20,7 @@ export const USERS_URL = {
   CHANGE_PASSWORD: "/Users/ChangePassword", // Update user password
   RESET_REQUEST: "/Users/Reset/Request", // Request reset if forget
   RESET: "/Users/Reset", // Reset user password
+  ForgetPassword: "/Users/Forget", //  Forget password
 };
 
 

@@ -19,6 +19,7 @@
     "react": "^19.2.0",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.2.0",
+    "react-dropzone": "^14.3.8",
     "react-hook-form": "^7.69.0",
     "react-router-dom": "^7.11.0",
     "react-sidebar": "^3.0.2",

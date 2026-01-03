@@ -15,6 +15,7 @@ import ForgetPassword from './Modules/AuthModule/Components/ForgetPassword/Forge
 import ChangePassword from './Modules/AuthModule/Components/ChangePassword/ChangePassword';
 import ResetPassord from './Modules/AuthModule/Components/ResetPassword/ResetPassord';
 import CreateNewAccount from './Modules/AuthModule/Components/CreateNewAccount/CreateNewAccount';
+import ProtectedRoute from './Context/ProtectedRoute';
 
 function App() {
   const routes = createBrowserRouter([
@@ -43,7 +44,11 @@ function App() {
     
     {
       path: "/dashboard",
-      element: <MasterLayout />,
+     element: (
+    <ProtectedRoute>
+      <MasterLayout />
+    </ProtectedRoute>
+  ),
       errorElement: <NotFound />,
       children: [
         { index: true, element: <DashBoard /> },     

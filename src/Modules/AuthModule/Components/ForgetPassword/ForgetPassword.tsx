@@ -7,12 +7,14 @@ import validation from "../../../../Services/Validation";
 import type { AuthField } from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 import AuthForm from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 
+// تعديل النوع ليقبل الإيميل فقط لأنها مرحلة الطلب
 type ForgetPasswordForm = {
   email: string;
-  password: string;
 };
+
 export default function ForgetPassword() {
   const navigate = useNavigate();
+
   const fields: AuthField<ForgetPasswordForm>[] = [
     {
       name: "email",
@@ -25,14 +27,16 @@ export default function ForgetPassword() {
 
   const onSubmit = async (data: ForgetPasswordForm) => {
     try {
-      const res = await http.post(USERS_URL.LOGIN, data);
+      // استخدام RESET_REQUEST بناءً على ملف الـ URLs الخاص بك
+      const res = await http.post(USERS_URL.RESET_REQUEST, data);
 
-      toast.success("Login successful ✅");
-      console.log(res.data);
-      navigate("/dashboard");
+      toast.success(res.data?.message || "OTP sent to your email ✅");
+
+      // التوجه لصفحة الـ Reset لإدخال الكود الجديد
+      navigate("/reset-password");
     } catch (err) {
       const msg = axios.isAxiosError(err)
-        ? err.response?.data?.message || "Login failed ❌"
+        ? err.response?.data?.message || "Failed to send request ❌"
         : "Something went wrong ❌";
 
       toast.error(msg);
@@ -45,7 +49,7 @@ export default function ForgetPassword() {
       title="Forget Password"
       fields={fields}
       onSubmit={onSubmit}
-      submitLabel="Verify"
+      submitLabel="Verify" 
     />
   );
 }
