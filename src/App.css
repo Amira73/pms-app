@@ -6,17 +6,35 @@
 
 .bgtransparentCreate{
 
-  width: 70vw;                 /* 🔹 70% of the screen */
-  max-width: none;             /* remove old limit */
+  width: 70vw;                 
+  max-width: none;            
 
   background: rgba(39, 50, 48, 0.92);
   border-radius: 20px;
-  height: 650px;
+  height: 570px;              
+  overflow-y: auto;            /* enable vertical scrolling */
+  overflow-x: hidden;
   border-radius: 16px;
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 25px 60px rgba(0,0,0,0.55);
 }
+.bgtransparentCreate::-webkit-scrollbar {
+  width: 8px;
+}
 
+.bgtransparentCreate::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+}
+
+.bgtransparentCreate::-webkit-scrollbar-thumb {
+  background: rgba(243, 162, 27, 0.7);
+  border-radius: 10px;
+}
+
+.bgtransparentCreate::-webkit-scrollbar-thumb:hover {
+  background: rgba(243, 162, 27, 0.95);
+}
 
 .primary-color{
     color:#ef9b28 ;
@@ -61,13 +79,13 @@
 
 
 .auth-field{
-  margin-top: 14px;
+  margin-top: 4px !important;
 }
 
 .auth-label{
   display: block;
-  margin-bottom: 10px;
-  font-size: 18px;
+  margin-bottom: 4px !important;   
+  font-size: 15px !important; 
   color: #f3a21b;
 }
 
@@ -78,7 +96,7 @@
   border: none !important;
   border-radius: 0 !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.35) !important;
-  padding: 10px 0 12px !important;
+  padding: 6px 0 8px !important;
   font-size: 14px !important;
   color: #eef7f3 !important;
   box-shadow: none !important;
@@ -94,10 +112,19 @@
   border-bottom-color: rgba(243, 162, 27, 0.9) !important;
 }
 
+.alert{
+  margin-top: 4px !important;
+  padding: 6px 8px !important;
+  font-size: 12px;
+}
+.row > div{
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
 
 .auth-inputgroup{
   border-bottom: 1px solid rgba(255, 255, 255, 0.35);
-  padding-bottom: 6px;
+  padding-bottom: 4px !important;
 }
 
 .auth-inputgroup:focus-within{
