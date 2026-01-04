@@ -42,7 +42,7 @@ export default function Login() {
     try {
       const res = await http.post(USERS_URL.LOGIN, data);
 
-      toast.success("Login successful ✅");
+      toast.success("Login successful ");
       console.log(res.data);
         localStorage.setItem("token", res.data.token);
         console.log(res.data.token)
