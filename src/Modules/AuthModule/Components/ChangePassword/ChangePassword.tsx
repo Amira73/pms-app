@@ -7,7 +7,9 @@ import { useNavigate } from "react-router-dom";
 import validation, {
   getRequiredMessage,
 } from "../../../../Services/Validation";
-import { baseURL, USERS_URL } from "../../../../Services/Api/ApisUrls";
+
+import { USERS_URL } from "../../../../Services/Api/ApisUrls";
+import { useForm } from "react-hook-form";
 
 type ChangePasswordForm = {
   oldPassword: string;

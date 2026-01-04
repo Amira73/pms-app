@@ -41,7 +41,7 @@ export default function AuthForm<TForm extends FieldValues>({
     register,
     handleSubmit,
     formState: { errors  } , 
-    watch ,
+   
   } = useForm<TForm>({ defaultValues });
 
   const finalFields = useMemo(
