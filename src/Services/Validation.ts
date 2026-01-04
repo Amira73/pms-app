@@ -49,7 +49,7 @@ const validation = {
     // newPassword: string
   ) => ({
     required: "Confirm Password is required",
-    validate: (value: string) =>
+     validate: (value: string) =>
     value === getValues("newPassword") || "Passwords do not match",
   }),
 
