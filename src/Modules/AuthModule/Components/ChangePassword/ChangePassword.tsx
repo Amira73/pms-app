@@ -18,40 +18,30 @@ type ChangePasswordForm = {
 };
 export default function ChangePassword() {
   let navigate = useNavigate();
+  const form = useForm<ChangePasswordForm>();
+  const { getValues } = form;
 
   const fields: AuthField<ChangePasswordForm>[] = [
     {
       name: "oldPassword",
-      label: "old Password",
+      label: "Old Password",
       type: "password",
-      placeholder: "Enter your old Password ",
-      rules: {
-        required: validation.PASSWORD_VALIDATION(
-          getRequiredMessage("oldPassword")
-        ).required,
-      },
+      placeholder: "Enter old password",
+      rules: validation.PASSWORD_VALIDATION(getRequiredMessage("oldPassword")),
     },
     {
       name: "newPassword",
-      label: "new Password",
+      label: "New Password",
       type: "password",
-      placeholder: "Enter your new Password",
-      rules: {
-        required: validation.PASSWORD_VALIDATION(
-          getRequiredMessage("newPassword")
-        ).required,
-      },
+      placeholder: "Enter new password",
+      rules: validation.PASSWORD_VALIDATION(getRequiredMessage("newPassword")),
     },
     {
       name: "confirmNewPassword",
-      label: "confirm New Password",
+      label: "Confirm New Password",
       type: "password",
-      placeholder: "Enter your confirm New Password",
-      rules: {
-        required: validation.PASSWORD_VALIDATION(
-          getRequiredMessage("confirmNewPassword")
-        ).required,
-      },
+      placeholder: "Confirm new password",
+      rules: validation.CONFIRM_PASSWORD_VALIDATION(getValues),
     },
   ];
   const onSubmit = async (data: ChangePasswordForm) => {
