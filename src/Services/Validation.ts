@@ -46,11 +46,11 @@ const validation = {
   }),
   CONFIRM_PASSWORD_VALIDATION: (
     getValues: (value: string) => string,
-    newPassword: string
+    // newPassword: string
   ) => ({
     required: "Confirm Password is required",
-    validate: (value: string) =>
-      value === getValues(newPassword) || "Passwords do not match",
+     validate: (value: string) =>
+    value === getValues("newPassword") || "Passwords do not match",
   }),
 
   OTP_VALIDATION: {
