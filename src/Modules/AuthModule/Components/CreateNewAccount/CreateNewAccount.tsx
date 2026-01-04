@@ -54,7 +54,7 @@ export default function CreateNewAccount() {
         });
 
         toast.success("Account created successfully", { theme: "colored" });
-        navigate("/login");
+        navigate("/auth/login");
 
       } catch (error:any) {
         console.log(error);
