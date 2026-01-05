@@ -61,11 +61,13 @@ export default function ChangePassword() {
     }
   };
   return (
-    <AuthForm<ChangePasswordForm>
-      title="Change Password"
-      fields={fields}
-      onSubmit={onSubmit}
-      submitLabel="Change"
-    />
+    <div className="con">
+      <AuthForm<ChangePasswordForm>
+        title="Change Password"
+        fields={fields}
+        onSubmit={onSubmit}
+        submitLabel="Change"
+      />
+    </div>
   );
 }

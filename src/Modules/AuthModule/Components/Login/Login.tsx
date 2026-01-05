@@ -16,10 +16,8 @@ type LoginForm = {
 };
 
 export default function Login() {
-
-
   let navigate = useNavigate();
-    const { savaLoginData , loginData, isAuthenticated} = useAuth()
+  const { savaLoginData, loginData, isAuthenticated } = useAuth();
 
   const fields: AuthField<LoginForm>[] = [
     {
@@ -44,17 +42,13 @@ export default function Login() {
 
       toast.success("Login successful ");
       console.log(res.data);
-        localStorage.setItem("token", res.data.token);
-        console.log(res.data.token)
-      savaLoginData()
+      localStorage.setItem("token", res.data.token);
+      console.log(res.data.token);
+      savaLoginData();
       navigate("/dashboard");
     } catch (err) {
-      const msg = axios.isAxiosError(err)
-        ? err.response?.data?.message || "Login failed ❌"
-        : "Something went wrong ❌";
-
-      toast.error(msg);
-      console.log(err);
+      console.log("error", err);
+      toast.error("Something went wrong ");
     }
   };
 
@@ -64,10 +58,12 @@ export default function Login() {
       fields={fields}
       onSubmit={onSubmit}
       submitLabel="Login"
-
       footer={
         <div className="d-flex justify-content-between mt-3 ">
-          <Link to="/auth/createaccount" className="text-decoration-none text-white">
+          <Link
+            to="/auth/createaccount"
+            className="text-decoration-none text-white"
+          >
             Register Now ?
           </Link>
 
@@ -79,7 +75,6 @@ export default function Login() {
           </Link>
         </div>
       }
-
     />
   );
 }
