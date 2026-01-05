@@ -21,6 +21,7 @@ export const USERS_URL = {
   RESET_REQUEST: "/Users/Reset/Request", // Request reset if forget
   RESET: "/Users/Reset", // Reset user password
   ForgetPassword: "/Users/Forget", //  Forget password
+  GetAllProjects: "/Project/manager", //  Forget password
 };
 
 
