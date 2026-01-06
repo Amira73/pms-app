@@ -9,13 +9,21 @@ import { HiBell, HiChevronDown } from "react-icons/hi";
 import { useAuth } from "../../../Context/AuthContext";
 // import logo from "/public/navLogo.svg";
 import userImg from "/public/Ellipse 18.png";
+<<<<<<< Updated upstream
 export default function Navbar() {
   const navigate = useNavigate();
 
  const { loginData, isLoading , logOutUser } = useAuth();
+=======
+import type { AuthContextType } from "../../../Services/AuthContextType";
 
- 
- 
+export default function NavBar() {
+  const navigate = useNavigate();
+
+  const { loginData, logOutUser }: AuthContextType = useAuth();
+  let { currentUser } = useAuth();
+>>>>>>> Stashed changes
+
   // const { darkMode, setDarkMode } = useMode();
 
   // const handleDarkMode = () => {
@@ -30,13 +38,13 @@ export default function Navbar() {
 
   // ===========================
   useEffect(() => {
-    // // console.log("Login Data in Navbar:", loginData);
+    console.log("Login Data in Navbar:", loginData);
   }, []);
 
   return (
     <>
       <div
-        className="d-flex w-100 justify-content-between align-items-center py-2 bg-white
+        className="d-flex w-100 justify-content-between align-items-center shadow  py-2 bg-white
        "
       >
         <div
@@ -103,18 +111,25 @@ export default function Navbar() {
           <div
             className="d-flex gap-3 align-items-center "
             style={{ cursor: "pointer" }}
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate("/dashboard/profile")}
           >
             <img
-              src={userImg}
+              src={`${"https://upskilling-egypt.com:3003/"}/${
+                currentUser?.imagePath
+              }`}
               alt="user"
               className="rounded-circle"
               width="40"
               height="40"
             />
             <div className="d-flex flex-column">
+<<<<<<< Updated upstream
               <span>{loginData?.userName}</span>
               <small className="">{"nadia.mohamed.taha166@gmail.com"}</small>
+=======
+              <span>{loginData?.id}</span>
+              <small className="">{loginData?.userEmail}</small>
+>>>>>>> Stashed changes
               <span className="text-muted fw-light">
                 {loginData?.userGroup}
               </span>
@@ -140,7 +155,7 @@ export default function Navbar() {
                    
                     `}
                   onClick={() => {
-                    navigate("/change-password");
+                    navigate("/dashboard/change-password");
                   }}
                   // color={darkMode ? "#f8f9fa" : "#212529"}
                 >

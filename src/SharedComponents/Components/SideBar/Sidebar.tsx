@@ -31,7 +31,7 @@ export default function SideBar() {
 
   return (
     <>
-      <div className="sidebar-container ">
+      <div className="sidebar-container shadow ">
         <div
           onClick={() => handleCollapse()}
           className="toggle-arrow"

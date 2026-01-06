@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from "react";
+// import type { Dispatch, SetStateAction } from "react";
 
 export interface AuthContextType {
   loginData: DecodedTokenPayload | null;
@@ -7,18 +7,18 @@ export interface AuthContextType {
   >;
   saveLoginData: () => Promise<void>;
   isLoading: boolean;
-  fullUserData: FullUserDataType | null;
-  setFullUserData: React.Dispatch<
-    React.SetStateAction<FullUserDataType | null>
-  >;
+ 
   getCurrentUser: () => Promise<void>;
   logOutUser: () => void;
+  currentUser: CurrentUserType | null;
+  setCurrentUser: React.Dispatch<React.SetStateAction<CurrentUserType | null>>;
 }
 
-export interface ModeContextType {
-  darkMode: boolean;
-  setDarkMode: Dispatch<SetStateAction<boolean>>;
-}
+
+// export interface ModeContextType {
+//   darkMode: boolean;
+//   setDarkMode: Dispatch<SetStateAction<boolean>>;
+// }
 
 export interface DecodedTokenPayload {
   exp: number; // Expiration time (Unix timestamp)
@@ -32,7 +32,8 @@ export interface DecodedTokenPayload {
 
 // Auth Context interfaces
 
-export type FullUserDataType = {
+
+export type CurrentUserType = {
   id: number;
   userName: string;
   email: string;
