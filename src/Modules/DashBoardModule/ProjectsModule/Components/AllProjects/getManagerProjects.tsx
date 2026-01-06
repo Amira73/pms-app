@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
-import { http } from "../../../../Services/Api/httpInstance";
-import { USERS_URL } from "../../../../Services/Api/ApisUrls";
+import { http } from "../../../../../Services/Api/httpInstance";
+import { USERS_URL } from "../../../../../Services/Api/ApisUrls";
 
 type Task = {
   id: number;
@@ -24,12 +24,12 @@ type ProjectsResponse = {
   pageNumber: number;
   pageSize: number;
   data: Project[];
-  totalNumberOfRecords?: number; 
-  totalPages?: number; 
+  totalNumberOfRecords?: number;
+  totalPages?: number;
 };
 
 export async function getManagerProjectsFun(params: {
-  pageNumber: number; 
+  pageNumber: number;
   pageSize: number;
   title?: string;
 }): Promise<ProjectsResponse> {

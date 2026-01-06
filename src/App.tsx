@@ -16,15 +16,15 @@ import ChangePassword from "./Modules/AuthModule/Components/ChangePassword/Chang
 import ResetPassord from "./Modules/AuthModule/Components/ResetPassword/ResetPassord";
 import CreateNewAccount from "./Modules/AuthModule/Components/CreateNewAccount/CreateNewAccount";
 import ProtectedRoute from "./Context/ProtectedRoute";
-import ProjectsSystem from "./Modules/DashBoardModule/Components/ProjectsSystem/ProjectsSystem";
-import AllProjects from "./Modules/DashBoardModule/Components/AllProjects/AllProjects";
-import ProjectForm from "./Modules/DashBoardModule/Components/ProjectForm/ProjectForm";
-import AllTasks from "./Modules/DashBoardModule/Components/AllTasks/AllTasks";
-import Users from "./Modules/DashBoardModule/Components/Users/Users";
-import TaskForm from "./Modules/DashBoardModule/Components/TaskForm/TaskForm";
-import TaskDetails from "./Modules/DashBoardModule/Components/TaskDetails/TaskDetails";
+import ProjectsSystem from "./Modules/DashBoardModule/ProjectsModule/Components/ProjectsSystem/ProjectsSystem";
+import AllProjects from "./Modules/DashBoardModule/ProjectsModule/Components/AllProjects/AllProjects";
+import ProjectForm from "./Modules/DashBoardModule/ProjectsModule/Components/ProjectForm/ProjectForm";
+import Users from "./Modules/DashBoardModule/UsersModule/Components/Users/Users";
 import Profile from "./Modules/DashBoardModule/Components/Profile/Profile";
-import MyTasks from "./Modules/DashBoardModule/Components/MyTasks/MyTasks";
+import AllTasks from "./Modules/DashBoardModule/TasksModule/Components/AllTasks/AllTasks";
+import TaskForm from "./Modules/DashBoardModule/TasksModule/Components/TaskForm/TaskForm";
+import TaskDetails from "./Modules/DashBoardModule/TasksModule/Components/TaskDetails/TaskDetails";
+import MyTasks from "./Modules/DashBoardModule/TasksModule/Components/MyTasks/MyTasks";
 
 function App() {
   const routes = createBrowserRouter([
@@ -43,7 +43,7 @@ function App() {
         { path: "login", element: <Login /> },
         { path: "createaccount", element: <CreateNewAccount /> },
         { path: "forget-password", element: <ForgetPassword /> },
-       
+
         { path: "reset-password", element: <ResetPassord /> },
         { path: "verify-account", element: <VerifyAccount /> },
       ],
