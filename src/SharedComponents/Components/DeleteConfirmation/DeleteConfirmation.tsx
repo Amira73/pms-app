@@ -1,10 +1,10 @@
 
-import nodata from '../../../assets/images/nodata.svg'
+import nodata from '../../../assets/images/nodata.png'
    
 
 
 type DeleteConfirmationProps = {
-  deleteItem: String;
+  deleteItem: string;
   name: string;
 };
 

@@ -22,6 +22,8 @@ export const USERS_URL = {
   RESET: "/Users/Reset", // Reset user password
   ForgetPassword: "/Users/Forget", //  Forget password
   GetAllProjects: "/Project/manager", //  Forget password
+   DeleteProject: (id: Id) =>`/Project/${id}`, 
+   CreateProject:'/Project'
 };
 
 
