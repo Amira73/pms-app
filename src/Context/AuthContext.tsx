@@ -1,3 +1,4 @@
+
 import { createContext, useContext, type PropsWithChildren } from "react";
 import { useState, useEffect } from "react";
 import type {
@@ -13,6 +14,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 
 export default function AuthContextProvider({ children }: PropsWithChildren) {
   const [loginData, setLoginData] = useState<DecodedTokenPayload | null>(null);
+
   const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<CurrentUserType | null>(null);
 
@@ -69,6 +71,7 @@ export default function AuthContextProvider({ children }: PropsWithChildren) {
       setIsLoading(false);
     }
   }, []);
+
 
   // value to provide
   const value: AuthContextType = {

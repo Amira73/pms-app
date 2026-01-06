@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { FaProjectDiagram } from "react-icons/fa";
 import {
@@ -9,13 +10,13 @@ import {
 } from "react-icons/md";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Link, useLocation } from "react-router-dom";
-import { useAuth } from "../../../Context/AuthContext";
-import type { AuthContextType } from "../../../Services/AuthContextType";
+// import { useAuth } from "../../../Context/AuthContext";
+// import type { AuthContextType } from "../../../Services/AuthContextType";
 
 export default function SideBar() {
   const location = useLocation();
   const [isCollapse, setIsCollapse] = useState(false);
-  const { loginData }: AuthContextType = useAuth();
+  // const { loginData }: AuthContextType = useAuth();
 
   const handleCollapse = () => {
     setIsCollapse(!isCollapse);
@@ -114,7 +115,7 @@ export default function SideBar() {
               All Tasks
             </MenuItem>
 
-            {loginData?.userGroup != "Manager" && (
+            {/* {loginData?.userGroup != "Manager" && ( )} */}
               <MenuItem
                 className={
                   location.pathname === "/dashboard/my-tasks" ? "active-menu" : ""
@@ -124,7 +125,7 @@ export default function SideBar() {
               >
                 My Tasks
               </MenuItem>
-            )}
+           
           </Menu>
         </Sidebar>
       </div>

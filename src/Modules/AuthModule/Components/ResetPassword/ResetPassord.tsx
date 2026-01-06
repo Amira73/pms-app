@@ -72,7 +72,7 @@ export default function ResetPassword() {
       setLoading(true);
 
       // استخدام USERS_URL.RESET (الذي يشير إلى /Users/Reset)
-      const res = await http.post(USERS_URL.RESET, data);
+      await http.post(USERS_URL.RESET, data);
 
       toast.success("Password reset successful ✅");
 

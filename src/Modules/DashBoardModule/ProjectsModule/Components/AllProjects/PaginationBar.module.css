@@ -1,0 +1,103 @@
+.bar {
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* كله في اليمين زي الصورة */
+  gap: 18px;
+
+  border: 1px solid #eef2f7;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #6b7280;
+  font-size: 22px;
+  white-space: nowrap;
+}
+
+.selectWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* الـ select شكل pill صغير زي الصورة */
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 999px;
+
+  padding: 6px 28px 6px 12px; /* مساحة للسهم */
+  font-size:22px;
+  color: #111827;
+  line-height: 1;
+
+  cursor: pointer;
+  outline: none;
+}
+
+/* سهم dropdown بسيط داخل الـ select */
+.selectContainer {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.selectArrow {
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+/* الجزء بتاع Page + الأسهم */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  color: #6b7280;
+  font-size: 22px;
+  white-space: nowrap;
+}
+
+/* أزرار الأسهم خفيفة جدًا (من غير دايرة) */
+.iconBtn {
+  border: none;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+
+  color: #9ca3af;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconBtn:hover {
+  color: #6b7280;
+}
+
+.iconBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* لو محتاجة تفصلي بينهم بخط خفيف */
+.divider {
+  width: 1px;
+  height: 18px;
+  background: #eef2f7;
+}

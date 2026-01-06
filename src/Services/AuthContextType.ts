@@ -1,18 +1,22 @@
+
 // import type { Dispatch, SetStateAction } from "react";
+
 
 export interface AuthContextType {
   loginData: DecodedTokenPayload | null;
+  
+  isLoading: boolean;
+  saveLoginData: () => Promise<void>;
   setLoginData: React.Dispatch<
     React.SetStateAction<DecodedTokenPayload | null>
-  >;
-  saveLoginData: () => Promise<void>;
-  isLoading: boolean;
- 
+  >; 
   getCurrentUser: () => Promise<void>;
+
   logOutUser: () => void;
   currentUser: CurrentUserType | null;
   setCurrentUser: React.Dispatch<React.SetStateAction<CurrentUserType | null>>;
 }
+
 
 
 // export interface ModeContextType {
@@ -49,3 +53,4 @@ export type CurrentUserType = {
     id: number;
   };
 };
+

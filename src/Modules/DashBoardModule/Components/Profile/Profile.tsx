@@ -1,5 +1,7 @@
 
+
 import { useAuth } from "../../../../Context/AuthContext";
+
 
 export default function Profile() {
   let { currentUser  } = useAuth()!;

@@ -1,28 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
-import { MdOutlineWbSunny } from "react-icons/md";
-import { BsMoonStarsFill } from "react-icons/bs";
+// import { MdOutlineWbSunny } from "react-icons/md";
+// import { BsMoonStarsFill } from "react-icons/bs";
 import { FiLock, FiLogOut } from "react-icons/fi";
 import { HiBell, HiChevronDown } from "react-icons/hi";
 // import type { AuthContextType } from "../../../Services/AuthContextType";
 import { useAuth } from "../../../Context/AuthContext";
 // import logo from "/public/navLogo.svg";
-import userImg from "/public/Ellipse 18.png";
-<<<<<<< Updated upstream
-export default function Navbar() {
-  const navigate = useNavigate();
-
- const { loginData, isLoading , logOutUser } = useAuth();
-=======
 import type { AuthContextType } from "../../../Services/AuthContextType";
 
 export default function NavBar() {
   const navigate = useNavigate();
 
-  const { loginData, logOutUser }: AuthContextType = useAuth();
-  let { currentUser } = useAuth();
->>>>>>> Stashed changes
+  const { loginData, logOutUser , currentUser }: AuthContextType = useAuth()!;
 
   // const { darkMode, setDarkMode } = useMode();
 
@@ -123,16 +114,10 @@ export default function NavBar() {
               height="40"
             />
             <div className="d-flex flex-column">
-<<<<<<< Updated upstream
-              <span>{loginData?.userName}</span>
-              <small className="">{"nadia.mohamed.taha166@gmail.com"}</small>
-=======
               <span>{loginData?.id}</span>
               <small className="">{loginData?.userEmail}</small>
->>>>>>> Stashed changes
-              <span className="text-muted fw-light">
-                {loginData?.userGroup}
-              </span>
+
+              <span className="text-muted fw-light">{loginData?.email}</span>
             </div>
           </div>
           {/* <!-- Arrow --> */}

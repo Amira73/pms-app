@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import Dropzone from 'react-dropzone'
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { InputGroup } from 'react-bootstrap';
-import { Link, Navigate } from 'react-router-dom';
+
 import Form from "react-bootstrap/Form";
 import { http } from "../../../../Services/Api/httpInstance";
-import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
-import validation from "../../../../Services/Validation";
+
 import { USERS_URL } from "../../../../Services/Api/ApisUrls";
 
 export default function CreateNewAccount() {

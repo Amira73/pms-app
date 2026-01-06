@@ -1,11 +1,11 @@
-import React from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { http } from "../../../../Services/Api/httpInstance";
 import { USERS_URL } from "../../../../Services/Api/ApisUrls";
 import validation from "../../../../Services/Validation";
-import axios from "axios";
+
 import type { AuthField } from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 import AuthForm from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 import { useAuth } from "../../../../Context/AuthContext";
@@ -17,7 +17,8 @@ type LoginForm = {
 
 export default function Login() {
   let navigate = useNavigate();
-  const { savaLoginData, loginData, isAuthenticated } = useAuth();
+  const { saveLoginData } = useAuth();
+
 
   const fields: AuthField<LoginForm>[] = [
     {
@@ -44,7 +45,7 @@ export default function Login() {
       console.log(res.data);
       localStorage.setItem("token", res.data.token);
       console.log(res.data.token);
-      savaLoginData();
+      saveLoginData();
       navigate("/dashboard");
     } catch (err) {
       console.log("error", err);
