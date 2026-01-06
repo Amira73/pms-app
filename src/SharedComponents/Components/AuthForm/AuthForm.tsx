@@ -30,7 +30,7 @@ export default function AuthForm<TForm extends FieldValues>({
   subtitle = "welcome to PMS",
   title,
   fields,
-  defaultValues,
+
   onSubmit,
   submitLabel = "Submit",
   hideFields = [],
@@ -42,7 +42,7 @@ export default function AuthForm<TForm extends FieldValues>({
     handleSubmit,
     formState: { errors  } , 
    
-  } = useForm<TForm>({ defaultValues });
+  } = useForm<TForm>({  });
 
   const finalFields = useMemo(
     () => fields.filter((f) => !hideFields.includes(f.name)),

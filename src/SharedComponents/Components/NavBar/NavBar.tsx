@@ -1,18 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
-import { MdOutlineWbSunny } from "react-icons/md";
-import { BsMoonStarsFill } from "react-icons/bs";
+// import { MdOutlineWbSunny } from "react-icons/md";
+// import { BsMoonStarsFill } from "react-icons/bs";
 import { FiLock, FiLogOut } from "react-icons/fi";
 import { HiBell, HiChevronDown } from "react-icons/hi";
 // import type { AuthContextType } from "../../../Services/AuthContextType";
 import { useAuth } from "../../../Context/AuthContext";
 // import logo from "/public/navLogo.svg";
 import userImg from "/public/Ellipse 18.png";
-export default function Navbar() {
+import type { AuthContextType } from "../../../Services/AuthContextType";
+
+
+export default function NavBar() {
   const navigate = useNavigate();
 
- const { loginData, isLoading , logOutUser } = useAuth();
+ const { loginData , logOutUser } : AuthContextType = useAuth();
 
  
  
@@ -113,10 +116,10 @@ export default function Navbar() {
               height="40"
             />
             <div className="d-flex flex-column">
-              <span>{loginData?.userName}</span>
+              <span>{loginData?.id}</span>
               <small className="">{"nadia.mohamed.taha166@gmail.com"}</small>
               <span className="text-muted fw-light">
-                {loginData?.userGroup}
+                {loginData?.email}
               </span>
             </div>
           </div>
