@@ -1,0 +1,20 @@
+.page-header {
+  background: #fff;
+  padding: 16px 24px;
+  border-bottom: 1px solid #eee;
+  margin-top: 1%;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #6c757d;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.back-btn:hover {
+  text-decoration: underline;
+}

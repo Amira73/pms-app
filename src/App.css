@@ -1,3 +1,6 @@
+html, body {
+  overflow-x: hidden;
+}
 .bgtransparent {
   background: rgba(45, 86, 78, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -48,6 +51,7 @@
 .primary-color {
   color: #ef9b28 !important;
 }
+
 .primary-color2 {
   color: #0E382F
 }
@@ -57,9 +61,12 @@
   box-sizing: border-box;
 }
 
-.primarycolorbg {
+.primarycolorbg,
+.primarycolorbg:hover,
+.primarycolorbg:focus,
+.primarycolorbg:active {
   color: #fff !important;
-  background-color:  rgba(243, 162, 27, 0.95);;
+  background-color: rgba(243, 162, 27, 0.95) !important;
 }
 
 .primary-color-bg2 th {
