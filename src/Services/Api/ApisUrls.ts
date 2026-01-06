@@ -24,7 +24,17 @@ export const USERS_URL = {
   GetAllProjects: "/Project/manager", //  Forget password
 };
 
-
+export const TASK_URLS = {
+  CREATE_TASK: "/Task", // Create task by manager
+  GET_ASSIGNED_TASKS: "/Task", // Get all my assigned tasks
+  GET_TASKS_BY_MANAGER: "/Task/manager", // Get all tasks by manager
+  GET_TASK: (id: number) => `/Task/${id}`, // Get task by id
+  UPDATE_TASK: (id: number) => `/Task/${id}`, // Update task by id
+  DELETE_TASK: (id: number) => `/Task/${id}`, // Delete task by id
+  COUNT_TASKS: "/Task/count", // Count tasks for manager and employee
+  CHANGE_STATUS: (id: number) => `/Task/${id}/change-status`, // Change task status
+  GET_TASKS_BY_PROJECT: (id: number) => `/Task/project/${id}`, // Get tasks by project id
+};
 
 
 

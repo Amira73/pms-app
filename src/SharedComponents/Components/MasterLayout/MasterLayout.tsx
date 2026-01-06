@@ -12,7 +12,7 @@ export default function MasterLayout() {
     </div>
 
 
-      <div className="w-100 bg-info ">
+      <div className="w-100">
         <NavBar/>
         <Outlet/>
 
