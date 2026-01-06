@@ -1,31 +1,32 @@
-import React from 'react'
-import header from '../../../assets/images/header.png'
+
+
 
 type HeaderProps = {
   title: string;
-  description?: string;
-  imgUrl?: string;
+btn_text:string
 };
 
 
-export default function Header({title,description,imgUrl}:HeaderProps) {
+export default function Header({title,btn_text}:HeaderProps) {
   return (
   <>
-<header className="bg-header overflow-hidden rounded rounded-4">
+<header className="bg-white overflow-hidden rounded rounded-4 my-2">
   <div className="container-fluid px-0">
-    <div className="row align-items-center p-3 text-white">
+    <div className="d-flex justify-content-between p-3 text-white">
+     
+        <h3 className='text-black   m-3'>{title}</h3> 
+        <button
+  type="submit"
+  className="btn primarycolorbg m-3 px-3 rounded-5 "
+>
+  <i className="fa-solid fa-plus me-3 text-white" />
+                    {btn_text}</button>
+                  
+                  </div>
       
-      <div className="col-12 col-md-8">
-        <h1>{title}</h1> 
-        <p>{description}</p>
-      </div>
-
-      <div className="col-12 col-md-4 text-end">
-      <img className="img-fluid w-75" src={imgUrl} alt='header' />
-      </div>
 
     </div>
-  </div>
+ 
 </header>
   </>
   )

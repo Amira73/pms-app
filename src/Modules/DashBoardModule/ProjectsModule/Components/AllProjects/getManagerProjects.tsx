@@ -1,6 +1,7 @@
-import axios, { AxiosError } from "axios";
+
 import { http } from "../../../../../Services/Api/httpInstance";
 import { USERS_URL } from "../../../../../Services/Api/ApisUrls";
+import type { AxiosError } from "axios";
 
 type Task = {
   id: number;
