@@ -1,0 +1,33 @@
+
+
+.searchWrapper {
+  position: relative;
+  width: 300px;
+}
+
+.searchInput {
+  width: 100%;
+  padding-left: 40px !important; /* space for icon */
+  height: 42px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 14px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.tableHeader th {
+  background-color: #315951E5 !important;
+  color: white;
+  border: none;
+}
+
+
+  
+

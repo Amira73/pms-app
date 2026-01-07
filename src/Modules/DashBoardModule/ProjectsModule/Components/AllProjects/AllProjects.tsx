@@ -36,8 +36,10 @@ export default function AllProjects() {
       const [show, setShow] = useState(false);
       const[projectId,setProjectId]=useState(0);
        const[projectName,setProjectName]=useState("");
+
 const [isDeleting, setIsDeleting] = useState(false);
 const [isLoading, setIsLoading] = useState(false);
+
 
 const load = async () => {
   setIsLoading(true);

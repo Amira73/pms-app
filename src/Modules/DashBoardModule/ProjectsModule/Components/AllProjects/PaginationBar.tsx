@@ -1,4 +1,6 @@
+
 import React, { useEffect } from "react";
+
 import styles from "./PaginationBar.module.css";
 
 type PaginationBarProps = {

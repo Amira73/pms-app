@@ -114,10 +114,9 @@ export default function NavBar() {
               height="40"
             />
             <div className="d-flex flex-column">
-              <span>{loginData?.id}</span>
               <small className="">{loginData?.userEmail}</small>
 
-              <span className="text-muted fw-light">{loginData?.email}</span>
+              <span className="text-muted fw-light">{loginData?.userGroup}</span>
             </div>
           </div>
           {/* <!-- Arrow --> */}
