@@ -13,7 +13,7 @@ import type { AuthContextType } from "../../../Services/AuthContextType";
 export default function NavBar() {
   const navigate = useNavigate();
 
-  const { loginData, logOutUser , currentUser }: AuthContextType = useAuth()!;
+  const { loginData, logOutUser, currentUser }: AuthContextType = useAuth()!;
 
   // const { darkMode, setDarkMode } = useMode();
 
@@ -116,7 +116,10 @@ export default function NavBar() {
             <div className="d-flex flex-column">
               <small className="">{loginData?.userEmail}</small>
 
-              <span className="text-muted fw-light">{loginData?.userGroup}</span>
+
+              <span className="text-muted fw-light">
+                {loginData?.userGroup}
+              </span>
             </div>
           </div>
           {/* <!-- Arrow --> */}
