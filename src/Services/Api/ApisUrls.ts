@@ -26,6 +26,7 @@ export const USERS_URL = {
    CreateProject:'/Project'
 };
 
+
 // PROJECT URLS
 export const PROJECT_URLS = {
   CREATE_PROJECT: "/Project", // Create project by manager
@@ -36,6 +37,7 @@ export const PROJECT_URLS = {
   GET_PROJECTS_BY_EMPLOYEE: "/Project/employee", // Get projects for employee
   GET_ALL_PROJECTS: "/Project", // Get all projects in system
 };
+
 
 export const TASK_URLS = {
   CREATE_TASK: "/Task", // Create task by manager
