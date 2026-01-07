@@ -60,6 +60,12 @@ html, body {
 *::after {
   box-sizing: border-box;
 }
+.primarycolorbg2{
+  background-color: #315951E5 !important;
+  color: #eef7f3 !important;
+  text-align: center;
+  
+}
 
 .primarycolorbg,
 .primarycolorbg:hover,

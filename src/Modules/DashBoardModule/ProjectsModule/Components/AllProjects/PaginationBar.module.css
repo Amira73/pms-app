@@ -6,7 +6,7 @@
 
   display: flex;
   align-items: center;
-  justify-content: flex-end; /* كله في اليمين زي الصورة */
+  justify-content: flex-end; 
   gap: 18px;
 
   border: 1px solid #eef2f7;
@@ -18,7 +18,7 @@
   gap: 10px;
 
   color: #6b7280;
-  font-size: 22px;
+  font-size: 18px;
   white-space: nowrap;
 }
 
