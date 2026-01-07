@@ -10,6 +10,7 @@ import { http } from "../../../../../Services/Api/httpInstance";
 import { USERS_URL } from "../../../../../Services/Api/ApisUrls";
 import type { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
+import Spinner from "react-bootstrap/Spinner";
 
 type Task = {
   id: number;
@@ -35,19 +36,33 @@ export default function AllProjects() {
       const [show, setShow] = useState(false);
       const[projectId,setProjectId]=useState(0);
        const[projectName,setProjectName]=useState("");
-const [isDeleting, setIsDeleting] = useState(false)!;
 
- async function load() {
-      const res = await getManagerProjectsFun({
-        pageSize,
-        pageNumber,
-        title: search,
-      });
+const [isDeleting, setIsDeleting] = useState(false);
+const [isLoading, setIsLoading] = useState(false);
 
-      setProectsList(res?.data ?? []);
-        setTotalResults(res?.totalNumberOfRecords ?? 0);
+
+const load = async () => {
+  setIsLoading(true);
+
+  try {
+    const res = await getManagerProjectsFun({
+      pageSize,
+      pageNumber,
+      title: search,
+    });
+
+    setProectsList(res?.data ?? []);
+    setTotalResults(res?.totalNumberOfRecords ?? 0);
     setTotalPages(res?.totalPages ?? 1);
-    }
+  } catch (err) {
+    console.error("load projects failed:", err);
+    setProectsList([]);
+    setTotalResults(0);
+    setTotalPages(1);
+  } finally {
+    setIsLoading(false);
+  }
+};
        const handleClose = () => setShow(false);
       const handleShow = (project:Project) => {
         setProjectId(project.id)
@@ -59,6 +74,7 @@ const [isDeleting, setIsDeleting] = useState(false)!;
 
     
 const handleDelete = async () => {
+  //alert(projectId)
   if (!projectId) return;
 
   setIsDeleting(true);
@@ -90,16 +106,19 @@ const handleDelete = async () => {
 const [totalResults, setTotalResults] = useState(0);
 const [totalPages, setTotalPages] = useState(1);
 
+
+
   const [projects, setProectsList] = useState<Project[]>([]);
 
-  const handleSearch = (q: string) => {
-    setSearch(q);
-    setPageNumber(1);
-  };
+const handleSearch = (q: string) => {
+  if (q === search) return;       
+  setSearch(q);
+  setPageNumber(1);
+};
 
   useEffect(() => {
    
-
+  console.log("pageNumber changed to:", pageNumber);
     load();
   }, [search, pageNumber, pageSize]);
 
@@ -118,57 +137,80 @@ const [totalPages, setTotalPages] = useState(1);
           </Button>
         </Modal.Footer>
       </Modal>
-      <Header btn_text="Add New Project" title="Projects" onBtnClick={() => navigate("/dashboard/projects/add")} />
+      <Header btn_text="Add New Project" title="Projects" onBtnClick={() =>
+  navigate("/dashboard/projects/add", {
+    state: { mode: "add" },
+  })
+} />
 
       <SearchBox onSearch={handleSearch} debounceMs={400} />
 
       <div className="table-responsive mx-4">
         <table className="table table-striped">
-          <thead className="">
-            <tr className="table-header-row primary-color-bg2">
-             <th>
+          <thead className="py-3">
+            <tr className="table-header-row primary-color-bg2 py-3">
+             <th className="py-2">
   <div className="d-flex align-items-center gap-2">
     <span>Title</span>
     <i className="fa-solid fa-sort text-white"></i>
   </div>
 </th>
-                     <th>
+                     <th className="py-2">
   <div className="d-flex align-items-center gap-2">
     <span>Status</span>
     <i className="fa-solid fa-sort text-white"></i>
   </div>
 </th>
-                      <th>
+                      <th className="py-2">
   <div className="d-flex align-items-center gap-2">
     <span>Num Users</span>
     <i className="fa-solid fa-sort text-white"></i>
   </div>
 </th>
-                      <th>
+                      <th className="py-2">
   <div className="d-flex align-items-center gap-2">
     <span>Num Tasks</span>
     <i className="fa-solid fa-sort text-white"></i>
   </div>
 </th>
-                      <th>
+                      <th className="py-2">
   <div className="d-flex align-items-center gap-2">
     <span>Date Created</span>
     <i className="fa-solid fa-sort text-white"></i>
   </div>
 </th>
-              <th></th>
+              <th className="py-é"></th>
             </tr>
           </thead>
 
           <tbody>
-            {projects.length > 0 ? (
+
+            {isLoading ? (
+    <tr>
+      <td colSpan={6} className="text-center py-4">
+        <Spinner animation="border" role="status" />
+      </td>
+    </tr>
+  ) :
+            projects.length > 0 ? (
               projects.map((project, idx) => (
                 <tr key={project.id || idx}>
                   <td>{project.title}</td>
-                  <td>Public</td>
+                 <td>
+  <span className="primarycolorbg2 px-3 py-1 rounded-pill text-white">
+    Public
+  </span>
+</td>
+
                   <td>2</td>
                   <td>{project.task.length}</td>
-                  <td>{project.creationDate}</td>
+                 <td>
+  {new Date(project.creationDate).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  })}
+</td>
 
                   <td>
                     <div className="dropdown">
@@ -192,7 +234,11 @@ const [totalPages, setTotalPages] = useState(1);
                         <li>
                           <button
                             className="dropdown-item primary-color2"
-                            onClick={() => console.log("Edit")}
+                           onClick={() =>
+  navigate("/dashboard/projects/add", {
+    state: { mode: "edit", projectIdd: project.id },
+  })
+}
                           >
                             <i className="fa-regular fa-pen-to-square me-2"></i>{" "}
                             Edit
@@ -220,15 +266,14 @@ const [totalPages, setTotalPages] = useState(1);
         </table>
       </div>
 
-    <PaginationBar
+  <PaginationBar
   totalResults={totalResults}
-  
   pageNumber={pageNumber}
   pageSize={pageSize}
-  onPageChange={setPageNumber}
+  onPageChange={(p) => setPageNumber(p)}
   onPageSizeChange={(size) => {
     setPageSize(size);
-    setPageNumber(totalPages);
+    setPageNumber(1);
   }}
 />
     </>

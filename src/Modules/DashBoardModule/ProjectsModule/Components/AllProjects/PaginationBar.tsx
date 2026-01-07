@@ -1,4 +1,6 @@
 
+import React, { useEffect } from "react";
+
 import styles from "./PaginationBar.module.css";
 
 type PaginationBarProps = {
@@ -29,6 +31,8 @@ export default function PaginationBar({
   const handleNext = () => {
     if (canNext) onPageChange(pageNumber + 1);
   };
+
+ 
 
   return (
     <div className={styles.bar}>
