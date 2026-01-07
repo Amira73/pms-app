@@ -1,3 +1,6 @@
+html, body {
+  overflow-x: hidden;
+}
 .bgtransparent {
   background: rgba(45, 86, 78, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -46,22 +49,31 @@
 }
 
 .primary-color {
-  color: #ef9b28;
+  color: #ef9b28 !important;
 }
 
-.primary-color-bg {
-  background-color: #ef9b28;
+.primary-color2 {
+  color: #0E382F
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
+.primarycolorbg,
+.primarycolorbg:hover,
+.primarycolorbg:focus,
+.primarycolorbg:active {
+  color: #fff !important;
+  background-color: rgba(243, 162, 27, 0.95) !important;
+}
 
+.primary-color-bg2 th {
+  background-color: #315951E5; /* اختاري اللون */
+  color: #fff;
+}
 
-  .primary-color {
-    color: #ef9b28;
-  }
-
-  .primary-color-bg {
-    background-color: #ef9b28;
-  }
 
   .auth-container {
     display: flex;
@@ -253,4 +265,6 @@
     box-shadow: 0 0 0px 1000px transparent inset !important;
     -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
   }
-}
+  .bg-outlet{
+    background-color: #f5f5f5;
+  }

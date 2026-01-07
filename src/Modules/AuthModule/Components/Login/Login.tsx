@@ -1,11 +1,11 @@
-import React from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { http } from "../../../../Services/Api/httpInstance";
 import { USERS_URL } from "../../../../Services/Api/ApisUrls";
 import validation from "../../../../Services/Validation";
-import axios from "axios";
+
 import type { AuthField } from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 import AuthForm from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 import { useAuth } from "../../../../Context/AuthContext";
@@ -16,10 +16,9 @@ type LoginForm = {
 };
 
 export default function Login() {
-
-
   let navigate = useNavigate();
-    const { savaLoginData , loginData, isAuthenticated} = useAuth()
+  const { saveLoginData } = useAuth();
+
 
   const fields: AuthField<LoginForm>[] = [
     {
@@ -42,19 +41,15 @@ export default function Login() {
     try {
       const res = await http.post(USERS_URL.LOGIN, data);
 
-      toast.success("Login successful ✅");
+      toast.success("Login successful ");
       console.log(res.data);
-        localStorage.setItem("token", res.data.token);
-        console.log(res.data.token)
-      savaLoginData()
+      localStorage.setItem("token", res.data.token);
+      console.log(res.data.token);
+      saveLoginData();
       navigate("/dashboard");
     } catch (err) {
-      const msg = axios.isAxiosError(err)
-        ? err.response?.data?.message || "Login failed ❌"
-        : "Something went wrong ❌";
-
-      toast.error(msg);
-      console.log(err);
+      console.log("error", err);
+      toast.error("Something went wrong ");
     }
   };
 
@@ -64,10 +59,12 @@ export default function Login() {
       fields={fields}
       onSubmit={onSubmit}
       submitLabel="Login"
-
       footer={
         <div className="d-flex justify-content-between mt-3 ">
-          <Link to="/auth/createaccount" className="text-decoration-none text-white">
+          <Link
+            to="/auth/createaccount"
+            className="text-decoration-none text-white"
+          >
             Register Now ?
           </Link>
 
@@ -79,7 +76,6 @@ export default function Login() {
           </Link>
         </div>
       }
-
     />
   );
 }

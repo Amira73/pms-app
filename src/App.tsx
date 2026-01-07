@@ -1,21 +1,30 @@
-import './App.css'
+import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import AuthLayout from './SharedComponents/Components/AuthLayout/AuthLayout';
-import MasterLayout from './SharedComponents/Components/MasterLayout/MasterLayout';
-import NotFound from './SharedComponents/Components/NotFound/NotFound';
+import AuthLayout from "./SharedComponents/Components/AuthLayout/AuthLayout";
+import MasterLayout from "./SharedComponents/Components/MasterLayout/MasterLayout";
+import NotFound from "./SharedComponents/Components/NotFound/NotFound";
 
-import Welcome from './Modules/AuthModule/Components/Welcome/Welcome';
-import Login from './Modules/AuthModule/Components/Login/Login';
+import Welcome from "./Modules/AuthModule/Components/Welcome/Welcome";
+import Login from "./Modules/AuthModule/Components/Login/Login";
 
-import VerifyAccount from './Modules/AuthModule/Components/VerifyAccount/VerifyAccount';
+import VerifyAccount from "./Modules/AuthModule/Components/VerifyAccount/VerifyAccount";
 
-import DashBoard from './Modules/DashBoardModule/Components/DashBoard/DashBoard';
-import ForgetPassword from './Modules/AuthModule/Components/ForgetPassword/ForgetPassword';
-import ChangePassword from './Modules/AuthModule/Components/ChangePassword/ChangePassword';
-import ResetPassord from './Modules/AuthModule/Components/ResetPassword/ResetPassord';
-import CreateNewAccount from './Modules/AuthModule/Components/CreateNewAccount/CreateNewAccount';
-import ProtectedRoute from './Context/ProtectedRoute';
+import DashBoard from "./Modules/DashBoardModule/Components/DashBoard/DashBoard";
+import ForgetPassword from "./Modules/AuthModule/Components/ForgetPassword/ForgetPassword";
+import ChangePassword from "./Modules/AuthModule/Components/ChangePassword/ChangePassword";
+import ResetPassord from "./Modules/AuthModule/Components/ResetPassword/ResetPassord";
+import CreateNewAccount from "./Modules/AuthModule/Components/CreateNewAccount/CreateNewAccount";
+import ProtectedRoute from "./Context/ProtectedRoute";
+import ProjectsSystem from "./Modules/DashBoardModule/ProjectsModule/Components/ProjectsSystem/ProjectsSystem";
+import AllProjects from "./Modules/DashBoardModule/ProjectsModule/Components/AllProjects/AllProjects";
+import ProjectForm from "./Modules/DashBoardModule/ProjectsModule/Components/ProjectForm/ProjectForm";
+import Users from "./Modules/DashBoardModule/UsersModule/Components/Users/Users";
+import Profile from "./Modules/DashBoardModule/Components/Profile/Profile";
+import AllTasks from "./Modules/DashBoardModule/TasksModule/Components/AllTasks/AllTasks";
+import TaskForm from "./Modules/DashBoardModule/TasksModule/Components/TaskForm/TaskForm";
+import TaskDetails from "./Modules/DashBoardModule/TasksModule/Components/TaskDetails/TaskDetails";
+import MyTasks from "./Modules/DashBoardModule/TasksModule/Components/MyTasks/MyTasks";
 
 function App() {
   const routes = createBrowserRouter([
@@ -25,45 +34,55 @@ function App() {
       errorElement: <NotFound />,
     },
 
-    
     {
       path: "/auth",
       element: <AuthLayout />,
       errorElement: <NotFound />,
       children: [
-        { index: true, element: <Login /> },         
-        { path: "login", element: <Login /> },     
-        { path: "createaccount", element: <CreateNewAccount /> },      
-        { path: "forget-password", element: <ForgetPassword /> }, 
-        { path: "change-password", element: <ChangePassword /> },
+        { index: true, element: <Login /> },
+        { path: "login", element: <Login /> },
+        { path: "createaccount", element: <CreateNewAccount /> },
+        { path: "forget-password", element: <ForgetPassword /> },
+
         { path: "reset-password", element: <ResetPassord /> },
         { path: "verify-account", element: <VerifyAccount /> },
       ],
     },
 
-    
     {
       path: "/dashboard",
-     element: (
-    <ProtectedRoute>
-      <MasterLayout />
-    </ProtectedRoute>
-  ),
+      element: (
+        <ProtectedRoute>
+          <MasterLayout />
+        </ProtectedRoute>
+      ),
       errorElement: <NotFound />,
       children: [
-        { index: true, element: <DashBoard /> },     
+        { index: true, element: <DashBoard /> },
+        { path: "dashboard", element: <DashBoard /> },
+
+        // Manager routes
+        { path: "projects-system", element: <ProjectsSystem /> },
+        { path: "projects-manage", element: <AllProjects /> },
+        { path: "projects/add", element: <ProjectForm /> },
+        { path: "projects/edit/:id", element: <ProjectForm /> },
+        { path: "tasks", element: <AllTasks /> },
+        { path: "tasks/add", element: <TaskForm /> },
+        { path: "tasks/edit/:id", element: <TaskForm /> },
+        { path: "tasks/:id", element: <TaskDetails /> },
+        { path: "users", element: <Users /> },
+        { path: "change-password", element: <ChangePassword /> },
+
+        { path: "profile", element: <Profile /> },
+
+        // Employee routes
+
+        { path: "my-tasks", element: <MyTasks /> },
       ],
     },
-
-    
-    { path: "/not-found", element: <NotFound /> },
-
-    
-    { path: "*", element: <NotFound /> },
   ]);
 
   return <RouterProvider router={routes} />;
 }
 
 export default App;
-

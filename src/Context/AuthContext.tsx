@@ -1,51 +1,73 @@
-import { createContext, useContext, type PropsWithChildren } from "react";
-import { useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type PropsWithChildren,
+} from "react";
 import { jwtDecode } from "jwt-decode";
+import type {
+  AuthContextType,
+  DecodedTokenPayload,
+} from "../Services/AuthContextType";
 
-export const AuthContext = createContext<any>(null);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+export default function AuthContextProvider({
+  children,
+}: PropsWithChildren) {
+  const [loginData, setLoginData] =
+    useState<DecodedTokenPayload | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-
-export default function AuthContextProvider({ children }: PropsWithChildren) {
-  const [loginData, setLoginData] = useState<any>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const savaLoginData = () => {
+  const saveLoginData = async () => {
     const token = localStorage.getItem("accessToken");
-      if (!token) {
+
+    if (!token) {
       setLoginData(null);
-      setIsAuthenticated(false);
+      setIsLoading(false);
       return;
     }
 
     try {
-      const decoded: any = jwtDecode(token); 
+      const decoded = jwtDecode<DecodedTokenPayload>(token);
       setLoginData(decoded);
-      setIsAuthenticated(true);
-     console.log("decoded token => ", decoded);
-
-    } catch (error) {
-      console.error("Invalid token!", error);
+    } catch {
       setLoginData(null);
-      setIsAuthenticated(false);
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-  
+  const logOutUser = () => {
+    localStorage.removeItem("accessToken");
+    setLoginData(null);
   };
 
   useEffect(() => {
-    savaLoginData();
+    saveLoginData();
   }, []);
 
+  const value: AuthContextType = {
+    loginData,
+    isAuthenticated: Boolean(loginData),
+    isLoading,
+    saveLoginData,
+    setLoginData,
+    logOutUser,
+  };
+
   return (
-    <AuthContext.Provider
-      value={{ loginData, savaLoginData, isAuthenticated, setIsAuthenticated }}
-    >
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-export function useAuth() {
-  return useContext(AuthContext);
+export function useAuth(): AuthContextType {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within AuthContextProvider");
+  }
+  return context;
 }
