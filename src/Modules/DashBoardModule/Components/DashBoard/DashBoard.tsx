@@ -1,6 +1,9 @@
+import DashHeader from "../../../../SharedComponents/Components/DashHeader/DashHeader";
 
 export default function DashBoard() {
   return (
-    <div>DashBoard</div>
+    <>
+       <DashHeader />
+    </>
   )
 }
