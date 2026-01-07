@@ -1,4 +1,4 @@
-import React from "react";
+
 import styles from "./PaginationBar.module.css";
 
 type PaginationBarProps = {

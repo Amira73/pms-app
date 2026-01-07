@@ -17,7 +17,7 @@ type LoginForm = {
 
 export default function Login() {
   let navigate = useNavigate();
-  const { saveLoginData } = useAuth();
+  const { saveLoginData } = useAuth()!;
 
 
   const fields: AuthField<LoginForm>[] = [

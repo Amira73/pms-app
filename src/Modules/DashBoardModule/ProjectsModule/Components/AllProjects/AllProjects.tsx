@@ -35,7 +35,7 @@ export default function AllProjects() {
       const [show, setShow] = useState(false);
       const[projectId,setProjectId]=useState(0);
        const[projectName,setProjectName]=useState("");
-const [isDeleting, setIsDeleting] = useState(false);
+const [isDeleting, setIsDeleting] = useState(false)!;
 
  async function load() {
       const res = await getManagerProjectsFun({
