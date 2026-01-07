@@ -46,7 +46,7 @@ const [isDeleting, setIsDeleting] = useState(false);
 
       setProectsList(res?.data ?? []);
         setTotalResults(res?.totalNumberOfRecords ?? 0);
-    setTotalPages(res?.totalPages ?? 1);
+        setTotalPages(res?.totalPages ?? 1);
     }
        const handleClose = () => setShow(false);
       const handleShow = (project:Project) => {
@@ -220,15 +220,14 @@ const [totalPages, setTotalPages] = useState(1);
         </table>
       </div>
 
-    <PaginationBar
+  <PaginationBar
   totalResults={totalResults}
-  
   pageNumber={pageNumber}
   pageSize={pageSize}
-  onPageChange={setPageNumber}
+  onPageChange={(p) => setPageNumber(p)}
   onPageSizeChange={(size) => {
     setPageSize(size);
-    setPageNumber(totalPages);
+    setPageNumber(1);
   }}
 />
     </>
