@@ -39,6 +39,15 @@ export default function AllProjects() {
 
 const [isDeleting, setIsDeleting] = useState(false);
 const [isLoading, setIsLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+const [totalResults, setTotalResults] = useState(0);
+const [totalPages, setTotalPages] = useState(1);
+
+
+
+  const [projects, setProectsList] = useState<Project[]>([]);
 
 
 const load = async () => {
@@ -100,15 +109,7 @@ const handleDelete = async () => {
     setIsDeleting(false);
   }
 };
-  const [search, setSearch] = useState("");
-  const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-const [totalResults, setTotalResults] = useState(0);
-const [totalPages, setTotalPages] = useState(1);
 
-
-
-  const [projects, setProectsList] = useState<Project[]>([]);
 
 const handleSearch = (q: string) => {
   if (q === search) return;       
