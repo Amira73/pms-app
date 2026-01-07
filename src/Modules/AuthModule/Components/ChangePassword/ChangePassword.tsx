@@ -61,7 +61,7 @@ export default function ChangePassword() {
     }
   };
   return (
-    <div className="con">
+    <div className="con mt-5 bg-dark w-50 rounded-3 m-auto ">
       <AuthForm<ChangePasswordForm>
         title="Change Password"
         fields={fields}
