@@ -116,7 +116,7 @@ export default function SideBar() {
             </MenuItem>
 
             {/* {loginData?.userGroup != "Manager" && ( )} */}
-              <MenuItem
+              {/* <MenuItem
                 className={
                   location.pathname === "/dashboard/my-tasks" ? "active-menu" : ""
                 }
@@ -124,7 +124,7 @@ export default function SideBar() {
                 component={<Link to="/dashboard/my-tasks" />}
               >
                 My Tasks
-              </MenuItem>
+              </MenuItem> */}
            
           </Menu>
         </Sidebar>

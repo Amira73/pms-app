@@ -163,6 +163,7 @@ export default function NavBar() {
                       icon: "warning",
                       confirmButtonText: "Logout",
                       showCloseButton: true,
+                      
                       // background: darkMode ? "#2c2c2c" : "#fff",
                       // color: darkMode ? "#fff" : "#000",
                     }).then((result: { isConfirmed: boolean }) => {
