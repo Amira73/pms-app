@@ -25,6 +25,7 @@ import AllTasks from "./Modules/DashBoardModule/TasksModule/Components/AllTasks/
 import TaskForm from "./Modules/DashBoardModule/TasksModule/Components/TaskForm/TaskForm";
 import TaskDetails from "./Modules/DashBoardModule/TasksModule/Components/TaskDetails/TaskDetails";
 import MyTasks from "./Modules/DashBoardModule/TasksModule/Components/MyTasks/MyTasks";
+import ThemeProvider from "./ThemeProvider";
 
 function App() {
   const routes = createBrowserRouter([
@@ -82,7 +83,11 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={routes} />;
+return (
+    
+      <RouterProvider router={routes} />
+  
+  );
 }
 
 export default App;
