@@ -139,7 +139,7 @@ export default function DashBoardCharts() {
             </div>
 
             <div className="row g-3 mt-3">
-              <div className="col-md-4">
+              <div className="col-12 col-sm-6 col-lg-4">
                 <div
                   className="rounded-4 p-3"
                   style={{ background: "#EEF0FF"}}
@@ -164,7 +164,7 @@ export default function DashBoardCharts() {
                 </div>
               </div>
 
-              <div className="col-md-4">
+             <div className="col-12 col-sm-6 col-lg-4">
                 <div
                   className="rounded-4 p-3"
                   style={{ background: "#F5F7E6"}}
@@ -189,7 +189,7 @@ export default function DashBoardCharts() {
                 </div>
               </div>
 
-              <div className="col-md-4">
+            <div className="col-12 col-sm-6 col-lg-4">
                 <div
                   className="rounded-4 p-3"
                   style={{ background: "#F8E9F2" }}
