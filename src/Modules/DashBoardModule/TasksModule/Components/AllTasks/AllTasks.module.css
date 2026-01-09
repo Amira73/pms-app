@@ -28,6 +28,40 @@
   border: none;
 }
 
+.statusBadge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13px;
+  display: inline-block;
+  min-width: 90px;
+  text-align: center;
+  border: 2px solid;
+}
+
+.statusTodo {
+  color: #fbfbf7;
+  border-color: #948e84;
+  background-color: #c7c4bf;
+}
+
+.statusProgress {
+  color: #fffefd;
+  border-color: #fbc923;
+  background-color: #f79d20;
+}
+
+.statusDone {
+  color: #f5f8f6;
+  border-color: #16a34a;
+  background-color: #24a066;
+}
+
+.statusDefault {
+  color: #6b7280;
+  border-color: #6b7280;
+  background-color: #f3f4f6;
+}
 
   
 
