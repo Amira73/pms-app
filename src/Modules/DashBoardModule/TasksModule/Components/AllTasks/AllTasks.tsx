@@ -5,6 +5,9 @@ import { http } from "../../../../../Services/Api/httpInstance";
 import { useNavigate } from "react-router-dom";
 import NoData from "../../../../../SharedComponents/Components/NoData/NoData";
 import styles from "./AllTasks.module.css";
+import { Button, Modal } from "react-bootstrap";
+import DeleteConfirmation from "../../../../../SharedComponents/Components/DeleteConfirmation/DeleteConfirmation";
+import { toast } from "react-toastify";
 
 type Task = {
   id: number;
@@ -21,11 +24,86 @@ type Project = { id: number; title: string };
 
 
 export default function AllTasks() {
+
+  
+
   const navigate = useNavigate();
   const [tasksList, setTasksList] = useState<Task[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const [taskId, setTaskId] = useState(0);
+  const [taskName, setTaskName] = useState('');
+
+  const [showViewModal, setShowViewModal] = useState(false);
+  const [viewTask, setViewTask] = useState<any>(null);
+  const [loadingView, setLoadingView] = useState(false)
+
+  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [newStatus, setNewStatus] = useState("");
+
+  const openStatusModal = (task: Task) => {
+    setSelectedTask(task);
+    setNewStatus(task.status);
+    setShowStatusModal(true);
+  };
+
+  const closeStatusModal = () => {
+    setShowStatusModal(false);
+    setSelectedTask(null);
+  };
+
+      const changeTaskStatus = async () => {
+      if (!selectedTask) return;
+
+      try {
+        await http.put(
+          TASK_URLS.CHANGE_STATUS(selectedTask.id),
+          { status: newStatus }, // BODY
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        // update UI instantly
+        setTasksList((prev) =>
+          prev.map((t) =>
+            t.id === selectedTask.id ? { ...t, status: newStatus } : t
+          )
+        );
+
+        toast.success("Status updated successfully");
+        closeStatusModal();
+      } catch (err) {
+        console.error(err);
+        toast.error("Failed to change status");
+      }
+    };
+
+    const getTaskById = async (id: number) => {
+      try {
+        setLoadingView(true);
+        const res = await http.get(TASK_URLS.GET_TASK(id));
+        setViewTask(res.data);
+        setShowViewModal(true);
+      } catch (err) {
+        console.error(err);
+        toast.error("Failed to load task details");
+      } finally {
+        setLoadingView(false);
+      }
+    }
+  const handleShow = (ts:any) => {
+    setTaskId(ts.id);
+    setTaskName(ts.title)
+    setShow(true);
+  };
+  
   const getAllTasks = async () => {
     try {
       const response = await http.get(TASK_URLS.GET_TASKS_BY_MANAGER, {
@@ -50,6 +128,16 @@ export default function AllTasks() {
     }
   };
 
+    const deleteTask = async () =>{
+      try {
+        const response = await http.delete(TASK_URLS.DELETE_TASK(taskId), {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } 
+      });
+      } catch (error) {
+        
+      }
+    }
+
   useEffect(() => {
     getAllTasks();
     getUsersAndProjects();
@@ -66,6 +154,21 @@ export default function AllTasks() {
 
   const getProjectTitle = (id: number | undefined) =>
     projects.find((p) => p.id === id)?.title ?? "-";
+
+    const getStatusClass = (status: string) => {
+      switch (status?.toLowerCase()) {
+        case "todo":
+          return styles.statusTodo;
+        case "inprogress":
+          return styles.statusProgress;
+        case "done":
+          return styles.statusDone;
+        default:
+          return styles.statusDefault;
+      }
+    };
+
+
 
   return (
     <>
@@ -115,7 +218,13 @@ export default function AllTasks() {
                   tasksList.map((task) => (
                     <tr key={task.id}>
                       <td>{task.title}</td>
-                      <td>{task.status}</td>
+                      <td>
+                        <span className={`${styles.statusBadge} ${getStatusClass(task.status)}`}>
+                          {task.status}
+                        </span>
+
+                      </td>
+
                       <td>{getUserName(task.employee?.id)}</td>
                       <td>{getProjectTitle(task.project?.id)}</td>
                       <td>{formatDate(task.creationDate)}</td>
@@ -127,17 +236,31 @@ export default function AllTasks() {
                           />
                           <ul className="dropdown-menu">
                             <li>
-                              <button className="dropdown-item">
+                              <button
+                                className="dropdown-item"
+                                onClick={() => getTaskById(task.id)}
+                              >
                                 <i className="fa-solid fa-eye"></i> View
                               </button>
                             </li>
                             <li>
-                              <button className="dropdown-item">
-                                <i className="fa-solid fa-edit"></i> Edit
+                              <button
+                              className="dropdown-item"
+                              onClick={() => navigate(`/dashboard/tasks/edit/${task.id}`)}
+                            >
+                              <i className="fa-solid fa-edit"></i> Edit
+                            </button>
+                            </li>
+                            <li>
+                              <button
+                                className="dropdown-item"
+                                onClick={() => openStatusModal(task)}
+                              >
+                                <i className="fa-solid fa-arrows-rotate"></i> Change Status
                               </button>
                             </li>
                             <li>
-                              <button className="dropdown-item text-danger">
+                              <button onClick={() => handleShow(task)} className="dropdown-item text-danger">
                                 <i className="fa-solid fa-trash"></i> Delete
                               </button>
                             </li>
@@ -158,7 +281,100 @@ export default function AllTasks() {
           </div>
         </div>
       </div>
+
+
+        <Modal show={show} onHide={handleClose} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Delete Task</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <DeleteConfirmation name={taskName} deleteItem="Task" />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={deleteTask}>
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={showStatusModal} onHide={closeStatusModal} centered size="sm">
+            <Modal.Header closeButton>
+              <Modal.Title>Change Task Status</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              <p className="mb-2 fw-bold">{selectedTask?.title}</p>
+
+              <select
+                className="form-select"
+                value={newStatus}
+                onChange={(e) => setNewStatus(e.target.value)}
+              >
+                <option value="ToDo">To Do</option>
+                <option value="InProgress">In Progress</option>
+                <option value="Done">Done</option>
+              </select>
+            </Modal.Body>
+
+            <Modal.Footer>
+              <Button variant="secondary" onClick={closeStatusModal}>
+                Cancel
+              </Button>
+              <Button variant="warning" onClick={changeTaskStatus}>
+                Save
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
+          <Modal show={showViewModal} onHide={() => setShowViewModal(false)} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>Task Details</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              {loadingView ? (
+                <p>Loading...</p>
+              ) : viewTask ? (
+                <>
+                  <p><b>Title:</b> {viewTask.title}</p>
+                  <p><b>Description:</b> {viewTask.description}</p>
+
+                  <p>
+                    <b>Status:</b>{" "}
+                    <span className={`${styles.statusBadge} ${getStatusClass(viewTask.status)}`}>
+                      {viewTask.status}
+                    </span>
+                  </p>
+
+                  <p>
+                    <b>Assigned To:</b> {viewTask.employee?.userName || "-"}
+                  </p>
+
+                  <p>
+                    <b>Project:</b> {viewTask.project?.title || "-"}
+                  </p>
+
+                  <p>
+                    <b>Created:</b> {formatDate(viewTask.creationDate)}
+                  </p>
+                </>
+              ) : (
+                <p>No data</p>
+              )}
+            </Modal.Body>
+
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowViewModal(false)}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
     </>
   );
  
 }
+
