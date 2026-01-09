@@ -67,6 +67,7 @@ export default function AllTasks() {
       });
       setTasksList(response.data.data ?? []);
       setTotalResults(response.data.totalNumberOfRecords ?? 0);
+      setTotalResults(response.data.totalNumberOfRecords ?? 0);
     } catch (error) {
       console.error("Failed to load tasks", error);
       toast.error("Failed to load tasks");
@@ -117,6 +118,9 @@ export default function AllTasks() {
   // UseEffects
   useEffect(() => {
     getAllTasks();
+  }, [currentPage, pageSize, searchTerm]);
+
+  useEffect(() => {
   }, [currentPage, pageSize, searchTerm]);
 
   useEffect(() => {
