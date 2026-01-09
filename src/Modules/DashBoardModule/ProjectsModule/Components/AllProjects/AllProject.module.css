@@ -1,6 +1,6 @@
 .searchContainer {
 margin:0px 40px;
-   padding: 24px 16px;
+   /* padding: 24px 16px; */
   background: #f7f7f7;
 }
 
@@ -12,19 +12,20 @@ margin:0px 40px;
   background: #ffffff;
   border-radius: 20px;
   padding: 10px 14px;
-  width: 320px;
+  width: 250px;
   box-shadow: 0 0 0 1px #e5e5e5;
+  height: 40px;
 }
 
 .searchIcon {
-  font-size: 24px;
+  font-size: 20px;
   color: #999;
 }
 
 .searchInput {
   border: none;
   outline: none;
-  font-size: 24px;
+  font-size: 20px;
   width: 100%;
   color: #333;
 }

@@ -45,7 +45,7 @@ export default function SearchBox({
 
   return (
  
-    <div className={`bg-white  ${styles.searchContainer}`}>
+    <div className={`  ${styles.searchContainer}`}>
       <div className={styles.searchBox}>
 <i className={`fa-solid fa-magnifying-glass ${styles.searchIcon}`}></i>
 
