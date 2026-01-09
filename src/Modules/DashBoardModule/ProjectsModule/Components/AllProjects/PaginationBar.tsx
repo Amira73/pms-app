@@ -1,13 +1,12 @@
-
 import React, { useEffect } from "react";
 
 import styles from "./PaginationBar.module.css";
 
 type PaginationBarProps = {
-  totalResults: number;       
-  pageNumber: number;          
-  pageSize: number;            
-  pageSizeOptions?: number[];  
+  totalResults: number;
+  pageNumber: number;
+  pageSize: number;
+  pageSizeOptions?: number[];
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
 };
@@ -32,29 +31,30 @@ export default function PaginationBar({
     if (canNext) onPageChange(pageNumber + 1);
   };
 
- 
-
   return (
     <div className={styles.bar}>
       <div className={styles.left}>
-        <span>Showing</span>
+        <span>Showing </span>
 
-        <select
-          className={styles.select}
-          value={pageSize}
-          onChange={(e) => onPageSizeChange(Number(e.target.value))}
-        >
-          {pageSizeOptions.map((opt) => (
-            <option key={opt} value={opt}>
-              {opt}
-            </option>
-          ))}
-        </select>
+<div className={styles.customSelect}>
+    <select
+      className={styles.selectField}
+      value={pageSize}
+      onChange={(e) => onPageSizeChange(Number(e.target.value))}
+    >
+      {pageSizeOptions.map((opt) => (
+        <option key={opt} value={opt}>
+          {opt}
+        </option>
+      ))}
+    </select>
+    <i className="fa-solid fa-chevron-down text-black"></i>
+  </div>
 
         <span>of {totalResults} Results</span>
       </div>
 
-      <div className={styles.right}>
+      <div className="">
         <span>
           Page {pageNumber} of {totalPages}
         </span>
