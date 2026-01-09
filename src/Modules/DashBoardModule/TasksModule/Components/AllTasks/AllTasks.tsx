@@ -25,6 +25,9 @@ type User = { id: number; userName: string };
 type Project = { id: number; title: string };
 
 export default function AllTasks() {
+
+  
+
   const navigate = useNavigate();
   const [tasksList, setTasksList] = useState<Task[]>([]);
   const [users, setUsers] = useState<User[]>([]);
@@ -37,6 +40,91 @@ export default function AllTasks() {
   const [searchTerm, setSearchTerm] = useState("");
   const [showMenu, setShowMenu] = useState<number | null>(null);
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const [taskId, setTaskId] = useState(0);
+  const [taskName, setTaskName] = useState('');
+
+  const [showViewModal, setShowViewModal] = useState(false);
+  const [viewTask, setViewTask] = useState<any>(null);
+  const [loadingView, setLoadingView] = useState(false)
+
+  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [newStatus, setNewStatus] = useState("");
+
+  const [totalResults, setTotalResults] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
+  const [search, setSearch] = useState("");
+
+  const handleSearch = (q: string) => {
+      if (q === search) return;       
+      setSearch(q);
+      setPageNumber(1);
+    };
+
+  const openStatusModal = (task: Task) => {
+    setSelectedTask(task);
+    setNewStatus(task.status);
+    setShowStatusModal(true);
+  };
+
+  const closeStatusModal = () => {
+    setShowStatusModal(false);
+    setSelectedTask(null);
+  };
+
+      const changeTaskStatus = async () => {
+      if (!selectedTask) return;
+
+      try {
+        await http.put(
+          TASK_URLS.CHANGE_STATUS(selectedTask.id),
+          { status: newStatus }, // BODY
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        // update UI instantly
+        setTasksList((prev) =>
+          prev.map((t) =>
+            t.id === selectedTask.id ? { ...t, status: newStatus } : t
+          )
+        );
+
+        toast.success("Status updated successfully");
+        closeStatusModal();
+      } catch (err) {
+        console.error(err);
+        toast.error("Failed to change status");
+      }
+    };
+
+    const getTaskById = async (id: number) => {
+      try {
+        setLoadingView(true);
+        const res = await http.get(TASK_URLS.GET_TASK(id));
+        setViewTask(res.data);
+        setShowViewModal(true);
+      } catch (err) {
+        console.error(err);
+        toast.error("Failed to load task details");
+      } finally {
+        setLoadingView(false);
+      }
+    }
+  const handleShow = (ts:any) => {
+    setTaskId(ts.id);
+    setTaskName(ts.title)
+    setShow(true);
+  };
+  
   const getAllTasks = async () => {
     try {
       const response = await http.get(TASK_URLS.GET_TASKS_BY_MANAGER, {
@@ -50,6 +138,8 @@ export default function AllTasks() {
       setTotalResults(response.data.totalNumberOfRecords ?? 0);
     } catch (error) {
       console.error("Failed to load tasks", error);
+          setTotalResults(0);
+          setTotalPages(1);
     }
   };
 
@@ -66,13 +156,23 @@ export default function AllTasks() {
     }
   };
 
+    const deleteTask = async () =>{
+      try {
+        const response = await http.delete(TASK_URLS.DELETE_TASK(taskId), {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } 
+      });
+      } catch (error) {
+        
+      }
+    }
+
   useEffect(() => {
     getAllTasks();
   }, [currentPage, pageSize, searchTerm]);
 
   useEffect(() => {
     getUsersAndProjects();
-  }, []);
+  }, [search, pageNumber, pageSize]);
 
   const handleSearch = (q: string) => {
     setSearchTerm(q);
@@ -84,6 +184,21 @@ export default function AllTasks() {
 
   const getProjectTitle = (id: number | undefined) =>
     projects.find((p) => p.id === id)?.title ?? "-";
+
+    const getStatusClass = (status: string) => {
+      switch (status?.toLowerCase()) {
+        case "todo":
+          return styles.statusTodo;
+        case "inprogress":
+          return styles.statusProgress;
+        case "done":
+          return styles.statusDone;
+        default:
+          return styles.statusDefault;
+      }
+    };
+
+
 
   return (
     <>
@@ -194,7 +309,109 @@ export default function AllTasks() {
             />
           </div>
         </div>
+        <PaginationBar
+          totalResults={totalResults}
+          pageNumber={pageNumber}
+          pageSize={pageSize}
+          onPageChange={(p) => setPageNumber(p)}
+          onPageSizeChange={(size) => {
+            setPageSize(size);
+            setPageNumber(1);
+          }}
+        />
       </div>
+
+
+        <Modal show={show} onHide={handleClose} centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Delete Task</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <DeleteConfirmation name={taskName} deleteItem="Task" />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={deleteTask}>
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={showStatusModal} onHide={closeStatusModal} centered size="sm">
+            <Modal.Header closeButton>
+              <Modal.Title>Change Task Status</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              <p className="mb-2 fw-bold">{selectedTask?.title}</p>
+
+              <select
+                className="form-select"
+                value={newStatus}
+                onChange={(e) => setNewStatus(e.target.value)}
+              >
+                <option value="ToDo">To Do</option>
+                <option value="InProgress">In Progress</option>
+                <option value="Done">Done</option>
+              </select>
+            </Modal.Body>
+
+            <Modal.Footer>
+              <Button variant="secondary" onClick={closeStatusModal}>
+                Cancel
+              </Button>
+              <Button variant="warning" onClick={changeTaskStatus}>
+                Save
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
+          <Modal show={showViewModal} onHide={() => setShowViewModal(false)} centered>
+            <Modal.Header closeButton>
+              <Modal.Title>Task Details</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              {loadingView ? (
+                <p>Loading...</p>
+              ) : viewTask ? (
+                <>
+                  <p><b>Title:</b> {viewTask.title}</p>
+                  <p><b>Description:</b> {viewTask.description}</p>
+
+                  <p>
+                    <b>Status:</b>{" "}
+                    <span className={`${styles.statusBadge} ${getStatusClass(viewTask.status)}`}>
+                      {viewTask.status}
+                    </span>
+                  </p>
+
+                  <p>
+                    <b>Assigned To:</b> {viewTask.employee?.userName || "-"}
+                  </p>
+
+                  <p>
+                    <b>Project:</b> {viewTask.project?.title || "-"}
+                  </p>
+
+                  <p>
+                    <b>Created:</b> {formatDate(viewTask.creationDate)}
+                  </p>
+                </>
+              ) : (
+                <p>No data</p>
+              )}
+            </Modal.Body>
+
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowViewModal(false)}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
     </>
   );
 }
