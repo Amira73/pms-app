@@ -1,10 +1,15 @@
-
 import { useEffect, useState } from "react";
 import { TASK_URLS, USERS_URL, PROJECT_URLS } from "../../../../../Services/Api/ApisUrls";
 import { http } from "../../../../../Services/Api/httpInstance";
 import { useNavigate } from "react-router-dom";
+
+// استيراد المكونات المشتركة بنفس الطريقة
+import SearchBox from "../../../ProjectsModule/Components/AllProjects/SearchBox";
+import PaginationBar from "../../../ProjectsModule/Components/AllProjects/PaginationBar";
 import NoData from "../../../../../SharedComponents/Components/NoData/NoData";
-import styles from "./AllTasks.module.css";
+
+// استيراد الـ CSS الخاص باليوزرز لتوحيد التصميم
+import styles from "../../../UsersModule/Components/UsersForm.module.css"; 
 
 type Task = {
   id: number;
@@ -19,19 +24,30 @@ type Task = {
 type User = { id: number; userName: string };
 type Project = { id: number; title: string };
 
-
 export default function AllTasks() {
   const navigate = useNavigate();
   const [tasksList, setTasksList] = useState<Task[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
+  
+  // States للباجينيشن والبحث مثل اليوزرز
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalResults, setTotalResults] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showMenu, setShowMenu] = useState<number | null>(null);
 
   const getAllTasks = async () => {
     try {
       const response = await http.get(TASK_URLS.GET_TASKS_BY_MANAGER, {
-        params: { pageNumber: 1, pageSize: 10 },
+        params: { 
+          pageNumber: currentPage, 
+          pageSize: pageSize,
+          title: searchTerm // نمرر كلمة البحث للـ API
+        },
       });
       setTasksList(response.data.data ?? []);
+      setTotalResults(response.data.totalNumberOfRecords ?? 0);
     } catch (error) {
       console.error("Failed to load tasks", error);
     }
@@ -52,15 +68,17 @@ export default function AllTasks() {
 
   useEffect(() => {
     getAllTasks();
+  }, [currentPage, pageSize, searchTerm]);
+
+  useEffect(() => {
     getUsersAndProjects();
   }, []);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-GB");
+  const handleSearch = (q: string) => {
+    setSearchTerm(q);
+    setCurrentPage(1);
   };
 
-  // Helper to map IDs to names
   const getUserName = (id: number | undefined) =>
     users.find((u) => u.id === id)?.userName ?? "-";
 
@@ -69,86 +87,91 @@ export default function AllTasks() {
 
   return (
     <>
-
-      <div className="container-fluid">
-        <div className="d-flex justify-content-between align-items-center bg-white border border-1 p-3">
-          <h1>Tasks</h1>
-          <button
-            className="p-2 px-5 bg-warning rounded-5 border-0"
-            onClick={() => navigate("/dashboard/tasks/add")}
-          >
-            + Add New Task
-          </button>
-        </div>
-      </div>
-
-      <div className={`container-fluid ${styles.backgroundPage}`}>
-        {/* Search & Filter */}
-        <div className="container d-flex justify-content-start align-items-center bg-white rounded-3 p-3 mb-3">
-          <div className={`${styles.searchWrapper} me-3`}>
-            <i className={`fa-solid fa-magnifying-glass ${styles.searchIcon}`}></i>
-            <input
-              type="text"
-              placeholder="Search tasks"
-              className={`form-control rounded-4 ms-2 ${styles.searchInput}`}
-            />
+      {/* الهيدر بنفس تصميم اليوزرز */}
+      <header className="bg-white overflow-hidden rounded rounded-4 my-2">
+        <div className="container-fluid px-0">
+          <div className="d-flex justify-content-between align-items-center p-3">
+            <h3 className="text-black m-0 ms-3">Tasks</h3>
+            <button
+              className="btn btn-warning rounded-5 px-4 me-3"
+              onClick={() => navigate("/dashboard/tasks/add")}
+            >
+              + Add New Task
+            </button>
           </div>
-          <button className="rounded-5 bg-white px-4">Filter</button>
         </div>
+      </header>
 
-        {/* Tasks Table */}
-        <div className="container bg-white rounded-3 p-3">
-          <div className="table-responsive">
-            <table className="table table-hover align-middle">
-              <thead className={`${styles.tableHeader}`}>
+      <div className={styles.container}>
+        <div style={{ marginBottom: "20px" }}>
+          {/* قسم البحث والفلتر الموحد */}
+          <div className={styles.searchSection}>
+            <div
+              className={styles.searchContainer}
+              style={{ background: "none", boxShadow: "none" }}
+            >
+              <SearchBox onSearch={handleSearch} debounceMs={400} />
+              <button className={styles.filterButton}>
+                <i className="fa-solid fa-filter"></i> Filter
+              </button>
+            </div>
+          </div>
+
+          {/* الجدول بنفس كلاسات اليوزرز */}
+          <div className={styles.tableContainer}>
+            <table className={styles.table}>
+              <thead className={styles.tableHeader}>
                 <tr>
-                  <th scope="col">Title</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">User</th>
-                  <th scope="col">Project</th>
-                  <th scope="col">Date Created</th>
-                  <th scope="col">Actions</th>
+                  <th className={styles.tableHeaderCell}>Title <i className="fa-solid fa-sort ms-1"></i></th>
+                  <th className={styles.tableHeaderCell}>Status <i className="fa-solid fa-sort ms-1"></i></th>
+                  <th className={styles.tableHeaderCell}>User <i className="fa-solid fa-sort ms-1"></i></th>
+                  <th className={styles.tableHeaderCell}>Project <i className="fa-solid fa-sort ms-1"></i></th>
+                  <th className={styles.tableHeaderCell}>Date Created <i className="fa-solid fa-sort ms-1"></i></th>
+                  <th className={styles.tableHeaderCell}></th>
                 </tr>
               </thead>
               <tbody>
                 {tasksList.length > 0 ? (
                   tasksList.map((task) => (
-                    <tr key={task.id}>
-                      <td>{task.title}</td>
-                      <td>{task.status}</td>
-                      <td>{getUserName(task.employee?.id)}</td>
-                      <td>{getProjectTitle(task.project?.id)}</td>
-                      <td>{formatDate(task.creationDate)}</td>
-                      <td>
-                        <div className="dropdown">
-                          <i
-                            className="fa-solid fa-ellipsis-vertical cursor-pointer"
-                            data-bs-toggle="dropdown"
-                          />
-                          <ul className="dropdown-menu">
-                            <li>
-                              <button className="dropdown-item">
-                                <i className="fa-solid fa-eye"></i> View
-                              </button>
-                            </li>
-                            <li>
-                              <button className="dropdown-item">
-                                <i className="fa-solid fa-edit"></i> Edit
-                              </button>
-                            </li>
-                            <li>
-                              <button className="dropdown-item text-danger">
-                                <i className="fa-solid fa-trash"></i> Delete
-                              </button>
-                            </li>
-                          </ul>
-                        </div>
+                    <tr key={task.id} className={styles.tableRow}>
+                      <td className={styles.tableCell}>{task.title}</td>
+                      <td className={styles.tableCell}>
+                        {/* استخدام الـ Badge حسب الحالة */}
+                        <span className={`${styles.statusBadge} ${task.status === 'Done' ? styles.statusActive : styles.statusNotActive}`}>
+                          {task.status}
+                        </span>
+                      </td>
+                      <td className={styles.tableCell}>{getUserName(task.employee?.id)}</td>
+                      <td className={styles.tableCell}>{getProjectTitle(task.project?.id)}</td>
+                      <td className={styles.tableCell}>
+                        {new Date(task.creationDate).toLocaleDateString("en-GB")}
+                      </td>
+                      <td className={styles.tableCell} style={{ position: "relative" }}>
+                        <button
+                          onClick={() => setShowMenu(showMenu === task.id ? null : task.id)}
+                          className={styles.actionButton}
+                        >
+                          ⋮
+                        </button>
+                        {showMenu === task.id && (
+                          <div className={styles.actionMenu}>
+                            <button className={styles.menuItem} onClick={() => navigate(`/dashboard/tasks/view/${task.id}`)}>
+                              👁️ View
+                            </button>
+                            <button className={styles.menuItem}>
+                              📝 Edit
+                            </button>
+                            <button className={`${styles.menuItem} text-danger`}>
+                              🗑️ Delete
+                            </button>
+                          </div>
+                        )}
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={6}>
+                    <td colSpan={6} className="text-center py-5">
                       <NoData />
                     </td>
                   </tr>
@@ -156,9 +179,22 @@ export default function AllTasks() {
               </tbody>
             </table>
           </div>
+
+          {/* الباجينيشن بار الموحد */}
+          <div className="mt-4">
+            <PaginationBar
+              totalResults={totalResults}
+              pageNumber={currentPage}
+              pageSize={pageSize}
+              onPageChange={(p) => setCurrentPage(p)}
+              onPageSizeChange={(size) => {
+                setPageSize(size);
+                setCurrentPage(1);
+              }}
+            />
+          </div>
         </div>
       </div>
     </>
   );
- 
 }
