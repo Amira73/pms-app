@@ -208,7 +208,7 @@ Done: ${c.done}`;
             right: 18,
             width: 560,
             maxWidth: "calc(100vw - 36px)",
-            height: 680,
+            height: 530,
             zIndex: 9999,
             overflow: "hidden",
             background: theme.panel,
@@ -240,7 +240,7 @@ Done: ${c.done}`;
           </div>
 
           {/* Body */}
-          <div className="p-3" style={{ height: 460, overflowY: "auto", background: theme.body }}>
+          <div className="p-3" style={{ height: 300, overflowY: "auto", background: theme.body }}>
             {messages.map((m, idx) => (
               <div
                 key={idx}
