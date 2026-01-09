@@ -8,6 +8,8 @@ import styles from "./AllTasks.module.css";
 import { Button, Modal } from "react-bootstrap";
 import DeleteConfirmation from "../../../../../SharedComponents/Components/DeleteConfirmation/DeleteConfirmation";
 import { toast } from "react-toastify";
+import PaginationBar from "../../../ProjectsModule/Components/AllProjects/PaginationBar";
+import SearchBox from "../../../ProjectsModule/Components/AllProjects/SearchBox";
 
 type Task = {
   id: number;
@@ -44,6 +46,19 @@ export default function AllTasks() {
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [newStatus, setNewStatus] = useState("");
+
+  const [totalResults, setTotalResults] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
+  const [search, setSearch] = useState("");
+
+  const handleSearch = (q: string) => {
+      if (q === search) return;       
+      setSearch(q);
+      setPageNumber(1);
+    };
 
   const openStatusModal = (task: Task) => {
     setSelectedTask(task);
@@ -107,11 +122,15 @@ export default function AllTasks() {
   const getAllTasks = async () => {
     try {
       const response = await http.get(TASK_URLS.GET_TASKS_BY_MANAGER, {
-        params: { pageNumber: 1, pageSize: 10 },
+        params: { pageNumber: 1, pageSize: 10 , title: search,},
       });
       setTasksList(response.data.data ?? []);
+      setTotalResults(response?.data.totalNumberOfRecords ?? 0);
+      setTotalPages(response?.data.totalPages ?? 1);
     } catch (error) {
       console.error("Failed to load tasks", error);
+          setTotalResults(0);
+          setTotalPages(1);
     }
   };
 
@@ -141,7 +160,7 @@ export default function AllTasks() {
   useEffect(() => {
     getAllTasks();
     getUsersAndProjects();
-  }, []);
+  }, [search, pageNumber, pageSize]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -187,7 +206,7 @@ export default function AllTasks() {
 
       <div className={`container-fluid ${styles.backgroundPage}`}>
         {/* Search & Filter */}
-        <div className="container d-flex justify-content-start align-items-center bg-white rounded-3 p-3 mb-3">
+        {/* <div className="container d-flex justify-content-start align-items-center bg-white rounded-3 p-3 mb-3">
           <div className={`${styles.searchWrapper} me-3`}>
             <i className={`fa-solid fa-magnifying-glass ${styles.searchIcon}`}></i>
             <input
@@ -197,7 +216,9 @@ export default function AllTasks() {
             />
           </div>
           <button className="rounded-5 bg-white px-4">Filter</button>
-        </div>
+        </div> */}
+
+        <SearchBox onSearch={handleSearch} debounceMs={400} />
 
         {/* Tasks Table */}
         <div className="container bg-white rounded-3 p-3">
@@ -280,6 +301,16 @@ export default function AllTasks() {
             </table>
           </div>
         </div>
+        <PaginationBar
+          totalResults={totalResults}
+          pageNumber={pageNumber}
+          pageSize={pageSize}
+          onPageChange={(p) => setPageNumber(p)}
+          onPageSizeChange={(size) => {
+            setPageSize(size);
+            setPageNumber(1);
+          }}
+        />
       </div>
 
 
