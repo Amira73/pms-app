@@ -101,3 +101,33 @@
   height: 18px;
   background: #eef2f7;
 }
+
+/* الحاوية التي تجمع السهم والسيلكت */
+.customSelect {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.selectField {
+  appearance: none;       /* إخفاء سهم المتصفح الافتراضي في كروم وفيرفوكس */
+  -webkit-appearance: none; 
+  -moz-appearance: none;
+  
+  background-color: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 4px 30px 4px 12px; /* مساحة واسعة من اليمين (30px) للأيقونة */
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* وضع الأيقونة داخل حدود السيلكت بصرياً */
+.customSelect i {
+  position: absolute;
+  right: 10px;           /* تحديد مكان السهم من جهة اليمين */
+  pointer-events: none;  /* تجعل الضغطة تمر من خلال الأيقونة للسيلكت */
+  font-size: 10px;       /* حجم السهم الصغير */
+  color: #000;
+}
+
