@@ -9,12 +9,15 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import App from "./App.tsx";
 import { ToastContainer } from "react-toastify";
 import AuthContextProvider from "./Context/AuthContext";
+import ModeProvider from "./Context/ModeContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthContextProvider>
-      <App />
-    </AuthContextProvider>
+    <ModeProvider>
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
+    </ModeProvider>
     <ToastContainer />
   </StrictMode>
 );

@@ -1,6 +1,8 @@
 
 // import type { Dispatch, SetStateAction } from "react";
 
+import type { Dispatch, SetStateAction } from "react";
+
 
 export interface AuthContextType {
   loginData: DecodedTokenPayload | null;
@@ -54,3 +56,7 @@ export type CurrentUserType = {
   };
 };
 
+export interface ModeContextType {
+  darkMode: boolean;
+  setDarkMode: Dispatch<SetStateAction<boolean>>;
+}

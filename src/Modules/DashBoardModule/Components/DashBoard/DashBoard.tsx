@@ -3,6 +3,7 @@ import DashBoardCharts from "./DashBoardCharts";
 import SimpleChatBot from "./SimpleChatBot";
 
 export default function DashBoard() {
+  
   return (
     <>
        <DashHeader />
