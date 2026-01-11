@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { http } from "../../../../../Services/Api/httpInstance";
 import { TASK_URLS, USERS_URL, PROJECT_URLS } from "../../../../../Services/Api/ApisUrls";
 import styles from "./TaskForm.module.css";
+import styles2 from '../../../ProjectsModule/Components/ProjectForm/ProjectForm.module.css'
+
 
 type User = { id: number; userName: string };
 type Project = { id: number; title: string };
@@ -113,11 +115,24 @@ export default function TaskForm() {
   };
 
   return (
+
+
+    
     <div className="container-fluid">
-      <div className="bg-white border border-1 p-3 mb-4">
+         <div className={styles2["page-header"]}>
+      <button
+        className={styles2["back-btn"]}
+        onClick={() => navigate('/dashboard/tasks')}
+      >
+        ‹ View All Pages
+      </button>
+
+      <h4 className="primary-color2 small">{isEdit ? "Edit Task" : "Add A New Task"}</h4>
+    </div>
+      {/* <div className="bg-white border border-1 p-3 mb-4">
         <h5>View All Tasks</h5>
         <h1>{isEdit ? "Edit Task" : "Add a New Task"}</h1>
-      </div>
+      </div> */}
 
       <div className={`container w-75 ${styles.backgroundPage}`}>
         <div className="bg-white p-4 rounded shadow-sm">

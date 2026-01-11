@@ -215,7 +215,7 @@ export default function DashBoardCharts() {
                       <div
                         className="rounded-4 p-3"
                           style={{
-                          backgroundColor: darkMode ? "#4999c7ff" : "#fff",
+                          backgroundColor: darkMode ? "#4999c7ff" : "#583030ff",
                         }}
                       >
                         <div
