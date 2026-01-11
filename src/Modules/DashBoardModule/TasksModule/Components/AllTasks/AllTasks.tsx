@@ -14,6 +14,7 @@ import DeleteConfirmation from "../../../../../SharedComponents/Components/Delet
 import { toast } from "react-toastify";
 import PaginationBar from "../../../ProjectsModule/Components/AllProjects/PaginationBar";
 import SearchBox from "../../../ProjectsModule/Components/AllProjects/SearchBox";
+import Header from "../../../../../SharedComponents/Components/Header/Header";
 
 
 type Task = {
@@ -194,7 +195,13 @@ export default function AllTasks() {
 
   return (
     <>
-      <div className="container-fluid">
+      <Header btn_text="Add New Task" title="Tasks" 
+      onBtnClick={() =>
+     navigate("/dashboard/tasks/add", {
+      state: { mode: "add" },
+    })
+  } />
+      {/* <div className="container-fluid">
         <div className="d-flex justify-content-between align-items-center bg-white border border-1 p-3">
           <h1>Tasks</h1>
           <button
@@ -204,7 +211,7 @@ export default function AllTasks() {
             + Add New Task
           </button>
         </div>
-      </div>
+      </div> */}
 
       <div className={`container-fluid ${styles.backgroundPage}`}>
         {/* Search & Filter */}
@@ -223,11 +230,12 @@ export default function AllTasks() {
         <SearchBox onSearch={handleSearch} debounceMs={400} />
 
         {/* Tasks Table */}
-        <div className="container bg-white rounded-3 p-3">
-          <div className="table-responsive">
-            <table className="table table-hover align-middle">
-              <thead className={`${styles.tableHeader}`}>
-                <tr>
+        <div className="table-responsive mx-4 overflow-hidden vh-100">
+         
+        <table className="table table-striped">
+          <thead className="py-3">
+            <tr className="table-header-row primary-color-bg2 py-3">
+           
                   <th scope="col">Title</th>
                   <th scope="col">Status</th>
                   <th scope="col">User</th>
@@ -311,7 +319,7 @@ export default function AllTasks() {
               </tbody>
             </table>
           </div>
-        </div>
+     
         <PaginationBar
           totalResults={totalResults}
           pageNumber={pageNumber}
@@ -322,7 +330,8 @@ export default function AllTasks() {
             setPageNumber(1);
           }}
         />
-      </div>
+    </div>
+     
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
