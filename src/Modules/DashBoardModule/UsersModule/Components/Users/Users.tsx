@@ -86,7 +86,7 @@ export default function Users() {
       <header className="bg-white overflow-hidden rounded rounded-4 my-2">
         <div className="container-fluid px-0">
           <div className="d-flex justify-content-between p-3 text-white">
-            <h3 className="text-black   m-3">Users</h3>
+            <h3 className="text-black  m-3">Users</h3>
           </div>
         </div>
       </header>
