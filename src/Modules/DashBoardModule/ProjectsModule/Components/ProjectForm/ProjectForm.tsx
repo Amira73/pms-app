@@ -5,12 +5,14 @@ import { http } from "../../../../../Services/Api/httpInstance";
 import { USERS_URL } from "../../../../../Services/Api/ApisUrls";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
+import { useMode } from "../../../../../Context/ModeContext";
 
 export default function ProjectForm() {
   const location = useLocation();
   const { mode, projectIdd } = (location.state as any) || { mode: "add" };
   
   const [isLoadingProject, setIsLoadingProject] = useState(false);
+    const { darkMode } = useMode();
 
   const isEdit = mode === "edit";
   let navigate=useNavigate()
@@ -101,83 +103,139 @@ const onSubmit = async (data: FormValues) => {
 //   reset(); 
 // };
   return (
-    <>
-    <div className={styles["page-header"]}>
-      <button
-        className={styles["back-btn"]}
-        onClick={() => navigate('/dashboard/projects-manage')}
-      >
-        ‹ View All Pages
-      </button>
+  <>
+<div
+  className={`${styles["page-header"]} ${
+    darkMode ? styles.pageHeaderDark : styles.pageHeaderLight
+  }`}
+>
+    <button
+      className={`${styles["back-btn"]} ${darkMode ? styles.backBtnDark : ""}`}
+      onClick={() => navigate("/dashboard/projects-manage")}
+    >
+      ‹ View All Pages
+    </button>
 
-      <h4 className="primary-color2 small">{isEdit ? "Edit Project" : "Add A New Project"}</h4>
-    </div>
+    <h4 className={`${darkMode ? "text-light" : "primary-color2"} small`}>
+      {isEdit ? "Edit Project" : "Add A New Project"}
+    </h4>
+  </div>
 
-
-
-
-
-    <div className="row justify-content-center m-5">
+  <div className="row justify-content-center m-5">
     <div className="col-12 col-md-4 col-lg-6">
-      <div className="card shadow-sm border-0 rounded-4">
+      <div
+        className="card shadow-sm border-0 rounded-4"
+         style={{
+    backgroundColor: darkMode ? "#0B1220" : "#ffffff",
+    border: darkMode ? "1px solid #1E293B" : "1px solid #EEF2F7",
+    color: darkMode ? "#E5E7EB" : "#111827",
+  }}
+      >
         <div className="card-body p-4 p-md-5">
           <form onSubmit={handleSubmit(onSubmit)}>
-             <div className="mb-4">
-                <label className="form-label text-muted">Title</label>
-                <input
-                  type="text"
-                  className={`form-control rounded-4 py-3 ${errors.title ? "is-invalid" : ""}`}
-                  placeholder="Name"
-                  {...register("title", {
-                    required: "Title is required",
-                    minLength: { value: 3, message: "Min 3 characters" },
-                  })}
-                />
-                {errors.title && (
-                  <div className="invalid-feedback">{errors.title.message}</div>
-                )}
-              </div>
+            <div className="mb-4">
+              <label className={`form-label ${darkMode ? "text-light" : "text-muted"}`}>
+                Title
+              </label>
 
-           <div className="mb-4">
-                <label className="form-label text-muted">Description</label>
-                <textarea
-                  className={`form-control rounded-4 py-3 ${errors.description ? "is-invalid" : ""}`}
-                  rows={4}
-                  placeholder="Description"
-                  {...register("description", {
-                    required: "Description is required",
-                    minLength: { value: 10, message: "Min 10 characters" },
-                  })}
-                />
-                {errors.description && (
-                  <div className="invalid-feedback">{errors.description.message}</div>
-                )}
-              </div>
+              <input
+                type="text"
+                className={`form-control rounded-4 py-3 ${
+                  errors.title ? "is-invalid" : ""
+                } ${darkMode ? "bg-transparent text-light" : ""}`}
+                style={
+                  darkMode
+                    ? {
+                        borderColor: "#334155",
+                        backgroundColor: "#0F172A", // input dark واضح
+                        color: "#E5E7EB",
+                      }
+                    : undefined
+                }
+                placeholder="Name"
+                {...register("title", {
+                  required: "Title is required",
+                  minLength: { value: 3, message: "Min 3 characters" },
+                })}
+              />
 
-            <div className="d-flex justify-content-between align-items-center pt-4 border-top">
-             <button
-                    type="button"
-                    className="btn btn-outline-secondary rounded-pill px-4"
-                    onClick={() => navigate(-1)}
-                    disabled={isSubmitting}
-                  >
-                    Cancel
-                  </button>
+              {errors.title && <div className="invalid-feedback">{errors.title.message}</div>}
+            </div>
+
+            <div className="mb-4">
+              <label className={`form-label ${darkMode ? "text-light" : "text-muted"}`}>
+                Description
+              </label>
+
+              <textarea
+                className={`form-control rounded-4 py-3 ${
+                  errors.description ? "is-invalid" : ""
+                } ${darkMode ? "bg-transparent text-light" : ""}`}
+                style={
+                  darkMode
+                    ? {
+                        borderColor: "#334155",
+                        backgroundColor: "#0F172A",
+                        color: "#E5E7EB",
+                      }
+                    : undefined
+                }
+                rows={4}
+                placeholder="Description"
+                {...register("description", {
+                  required: "Description is required",
+                  minLength: { value: 10, message: "Min 10 characters" },
+                })}
+              />
+
+              {errors.description && (
+                <div className="invalid-feedback">{errors.description.message}</div>
+              )}
+            </div>
+
+            <div
+              className={`d-flex justify-content-between align-items-center pt-4 ${
+                darkMode ? "border-top border-secondary" : "border-top"
+              }`}
+              style={darkMode ? { borderColor: "#1E293B" } : undefined}
+            >
+              <button
+                type="button"
+                className={`btn rounded-pill px-4 ${
+                  darkMode ? "btn-outline-light" : "btn-outline-secondary"
+                }`}
+                onClick={() => navigate(-1)}
+                disabled={isSubmitting}
+                style={
+                  darkMode
+                    ? {
+                        borderColor: "#334155",
+                        color: "#E5E7EB",
+                      }
+                    : undefined
+                }
+              >
+                Cancel
+              </button>
 
               <button
-                  type="submit"
-                  className="btn rounded-pill px-5 text-white border-0"
-                  style={{ backgroundColor: "#f59e0b" }}
-                  disabled={isSubmitting}
-                >
-                {isSubmitting ? (isEdit ? "Updating..." : "Saving...") : (isEdit ? "Update" : "Save")}
-                </button>
+                type="submit"
+                className="btn rounded-pill px-5 text-white border-0"
+                style={{
+                  backgroundColor: darkMode ? "#F59E0B" : "#F59E0B",
+                  boxShadow: darkMode ? "0 8px 22px rgba(245,158,11,0.18)" : undefined,
+                }}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (isEdit ? "Updating..." : "Saving...") : isEdit ? "Update" : "Save"}
+              </button>
             </div>
           </form>
         </div>
       </div>
-   </div>
-   </div>
-    </>
+    </div>
+  </div>
+</>
+
   )
 }

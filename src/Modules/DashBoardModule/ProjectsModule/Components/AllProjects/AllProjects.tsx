@@ -11,6 +11,7 @@ import { USERS_URL } from "../../../../../Services/Api/ApisUrls";
 import type { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
+import { useMode } from "../../../../../Context/ModeContext";
 
 type Task = {
   id: number;
@@ -52,6 +53,7 @@ const [totalPages, setTotalPages] = useState(1);
 
 
   const [projects, setProectsList] = useState<Project[]>([]);
+    const { darkMode } = useMode();
 
 
 const load = async () => {
@@ -300,7 +302,9 @@ const handleSearch = (q: string) => {
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
-                        <i className="fa-solid fa-ellipsis"></i>
+                    <i
+  className={`fa-solid fa-ellipsis ${darkMode ? "text-white" : "text-dark"}`}
+></i>
                       </button>
 
                       <ul className="dropdown-menu dropdown-menu-end">
