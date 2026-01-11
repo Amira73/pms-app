@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from './AllProject.module.css'
-
+import styles from "./AllProject.module.css";
 
 type SearchBoxProps = {
   /** Called when user triggers search (button click / Enter / debounce if enabled) */
@@ -44,10 +43,9 @@ export default function SearchBox({
   }, [query, debounceMs, onSearch]);
 
   return (
- 
-    <div className={`  ${styles.searchContainer}`}>
+    <div className={`bg-white  ${styles.searchContainer}`}>
       <div className={styles.searchBox}>
-<i className={`fa-solid fa-magnifying-glass ${styles.searchIcon}`}></i>
+        <i className={`fa-solid fa-magnifying-glass ${styles.searchIcon}`}></i>
 
         <input
           type="text"
@@ -59,8 +57,6 @@ export default function SearchBox({
           }
           onKeyDown={onKeyDown}
         />
-
-     
       </div>
     </div>
   );

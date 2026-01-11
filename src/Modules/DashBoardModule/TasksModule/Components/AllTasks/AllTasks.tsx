@@ -7,12 +7,14 @@ import {
 import { http } from "../../../../../Services/Api/httpInstance";
 import { useNavigate } from "react-router-dom";
 import NoData from "../../../../../SharedComponents/Components/NoData/NoData";
+
 import styles from "./AllTasks.module.css";
 import { Button, Modal } from "react-bootstrap";
 import DeleteConfirmation from "../../../../../SharedComponents/Components/DeleteConfirmation/DeleteConfirmation";
 import { toast } from "react-toastify";
 import PaginationBar from "../../../ProjectsModule/Components/AllProjects/PaginationBar";
 import SearchBox from "../../../ProjectsModule/Components/AllProjects/SearchBox";
+
 
 type Task = {
   id: number;
@@ -32,6 +34,10 @@ export default function AllTasks() {
   const [tasksList, setTasksList] = useState<Task[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showMenu, setShowMenu] = useState<number | null>(null);
+
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -159,10 +165,12 @@ export default function AllTasks() {
     getUsersAndProjects();
   }, [search, pageNumber, pageSize]);
 
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-GB");
   };
+
 
   // Helper to map IDs to names
   const getUserName = (id: number | undefined) =>

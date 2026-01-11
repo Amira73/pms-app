@@ -6,6 +6,7 @@ import styles from "../UsersForm.module.css";
 import SearchBox from "../../../ProjectsModule/Components/AllProjects/SearchBox";
 import PaginationBar from "../../../ProjectsModule/Components/AllProjects/PaginationBar";
 import NoData from "../../../../../SharedComponents/Components/NoData/NoData";
+import { useMode } from "../../../../../Context/ModeContext";
 
 interface User {
   id: number;
@@ -171,9 +172,7 @@ export default function Users() {
                         {showMenu === user.id && (
                           <div className={styles.actionMenu}>
                             <button className={styles.menuItem}> View</button>
-                            <button className={styles.menuItem}>
-                               Block
-                            </button>
+                            <button className={styles.menuItem}>Block</button>
                           </div>
                         )}
                       </td>
