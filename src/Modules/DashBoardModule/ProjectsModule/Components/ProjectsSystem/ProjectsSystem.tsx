@@ -15,6 +15,7 @@ import PaginationBar from "../AllProjects/PaginationBar";
 import { getSystemProjectsFun } from "./getSystemProjects";
 import styles from "../../../UsersModule/Components/UsersForm.module.css";
 import { Button, Modal } from "react-bootstrap";
+import { useMode } from "../../../../../Context/ModeContext";
 export default function ProjectsSystem() {
   type Manager = {
     id: number;
@@ -63,6 +64,8 @@ export default function ProjectsSystem() {
   };
 
   const [projects, setProectsList] = useState<Project[]>([]);
+      const { darkMode } = useMode();
+  
 
   let navigate = useNavigate();
 
@@ -274,12 +277,15 @@ export default function ProjectsSystem() {
                         })}
                       </td>
                       <td className={styles.tableCell} style={{ position: "relative" }}>
-                        <button 
-                          onClick={() => setShowMenu(showMenu === project.id ? null : project.id)}
-                          className={styles.actionButton}
-                        >
-                          ⋮
-                        </button>
+              <button
+  onClick={() => setShowMenu(showMenu === project.id ? null : project.id)}
+  className={`${styles.actionButton} ${darkMode ? styles.actionButtonDark : ""}`}
+  type="button"
+  aria-label="Actions"
+>
+  <i className="fa-solid fa-ellipsis-vertical" />
+</button>
+
                         {showMenu === project.id && (
                           <div className={styles.actionMenu}>
                             <button className={styles.menuItem}   
