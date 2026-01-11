@@ -222,23 +222,13 @@ export default function ProjectsSystem() {
           </div>
         </div>
       </header>
-            <div className={styles.container}>
-
-        <div style={{ marginBottom: "20px" }}>
-          <div className={styles.searchSection}>
-            <div className={styles.searchContainer} style={{ background: 'none', boxShadow: 'none' }}>
               <SearchBox onSearch={handleSearch} debounceMs={400} />
-              
-              <button className={styles.filterButton}>
-                <i className="fa-solid fa-filter"></i> Filter
-              </button>
-            </div>
-          </div>
-
-          <div className={styles.tableContainer}>
-            <table className={styles.table}>
-              <thead className={styles.tableHeader}>
-                <tr>
+            
+                  <div className="table-responsive mx-4">
+                    <table className="table table-striped">
+                      <thead className="py-3">
+                        <tr className="table-header-row primary-color-bg2 py-3">
+                     
                   <th className={styles.tableHeaderCell}>
                     Title <span className={styles.sortIcon}><i className="fa-solid fa-sort"></i></span>
                   </th>
@@ -323,8 +313,8 @@ export default function ProjectsSystem() {
               }}
             />
           </div>
-        </div>
-      </div>
+       
+     
 
       <PaginationBar
         totalResults={totalResults}

@@ -132,3 +132,41 @@
   font-size: 10px; /* حجم السهم الصغير */
   color: #000;
 }
+.barDark {
+  background: #0f172a;
+  border: 1px solid #1f2937;
+  color: #e2e8f0;
+}
+
+/* Select */
+.customSelectDark {
+  border: 1px solid #1f2937;
+  background: #111827;
+  border-radius: 10px;
+}
+
+.selectFieldDark {
+  background: transparent;
+  color: #e2e8f0;
+}
+
+.selectFieldDark option {
+  background: #000;
+  color: #e2e8f0;
+}
+
+/* Buttons */
+.iconBtnDark {
+  border: 1px solid #000;
+  background: #111827;
+}
+
+.iconBtnDark:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Icons */
+.iconWhite {
+  color: #fff !important;
+}
