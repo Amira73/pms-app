@@ -332,3 +332,52 @@ html, body {
 .app-dark .border-top {
   border-top: 1px solid #1e293b !important;
 }
+
+
+
+
+.app-light {
+  background: #f6f7fb;
+  min-height: 100vh;
+}
+
+.app-dark {
+  background: #0b1220;
+  min-height: 100vh;
+  color: #e5e7eb;
+}
+
+/* Card surface */
+.app-dark .card-surface {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+}
+
+/* Inputs / Selects */
+.app-dark .form-control,
+.app-dark .form-select {
+  background: #0b1220;
+  border: 1px solid #1e293b;
+  color: #e5e7eb;
+}
+
+.app-dark .form-control::placeholder,
+.app-dark textarea::placeholder {
+  color: #94a3b8;
+}
+
+.app-dark .form-control:focus,
+.app-dark .form-select:focus {
+  border-color: #334155;
+  box-shadow: 0 0 0 0.2rem rgba(148, 163, 184, 0.15);
+}
+
+/* Muted text + border */
+.app-dark .text-muted {
+  color: #94a3b8 !important;
+}
+
+.app-dark .border-top {
+  border-top: 1px solid #1e293b !important;
+}
+
