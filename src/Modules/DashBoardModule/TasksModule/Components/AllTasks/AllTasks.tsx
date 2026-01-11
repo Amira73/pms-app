@@ -10,6 +10,9 @@ import NoData from "../../../../../SharedComponents/Components/NoData/NoData";
 
 // استيراد الـ CSS الخاص باليوزرز لتوحيد التصميم
 import styles from "../../../UsersModule/Components/UsersForm.module.css"; 
+import { toast } from "react-toastify";
+import { Button, Modal } from "react-bootstrap";
+import DeleteConfirmation from "../../../../../SharedComponents/Components/DeleteConfirmation/DeleteConfirmation";
 
 type Task = {
   id: number;
@@ -35,8 +38,6 @@ export default function AllTasks() {
   
   // States للباجينيشن والبحث مثل اليوزرز
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [totalResults, setTotalResults] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [showMenu, setShowMenu] = useState<number | null>(null);
 
@@ -174,10 +175,10 @@ export default function AllTasks() {
     getUsersAndProjects();
   }, [search, pageNumber, pageSize]);
 
-  const handleSearch = (q: string) => {
-    setSearchTerm(q);
-    setCurrentPage(1);
-  };
+  // const handleSearch = (q: string) => {
+  //   setSearchTerm(q);
+  //   setCurrentPage(1);
+  // };
 
   const getUserName = (id: number | undefined) =>
     users.find((u) => u.id === id)?.userName ?? "-";

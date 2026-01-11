@@ -1,11 +1,14 @@
 .searchContainer {
-margin:0px 40px;
-   /* padding: 24px 16px; */
+  margin: 0px 40px;
+  /* padding: 24px 16px; */
   background: #f7f7f7;
+  background: #fff;
+  padding-top: 20px;
+  border-radius: 15px;
 }
 
 .searchBox {
-    width: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 8px;
