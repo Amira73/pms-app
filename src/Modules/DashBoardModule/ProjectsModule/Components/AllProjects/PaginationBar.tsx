@@ -1,5 +1,6 @@
 
 import styles from "./PaginationBar.module.css";
+import { useMode } from "../../../../../Context/ModeContext";
 
 type PaginationBarProps = {
   totalResults: number;
@@ -30,52 +31,57 @@ export default function PaginationBar({
     if (canNext) onPageChange(pageNumber + 1);
   };
 
-  return (
-    <div className={styles.bar}>
-      <div className={styles.left}>
-        <span>Showing </span>
+      const { darkMode } = useMode();
+  
 
-<div className={styles.customSelect}>
-    <select
-      className={styles.selectField}
-      value={pageSize}
-      onChange={(e) => onPageSizeChange(Number(e.target.value))}
-    >
-      {pageSizeOptions.map((opt) => (
-        <option key={opt} value={opt}>
-          {opt}
-        </option>
-      ))}
-    </select>
-    <i className="fa-solid fa-chevron-down text-black"></i>
+  return (
+   <div className={`${styles.bar} ${darkMode ? styles.barDark : ""}`}>
+  <div className={styles.left}>
+    <span>Showing </span>
+
+    <div className={`${styles.customSelect} ${darkMode ? styles.customSelectDark : ""}`}>
+      <select
+        className={`${styles.selectField} ${darkMode ? styles.selectFieldDark : ""}`}
+        value={pageSize}
+        onChange={(e) => onPageSizeChange(Number(e.target.value))}
+      >
+        {pageSizeOptions.map((opt) => (
+          <option key={opt} value={opt}>
+            {opt}
+          </option>
+        ))}
+      </select>
+
+      <i
+        className={`fa-solid fa-chevron-down ${darkMode ? styles.iconWhite : "text-black"}`}
+      ></i>
+    </div>
+
+    <span>of {totalResults} Results</span>
   </div>
 
-        <span>of {totalResults} Results</span>
-      </div>
+  <div>
+    <span>Page {pageNumber} of {totalPages}</span>
 
-      <div className="">
-        <span>
-          Page {pageNumber} of {totalPages}
-        </span>
+    <button
+      className={`${styles.iconBtn} ${darkMode ? styles.iconBtnDark : ""}`}
+      onClick={handlePrev}
+      disabled={!canPrev}
+      aria-label="Previous page"
+    >
+      <i className={`fa-solid fa-chevron-left ${darkMode ? styles.iconWhite : ""}`} />
+    </button>
 
-        <button
-          className={styles.iconBtn}
-          onClick={handlePrev}
-          disabled={!canPrev}
-          aria-label="Previous page"
-        >
-          <i className="fa-solid fa-chevron-left" />
-        </button>
+    <button
+      className={`${styles.iconBtn} ${darkMode ? styles.iconBtnDark : ""}`}
+      onClick={handleNext}
+      disabled={!canNext}
+      aria-label="Next page"
+    >
+      <i className={`fa-solid fa-chevron-right ${darkMode ? styles.iconWhite : ""}`} />
+    </button>
+  </div>
+</div>
 
-        <button
-          className={styles.iconBtn}
-          onClick={handleNext}
-          disabled={!canNext}
-          aria-label="Next page"
-        >
-          <i className="fa-solid fa-chevron-right" />
-        </button>
-      </div>
-    </div>
   );
 }

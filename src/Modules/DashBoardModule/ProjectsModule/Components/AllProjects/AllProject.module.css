@@ -1,11 +1,14 @@
 .searchContainer {
-margin:0px 40px;
-   /* padding: 24px 16px; */
+  padding: 50px;
+  margin: 0px 40px;
   background: #f7f7f7;
+  background: #fff;
+  padding-top: 20px;
+  border-radius: 15px;
 }
 
 .searchBox {
-    width: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -47,3 +50,29 @@ margin:0px 40px;
 .searchBtn:hover {
   opacity: 0.9;
 }
+
+
+.searchContainerDark {
+  background-color: #010715; 
+  border: 1px solid #1f2937;
+}
+
+.searchBoxDark {
+  background-color: transparent;
+}
+
+.searchInputDark {
+  color: #e2e8f0;
+}
+
+.searchInputDark::placeholder {
+  color: #94a3b8;
+}
+
+.searchIconDark {
+  color: #94a3b8;
+}
+
+
+
+

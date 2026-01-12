@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import styles from './AllProject.module.css'
-
+import styles from "./AllProject.module.css";
+import { useMode } from "../../../../../Context/ModeContext";
 
 type SearchBoxProps = {
   /** Called when user triggers search (button click / Enter / debounce if enabled) */
@@ -23,6 +23,7 @@ export default function SearchBox({
   placeholder = "Search By Title",
 }: SearchBoxProps) {
   const [query, setQuery] = useState<string>(defaultValue);
+    const { darkMode } = useMode();
 
   const triggerSearch = () => {
     onSearch?.(query.trim());
@@ -44,24 +45,25 @@ export default function SearchBox({
   }, [query, debounceMs, onSearch]);
 
   return (
- 
-    <div className={`  ${styles.searchContainer}`}>
-      <div className={styles.searchBox}>
-<i className={`fa-solid fa-magnifying-glass ${styles.searchIcon}`}></i>
+ <div
+  className={`${styles.searchContainer} ${darkMode ? styles.searchContainerDark : "bg-white"}`}
+>
+  <div className={`${styles.searchBox} ${darkMode ? styles.searchBoxDark : ""}`}>
+    <i
+      className={`fa-solid fa-magnifying-glass ${styles.searchIcon} ${
+        darkMode ? styles.searchIconDark : ""
+      }`}
+    ></i>
 
-        <input
-          type="text"
-          className={styles.searchInput}
-          placeholder={placeholder}
-          value={query}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setQuery(e.target.value)
-          }
-          onKeyDown={onKeyDown}
-        />
-
-     
-      </div>
-    </div>
+    <input
+      type="text"
+      className={`${styles.searchInput} ${darkMode ? styles.searchInputDark : ""}`}
+      placeholder={placeholder}
+      value={query}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
+      onKeyDown={onKeyDown}
+    />
+  </div>
+</div>
   );
 }

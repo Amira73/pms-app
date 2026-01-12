@@ -6,9 +6,11 @@
 
   display: flex;
   align-items: center;
-  justify-content: flex-end; 
+  justify-content: flex-end;
   gap: 18px;
-
+  position: fixed;
+  left: 0;
+  bottom: 0;
   border: 1px solid #eef2f7;
 }
 
@@ -39,7 +41,7 @@
   border-radius: 999px;
 
   padding: 6px 28px 6px 12px; /* مساحة للسهم */
-  font-size:22px;
+  font-size: 22px;
   color: #111827;
   line-height: 1;
 
@@ -110,10 +112,10 @@
 }
 
 .selectField {
-  appearance: none;       /* إخفاء سهم المتصفح الافتراضي في كروم وفيرفوكس */
-  -webkit-appearance: none; 
+  appearance: none; /* إخفاء سهم المتصفح الافتراضي في كروم وفيرفوكس */
+  -webkit-appearance: none;
   -moz-appearance: none;
-  
+
   background-color: #fff;
   border: 1px solid #d1d5db;
   border-radius: 6px;
@@ -125,9 +127,46 @@
 /* وضع الأيقونة داخل حدود السيلكت بصرياً */
 .customSelect i {
   position: absolute;
-  right: 10px;           /* تحديد مكان السهم من جهة اليمين */
-  pointer-events: none;  /* تجعل الضغطة تمر من خلال الأيقونة للسيلكت */
-  font-size: 10px;       /* حجم السهم الصغير */
+  right: 10px; /* تحديد مكان السهم من جهة اليمين */
+  pointer-events: none; /* تجعل الضغطة تمر من خلال الأيقونة للسيلكت */
+  font-size: 10px; /* حجم السهم الصغير */
   color: #000;
 }
+.barDark {
+  background: #0f172a;
+  border: 1px solid #1f2937;
+  color: #e2e8f0;
+}
 
+/* Select */
+.customSelectDark {
+  border: 1px solid #1f2937;
+  background: #111827;
+  border-radius: 10px;
+}
+
+.selectFieldDark {
+  background: transparent;
+  color: #e2e8f0;
+}
+
+.selectFieldDark option {
+  background: #000;
+  color: #e2e8f0;
+}
+
+/* Buttons */
+.iconBtnDark {
+  border: 1px solid #000;
+  background: #111827;
+}
+
+.iconBtnDark:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Icons */
+.iconWhite {
+  color: #fff !important;
+}

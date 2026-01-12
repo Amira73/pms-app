@@ -1,4 +1,3 @@
-
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -19,14 +18,15 @@ export default function Login() {
   let navigate = useNavigate();
   const { saveLoginData } = useAuth()!;
 
-
   const fields: AuthField<LoginForm>[] = [
     {
       name: "email",
       label: "E-mail",
       type: "email",
       placeholder: "Enter your E-mail",
-      rules: { required: validation.EMAIL_VALIDATION.required },
+      rules: {
+        required: validation.EMAIL_VALIDATION.required,
+      },
     },
     {
       name: "password",
@@ -47,9 +47,12 @@ export default function Login() {
       console.log(res.data.token);
       saveLoginData();
       navigate("/dashboard");
-    } catch (err) {
-      console.log("error", err);
-      toast.error("Something went wrong ");
+    } catch (err: any) {
+      const serverMessage = err.response?.data?.message;
+      if (serverMessage) {
+        toast.error(serverMessage);
+        return;
+      }
     }
   };
 

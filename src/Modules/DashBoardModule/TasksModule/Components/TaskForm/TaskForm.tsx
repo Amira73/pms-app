@@ -6,6 +6,9 @@ import { toast } from "react-toastify";
 import { http } from "../../../../../Services/Api/httpInstance";
 import { TASK_URLS, USERS_URL, PROJECT_URLS } from "../../../../../Services/Api/ApisUrls";
 import styles from "./TaskForm.module.css";
+import styles2 from '../../../ProjectsModule/Components/ProjectForm/ProjectForm.module.css'
+import { useMode } from "../../../../../Context/ModeContext";
+
 
 type User = { id: number; userName: string };
 type Project = { id: number; title: string };
@@ -28,6 +31,7 @@ export default function TaskForm() {
   const loaded = useRef(false);
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
+  const { darkMode } = useMode();
 
   // Load users & projects
   useEffect(() => {
@@ -113,21 +117,36 @@ export default function TaskForm() {
   };
 
   return (
+
+
+    
+   <div className={darkMode ? "app-dark" : "app-light"}>
     <div className="container-fluid">
-      <div className="bg-white border border-1 p-3 mb-4">
-        <h5>View All Tasks</h5>
-        <h1>{isEdit ? "Edit Task" : "Add a New Task"}</h1>
+      <div className={styles2["page-header"]}>
+        <button
+          className={styles2["back-btn"]}
+          onClick={() => navigate("/dashboard/tasks")}
+          type="button"
+        >
+          ‹ View All Pages
+        </button>
+
+        <h4 className="primary-color2 small">
+          {isEdit ? "Edit Task" : "Add A New Task"}
+        </h4>
       </div>
 
       <div className={`container w-75 ${styles.backgroundPage}`}>
-        <div className="bg-white p-4 rounded shadow-sm">
+        <div className="card-surface p-4 rounded shadow-sm">
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             {/* Title */}
             <div className="mb-4">
               <label className="form-label text-muted">Title *</label>
               <input
                 type="text"
-                className={`form-control rounded-4 py-3 ${errors.title ? "is-invalid" : ""}`}
+                className={`form-control rounded-4 py-3 ${
+                  errors.title ? "is-invalid" : ""
+                }`}
                 placeholder="Enter task title"
                 {...register("title", {
                   required: "Title is required",
@@ -135,7 +154,9 @@ export default function TaskForm() {
                   maxLength: { value: 150, message: "Title is too long" },
                 })}
               />
-              {errors.title && <div className="invalid-feedback">{errors.title.message}</div>}
+              {errors.title && (
+                <div className="invalid-feedback">{errors.title.message}</div>
+              )}
             </div>
 
             {/* Description */}
@@ -143,14 +164,18 @@ export default function TaskForm() {
               <label className="form-label text-muted">Description *</label>
               <textarea
                 rows={4}
-                className={`form-control rounded-4 py-3 ${errors.description ? "is-invalid" : ""}`}
+                className={`form-control rounded-4 py-3 ${
+                  errors.description ? "is-invalid" : ""
+                }`}
                 placeholder="Describe the task..."
                 {...register("description", {
                   required: "Description is required",
                   minLength: { value: 10, message: "Description must be at least 10 characters" },
                 })}
               />
-              {errors.description && <div className="invalid-feedback">{errors.description.message}</div>}
+              {errors.description && (
+                <div className="invalid-feedback">{errors.description.message}</div>
+              )}
             </div>
 
             {/* User & Project */}
@@ -158,29 +183,47 @@ export default function TaskForm() {
               <div className="col-md-6">
                 <label className="form-label text-muted">Assigned To *</label>
                 <select
-                  className={`form-select ${errors.employeeId ? "is-invalid" : ""}`}
-                  {...register("employeeId", { required: "Please select an assignee", valueAsNumber: true })}
+                  className={`form-select rounded-4 py-3 ${
+                    errors.employeeId ? "is-invalid" : ""
+                  }`}
+                  {...register("employeeId", {
+                    required: "Please select an assignee",
+                    valueAsNumber: true,
+                  })}
                 >
                   <option value="">Select team member...</option>
-                  {users.map(user => (
-                    <option key={user.id} value={user.id}>{user.userName}</option>
+                  {users.map((user) => (
+                    <option key={user.id} value={user.id}>
+                      {user.userName}
+                    </option>
                   ))}
                 </select>
-                {errors.employeeId && <div className="invalid-feedback">{errors.employeeId.message}</div>}
+                {errors.employeeId && (
+                  <div className="invalid-feedback">{errors.employeeId.message}</div>
+                )}
               </div>
 
               <div className="col-md-6">
                 <label className="form-label text-muted">Project *</label>
                 <select
-                  className={`form-select ${errors.projectId ? "is-invalid" : ""}`}
-                  {...register("projectId", { required: "Please select a project", valueAsNumber: true })}
+                  className={`form-select rounded-4 py-3 ${
+                    errors.projectId ? "is-invalid" : ""
+                  }`}
+                  {...register("projectId", {
+                    required: "Please select a project",
+                    valueAsNumber: true,
+                  })}
                 >
                   <option value="">Select project...</option>
-                  {projects.map(project => (
-                    <option key={project.id} value={project.id}>{project.title}</option>
+                  {projects.map((project) => (
+                    <option key={project.id} value={project.id}>
+                      {project.title}
+                    </option>
                   ))}
                 </select>
-                {errors.projectId && <div className="invalid-feedback">{errors.projectId.message}</div>}
+                {errors.projectId && (
+                  <div className="invalid-feedback">{errors.projectId.message}</div>
+                )}
               </div>
             </div>
 
@@ -208,5 +251,6 @@ export default function TaskForm() {
         </div>
       </div>
     </div>
+  </div>
   );
 }
