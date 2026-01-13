@@ -39,6 +39,7 @@ export default function AllProjects() {
 
  // const { loginData} = auth;
 const role = localStorage.getItem("userGroup");
+const isManager = role === "Manager";
   let navigate=useNavigate()
       const [show, setShow] = useState(false);
           const [show2, setShow2] = useState(false);
@@ -305,6 +306,7 @@ const handleSearch = (q: string) => {
 </td>
 
                   <td>
+            { isManager && (
                     <div className="dropdown">
                       <button
                         className="btn btn-link p-0 text-dark"
@@ -351,7 +353,7 @@ const handleSearch = (q: string) => {
                           </button>
                         </li>
                       </ul>
-                    </div>
+                    </div>)}
                   </td>
                 </tr>
               ))
