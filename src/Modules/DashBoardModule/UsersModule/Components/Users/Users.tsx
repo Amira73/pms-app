@@ -490,7 +490,7 @@ export default function Users() {
                                       : "fa-user-check text-success"
                                   } me-2`}
                                 ></i>
-                                {user.status === "Active" ? "Block" : "Activate"}
+                               Block
                               </button>
                             </div>
                           )}
