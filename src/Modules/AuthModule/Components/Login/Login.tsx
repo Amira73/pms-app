@@ -37,6 +37,12 @@ export default function Login() {
     },
   ];
 
+  function decodeJwt(token: string) {
+  const base64Url = token.split(".")[1];
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  return JSON.parse(decodeURIComponent(escape(atob(base64))));
+}
+
   const onSubmit = async (data: LoginForm) => {
     try {
       const res = await http.post(USERS_URL.LOGIN, data);
@@ -44,6 +50,8 @@ export default function Login() {
       toast.success("Login successful ");
       console.log(res.data);
       localStorage.setItem("token", res.data.token);
+         const decoded = decodeJwt(res.data.token);
+  localStorage.setItem("userGroup", decoded.userGroup);
       console.log(res.data.token);
       saveLoginData();
       navigate("/dashboard");
