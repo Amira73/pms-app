@@ -1,5 +1,5 @@
 import { http } from "../../../../../Services/Api/httpInstance";
-import { USERS_URL } from "../../../../../Services/Api/ApisUrls";
+import { Employee_URLS, USERS_URL } from "../../../../../Services/Api/ApisUrls";
 import type { AxiosError } from "axios";
 
 // --- التعريفات (Types) ---
@@ -33,20 +33,24 @@ type ProjectsResponse = {
 
 // --- الدالة (Function) ---
 
-export async function getManagerProjectsFun(params: {
-  pageNumber: number;
-  pageSize: number;
-  title?: string;      // البحث بالعنوان (موجود أصلاً)
-  userName?: string;   // إضافة إمكانية البحث بالاسم
-  phoneNumber?: string; // إضافة إمكانية البحث بالتليفون
-}): Promise<ProjectsResponse> {
+export async function getManagerProjectsFun(
+  params: {
+    pageNumber: number;
+    pageSize: number;
+    title?: string;
+    userName?: string;
+    phoneNumber?: string;
+  },
+  role?: string
+): Promise<ProjectsResponse> {
   try {
-    const res = await http.get<ProjectsResponse>(
-      USERS_URL.GetAllProjects,
-      { params }
-    );
+    const url =
+      role === "Manager"
+        ? USERS_URL.GetAllProjects
+        : Employee_URLS.GET_PROJECTSEMPLOYEE;
 
-    // إرجاع البيانات مع التأكد من وجود قيم للباجينيشن حتى لو الـ API بعتها null
+    const res = await http.get<ProjectsResponse>(url, { params });
+
     return {
       ...res.data,
       totalNumberOfRecords: res.data.totalNumberOfRecords ?? 0,
@@ -54,17 +58,11 @@ export async function getManagerProjectsFun(params: {
     };
   } catch (err) {
     const error = err as AxiosError<any>;
-
     const message =
       error.response?.data?.message ??
       error.response?.data?.error ??
       error.message ??
       "Failed to fetch projects";
-
-    console.error("getManagerProjects failed:", {
-      status: error.response?.status,
-      message,
-    });
 
     throw new Error(message);
   }
