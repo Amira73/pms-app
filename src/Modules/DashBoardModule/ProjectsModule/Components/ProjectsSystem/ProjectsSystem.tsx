@@ -47,7 +47,7 @@ export default function ProjectsSystem() {
     status: "ToDo" | "InProgress" | "Done" | string;
 
     creationDate: string;
-      modificationDate: string;
+    modificationDate: string;
     manager: Manager;
   };
 
@@ -64,14 +64,11 @@ export default function ProjectsSystem() {
   };
 
   const [projects, setProectsList] = useState<Project[]>([]);
-      const { darkMode } = useMode();
-  
+  const { darkMode } = useMode();
 
   let navigate = useNavigate();
 
   const [show, setShow] = useState(false);
-
-
 
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -85,25 +82,23 @@ export default function ProjectsSystem() {
 
   const [totalResults, setTotalResults] = useState(0);
   const [showMenu, setShowMenu] = useState<number | null>(null); // لإظهار النقاط ⋮ مثل اليوزرز
-          const [show2, setShow2] = useState(false);
-                const[projectId,setProjectId]=useState(0);
-       const[projectName,setProjectName]=useState("");
-          const[projectDes,setProjectDesc]=useState("");
-             const[projectDate,setProjectDate]=useState("");
-                 const[projectDatemod,setProjectDatemod]=useState("");
+  const [show2, setShow2] = useState(false);
+  const [projectId, setProjectId] = useState(0);
+  const [projectName, setProjectName] = useState("");
+  const [projectDes, setProjectDesc] = useState("");
+  const [projectDate, setProjectDate] = useState("");
+  const [projectDatemod, setProjectDatemod] = useState("");
 
-  const handleShow2 = (project:Project) => {
-        setProjectId(project.id)
-        setProjectName(project.title)
-        setProjectDate(project.creationDate)
-        setProjectDatemod(project.modificationDate)
-        setProjectDesc(project.description)
-      
-      
-        setShow2(true);
-      }
-               const handleClose2 = () => setShow2(false);
+  const handleShow2 = (project: Project) => {
+    setProjectId(project.id);
+    setProjectName(project.title);
+    setProjectDate(project.creationDate);
+    setProjectDatemod(project.modificationDate);
+    setProjectDesc(project.description);
 
+    setShow2(true);
+  };
+  const handleClose2 = () => setShow2(false);
 
   const [totalPages, setTotalPages] = useState(1);
 
@@ -153,68 +148,61 @@ export default function ProjectsSystem() {
 
   return (
     <>
-
-
-
-
-        <Modal show={show2} onHide={handleClose2} size="lg">
+      <Modal show={show2} onHide={handleClose2} size="lg">
         <Modal.Header closeButton>
           <Modal.Title> Project Details</Modal.Title>
         </Modal.Header>
 
+        <Modal.Body>
+          <div className="p-3 rounded-4 bg-light">
+            {/* Header Card */}
+            <div className="bg-white rounded-4 p-3 shadow-sm mb-3">
+              <div className="d-flex justify-content-between align-items-start gap-3">
+                <div>
+                  <h5 className="mb-1">{projectName}</h5>
+                  <p className="text-muted mb-0">{projectDes}</p>
+                </div>
 
-         <Modal.Body>
-    <div className="p-3 rounded-4 bg-light">
-      {/* Header Card */}
-      <div className="bg-white rounded-4 p-3 shadow-sm mb-3">
-        <div className="d-flex justify-content-between align-items-start gap-3">
-          <div>
-            <h5 className="mb-1">{projectName}</h5>
-            <p className="text-muted mb-0">{projectDes}</p>
+                <span className="badge text-bg-secondary px-3 py-2 rounded-pill">
+                  Info
+                </span>
+              </div>
+            </div>
+
+            {/* Details */}
+            <div className="bg-white rounded-4 p-3 shadow-sm">
+              <div className="d-flex justify-content-between align-items-start py-2 border-bottom">
+                <span className="text-muted fw-semibold">Title</span>
+                <span className="fw-medium text-end">{projectName}</span>
+              </div>
+
+              <div className="d-flex justify-content-between align-items-start py-2 border-bottom">
+                <span className="text-muted fw-semibold">Description</span>
+                <span className="fw-medium text-end" style={{ maxWidth: 420 }}>
+                  {projectDes}
+                </span>
+              </div>
+
+              <div className="d-flex justify-content-between align-items-start py-2 border-bottom">
+                <span className="text-muted fw-semibold">Created At</span>
+                <span className="fw-medium text-end">
+                  {new Date(projectDate ?? "").toLocaleString()}
+                </span>
+              </div>
+
+              <div className="d-flex justify-content-between align-items-start py-2">
+                <span className="text-muted fw-semibold">Last Updated</span>
+                <span className="fw-medium text-end">
+                  {new Date(projectDatemod ?? "").toLocaleString()}
+                </span>
+              </div>
+            </div>
           </div>
-
-          <span className="badge text-bg-secondary px-3 py-2 rounded-pill">
-            Info
-          </span>
-        </div>
-      </div>
-
-      {/* Details */}
-      <div className="bg-white rounded-4 p-3 shadow-sm">
-        <div className="d-flex justify-content-between align-items-start py-2 border-bottom">
-          <span className="text-muted fw-semibold">Title</span>
-          <span className="fw-medium text-end">{projectName}</span>
-        </div>
-
-        <div className="d-flex justify-content-between align-items-start py-2 border-bottom">
-          <span className="text-muted fw-semibold">Description</span>
-          <span className="fw-medium text-end" style={{ maxWidth: 420 }}>
-            {projectDes}
-          </span>
-        </div>
-
-        <div className="d-flex justify-content-between align-items-start py-2 border-bottom">
-          <span className="text-muted fw-semibold">Created At</span>
-          <span className="fw-medium text-end">
-            {new Date(projectDate ?? "").toLocaleString()}
-          </span>
-        </div>
-
-        <div className="d-flex justify-content-between align-items-start py-2">
-          <span className="text-muted fw-semibold">Last Updated</span>
-          <span className="fw-medium text-end">
-            {new Date(projectDatemod?? "").toLocaleString()}
-          </span>
-        </div>
-      </div>
-    </div>
-  </Modal.Body>
-      {/* <DeleteConfirmation deleteItem="project " name={projectName}></DeleteConfirmation> */}
+        </Modal.Body>
+        {/* <DeleteConfirmation deleteItem="project " name={projectName}></DeleteConfirmation> */}
         <Modal.Footer>
-
-          
-          <Button variant="outline-danger"onClick={handleClose2} >
-           Cancle
+          <Button variant="outline-danger" onClick={handleClose2}>
+            Cancle
           </Button>
         </Modal.Footer>
       </Modal>
@@ -225,102 +213,135 @@ export default function ProjectsSystem() {
           </div>
         </div>
       </header>
-              <SearchBox onSearch={handleSearch} debounceMs={400} />
-            
-                  <div className="table-responsive mx-4">
-                    <table className="table table-striped">
-                      <thead className="py-3">
-                        <tr className="table-header-row primary-color-bg2 py-3">
-                     
-                  <th className={styles.tableHeaderCell}>
-                    Title <span className={styles.sortIcon}><i className="fa-solid fa-sort"></i></span>
-                  </th>
-                  <th className={styles.tableHeaderCell}>
-                    Status <span className={styles.sortIcon}><i className="fa-solid fa-sort"></i></span>
-                  </th>
-                  <th className={styles.tableHeaderCell}>
-                    Manager <span className={styles.sortIcon}><i className="fa-solid fa-sort"></i></span>
-                  </th>
-                  <th className={styles.tableHeaderCell}>
-                    Manager Mail <span className={styles.sortIcon}><i className="fa-solid fa-sort"></i></span>
-                  </th>
-                  <th className={styles.tableHeaderCell}>
-                    Date Created <span className={styles.sortIcon}><i className="fa-solid fa-sort"></i></span>
-                  </th>
-                  <th className={styles.tableHeaderCell}></th>
+      <SearchBox onSearch={handleSearch} debounceMs={400} />
+
+      <div className="table-responsive mx-4">
+        <table className="table table-striped">
+          <thead className="py-3">
+            <tr className="table-header-row primary-color-bg2 py-3">
+              <th className={styles.tableHeaderCell}>
+                Title{" "}
+                <span className={styles.sortIcon}>
+                  <i className="fa-solid fa-sort"></i>
+                </span>
+              </th>
+              <th className={styles.tableHeaderCell}>
+                Status{" "}
+                <span className={styles.sortIcon}>
+                  <i className="fa-solid fa-sort"></i>
+                </span>
+              </th>
+              <th className={styles.tableHeaderCell}>
+                Manager{" "}
+                <span className={styles.sortIcon}>
+                  <i className="fa-solid fa-sort"></i>
+                </span>
+              </th>
+              <th className={styles.tableHeaderCell}>
+                Manager Mail{" "}
+                <span className={styles.sortIcon}>
+                  <i className="fa-solid fa-sort"></i>
+                </span>
+              </th>
+              <th className={styles.tableHeaderCell}>
+                Date Created{" "}
+                <span className={styles.sortIcon}>
+                  <i className="fa-solid fa-sort"></i>
+                </span>
+              </th>
+              <th className={styles.tableHeaderCell}></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {isLoading ? (
+              <tr>
+                <td colSpan={6} className="text-center py-5">
+                  <Spinner animation="border" variant="success" />
+                </td>
+              </tr>
+            ) : projects.length > 0 ? (
+              projects.map((project) => (
+                <tr key={project.id} className={styles.tableRow}>
+                  <td className={styles.tableCell}>{project.title}</td>
+                  <td className={styles.tableCell}>
+                    <span
+                      className="primarycolorbg2 px-3 py-1 rounded-pill text-white"
+                      style={{ fontSize: "0.8rem" }}
+                    >
+                      Public
+                    </span>
+                  </td>
+                  <td className={styles.tableCell}>
+                    {project.manager?.userName ?? "-"}
+                  </td>
+                  <td className={styles.tableCell}>
+                    {project.manager?.email ?? "-"}
+                  </td>
+                  <td className={styles.tableCell}>
+                    {new Date(project.creationDate).toLocaleDateString(
+                      "en-GB",
+                      {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      }
+                    )}
+                  </td>
+                  <td
+                    className={styles.tableCell}
+                    style={{ position: "relative" }}
+                  >
+                    <button
+                      onClick={() =>
+                        setShowMenu(showMenu === project.id ? null : project.id)
+                      }
+                      className={`${styles.actionButton} ${
+                        darkMode ? styles.actionButtonDark : ""
+                      }`}
+                      type="button"
+                      aria-label="Actions"
+                    >
+                      <i className="fa-solid fa-ellipsis-vertical" />
+                    </button>
+
+                    {showMenu === project.id && (
+                      <div className={styles.actionMenu}>
+                        <button
+                          className={styles.menuItem}
+                          onClick={() => handleShow2(project)}
+                        >
+                          {" "}
+                          View
+                        </button>
+                      </div>
+                    )}
+                  </td>
                 </tr>
-              </thead>
-              
-              <tbody>
-                {isLoading ? (
-                  <tr>
-                    <td colSpan={6} className="text-center py-5">
-                      <Spinner animation="border" variant="success" />
-                    </td>
-                  </tr>
-                ) : projects.length > 0 ? (
-                  projects.map((project) => (
-                    <tr key={project.id} className={styles.tableRow}>
-                      <td className={styles.tableCell}>{project.title}</td>
-                      <td className={styles.tableCell}>
-                        <span className="primarycolorbg2 px-3 py-1 rounded-pill text-white" style={{fontSize: '0.8rem'}}>
-                          Public
-                        </span>
-                      </td>
-                      <td className={styles.tableCell}>{project.manager?.userName ?? "-"}</td>
-                      <td className={styles.tableCell}>{project.manager?.email ?? "-"}</td>
-                      <td className={styles.tableCell}>
-                        {new Date(project.creationDate).toLocaleDateString("en-GB", {
-                          day: "2-digit",
-                          month: "short",
-                          year: "numeric",
-                        })}
-                      </td>
-                      <td className={styles.tableCell} style={{ position: "relative" }}>
-              <button
-  onClick={() => setShowMenu(showMenu === project.id ? null : project.id)}
-  className={`${styles.actionButton} ${darkMode ? styles.actionButtonDark : ""}`}
-  type="button"
-  aria-label="Actions"
->
-  <i className="fa-solid fa-ellipsis-vertical" />
-</button>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={6} className="text-center py-5">
+                  <NoData />
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
 
-                        {showMenu === project.id && (
-                          <div className={styles.actionMenu}>
-                            <button className={styles.menuItem}   
-                             onClick={() => handleShow2(project)}
-                            > View</button>
-                          </div>
-                        )}
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={6} className="text-center py-5">
-                      <NoData />
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="mt-4">
-            <PaginationBar
-              totalResults={totalResults}
-              pageNumber={pageNumber}
-              pageSize={pageSize}
-              onPageChange={(p) => setPageNumber(p)}
-              onPageSizeChange={(size) => {
-                setPageSize(size);
-                setPageNumber(1);
-              }}
-            />
-          </div>
-       
-     
+      <div className="mt-4">
+        <PaginationBar
+          totalResults={totalResults}
+          pageNumber={pageNumber}
+          pageSize={pageSize}
+          onPageChange={(p) => setPageNumber(p)}
+          onPageSizeChange={(size) => {
+            setPageSize(size);
+            setPageNumber(1);
+          }}
+        />
+      </div>
 
       <PaginationBar
         totalResults={totalResults}

@@ -34,6 +34,9 @@ type ProjectsResponse = {
 // --- الدالة (Function) ---
 
 export async function getManagerProjectsFun(params: {
+
+  
+  
   pageNumber: number;
   pageSize: number;
   title?: string;      // البحث بالعنوان (موجود أصلاً)
@@ -41,6 +44,7 @@ export async function getManagerProjectsFun(params: {
   phoneNumber?: string; // إضافة إمكانية البحث بالتليفون
 }): Promise<ProjectsResponse> {
   try {
+
     const res = await http.get<ProjectsResponse>(
       USERS_URL.GetAllProjects,
       { params }
