@@ -61,6 +61,8 @@ export const Employee_URLS = {
   DELETE_CATEGORY: (id:Id) => `/Category/${id}`,
   UPDATE_CATEGORY: (id:Id) => `/Category/${id}`,
   POST_CATEGORY: "/Category",
+   GET_TASK: "/Task",
+   CHANGE_STUTUS:(id:Id) =>`/Task/${id}/change-status`
 };
 // //user recipies
 // export const USER_RECIPIES_URLS={
