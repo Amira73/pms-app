@@ -322,17 +322,7 @@ export default function ProjectsSystem() {
        
      
 
-      <PaginationBar
-        totalResults={totalResults}
-        pageNumber={pageNumber}
-        pageSize={pageSize}
-        onPageChange={(p) => setPageNumber(p)}
-        onPageSizeChange={(size) => {
-          setPageSize(size);
-
-          setPageNumber(1);
-        }}
-      />
+      
     </>
   );
 }
