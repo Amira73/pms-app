@@ -12,6 +12,7 @@ import type { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import { useMode } from "../../../../../Context/ModeContext";
+import { useAuth } from "../../../../../Context/AuthContext";
 
 type Task = {
   id: number;
@@ -33,6 +34,11 @@ type Project = {
 };
 
 export default function AllProjects() {
+  const auth = useAuth();
+    if (!auth) return null; // أو Loading / Error UI
+
+ // const { loginData} = auth;
+const role = localStorage.getItem("userGroup");
   let navigate=useNavigate()
       const [show, setShow] = useState(false);
           const [show2, setShow2] = useState(false);
@@ -60,11 +66,14 @@ const load = async () => {
   setIsLoading(true);
 
   try {
-    const res = await getManagerProjectsFun({
-      pageSize,
-      pageNumber,
-      title: search,
-    });
+ const res = await getManagerProjectsFun(
+  {
+    pageSize,
+    pageNumber,
+    title: search,
+  },
+  role
+);
 
     setProectsList(res?.data ?? []);
     setTotalResults(res?.totalNumberOfRecords ?? 0);
