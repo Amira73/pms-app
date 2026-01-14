@@ -143,7 +143,7 @@ export default function NavBar() {
             </button>
             <ul className="dropdown-menu dropdown-menu-start shadow-lg">
               <li>
-                ${darkMode ? `text-whtie` : `text-secondary`}
+             
                 <button
                   className={`dropdown-item d-flex align-items-center gap-2
                    
@@ -157,7 +157,7 @@ export default function NavBar() {
                 </button>
               </li>
               <li>
-                ${darkMode ? "text-light" : "text-danger"}
+               
                 <button
                   className={`dropdown-item d-flex align-items-center gap-2 `}
                   style={{
