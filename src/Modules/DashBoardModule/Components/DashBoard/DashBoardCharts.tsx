@@ -21,6 +21,8 @@ type UsersCountResponse = {
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function DashBoardCharts() {
+  const role = localStorage.getItem("userGroup");
+  const isManager = role === "Manager";
   const [counts, setCounts] = useState<CountResponse | null>(null);
   const [userscounts, setusersCounts] = useState<UsersCountResponse | null>(
     null
@@ -96,12 +98,7 @@ export default function DashBoardCharts() {
         label: "Tasks",
         data: [counts?.toDo ?? 0, counts?.inProgress ?? 0, counts?.done ?? 0],
 
-       backgroundColor: [
-        "#F5F7E6",
-  "#EEF0FF",
-  
-  "#F8E9F2",
-],
+        backgroundColor: ["#F5F7E6", "#EEF0FF", "#F8E9F2"],
         // borderColor: [
         // '#F5F7E6#F5F7E6',
         // 'rgba(54, 162, 235, 1)',
@@ -154,7 +151,7 @@ export default function DashBoardCharts() {
                     <div className="col-12 col-sm-6 col-lg-4">
                       <div
                         className="rounded-4 p-3"
-                          style={{
+                        style={{
                           backgroundColor: darkMode ? "#065684ff" : "#F5F7E6",
                         }}
                       >
@@ -184,7 +181,7 @@ export default function DashBoardCharts() {
                     <div className="col-12 col-sm-6 col-lg-4">
                       <div
                         className="rounded-4 p-3"
-                         style={{
+                        style={{
                           backgroundColor: darkMode ? "#158bceff" : "#EEF0FF",
                         }}
                       >
@@ -214,7 +211,7 @@ export default function DashBoardCharts() {
                     <div className="col-12 col-sm-6 col-lg-4">
                       <div
                         className="rounded-4 p-3"
-                          style={{
+                        style={{
                           backgroundColor: darkMode ? "#4999c7ff" : "#F8E9F2",
                         }}
                       >
@@ -247,88 +244,90 @@ export default function DashBoardCharts() {
           </div>
 
           {/* Users */}
-          <div className="col-md-6">
-            <div
-              className=" rounded-4 p-3 shadow-sm"
-              style={{
-                backgroundColor: darkMode ? "#222" : "#fff",
-                boxShadow: darkMode
-                  ? "0 2px 4px rgba(255, 255, 255, 0.65)"
-                  : "none",
-              }}
-            >
-              <div className="d-flex gap-3">
-                <div
-                  style={{
-                    width: 4,
-                    height: 50,
-                    borderRadius: 8,
-                    background: "#F4A21B",
-                  }}
-                />
-                <div className="flex-grow-1">
-                  <div className="fw-semibold">Users</div>
-                  <div className="text-muted" style={{ fontSize: 13 }}>
-                    Lorem ipsum dolor sit amet,consecteture
-                  </div>
-
-                  <div className="row g-3 mt-3">
-                    <div className="col-md-6">
-                      <div
-                        className="rounded-4 p-3"
-                        style={{
-                          backgroundColor: darkMode ? "#39275aff" : "#EEF0FF",
-                        }}
-                      >
-                        <div
-                          className="d-flex align-items-center justify-content-center mb-2"
-                          style={{
-                            width: 44,
-                            height: 44,
-                            borderRadius: 14,
-                            background: "rgba(0,0,0,0.06)",
-                          }}
-                        >
-                          <i className="bi bi-person-check" />
-                        </div>
-                        <div
-                          className="text-secondary"
-                          style={{ fontSize: 13 }}
-                        >
-                          active
-                        </div>
-                        <div className="fw-bold" style={{ fontSize: 20 }}>
-                          {userscounts?.activatedEmployeeCount}
-                        </div>
-                      </div>
+          {isManager ? (
+            <div className="col-md-6">
+              <div
+                className=" rounded-4 p-3 shadow-sm"
+                style={{
+                  backgroundColor: darkMode ? "#222" : "#fff",
+                  boxShadow: darkMode
+                    ? "0 2px 4px rgba(255, 255, 255, 0.65)"
+                    : "none",
+                }}
+              >
+                <div className="d-flex gap-3">
+                  <div
+                    style={{
+                      width: 4,
+                      height: 50,
+                      borderRadius: 8,
+                      background: "#F4A21B",
+                    }}
+                  />
+                  <div className="flex-grow-1">
+                    <div className="fw-semibold">Users</div>
+                    <div className="text-muted" style={{ fontSize: 13 }}>
+                      Lorem ipsum dolor sit amet,consecteture
                     </div>
 
-                    <div className="col-md-6">
-                      <div
-                        className="rounded-4 p-3"
-                        style={{
-                          backgroundColor: darkMode ? "#174864" : "#fff",
-                        }}
-                      >
+                    <div className="row g-3 mt-3">
+                      <div className="col-md-6">
                         <div
-                          className="d-flex align-items-center justify-content-center mb-2"
+                          className="rounded-4 p-3"
                           style={{
-                            width: 44,
-                            height: 44,
-                            borderRadius: 14,
-                            background: "rgba(0,0,0,0.06)",
+                            backgroundColor: darkMode ? "#39275aff" : "#EEF0FF",
                           }}
                         >
-                          <i className="bi bi-person-x" />
+                          <div
+                            className="d-flex align-items-center justify-content-center mb-2"
+                            style={{
+                              width: 44,
+                              height: 44,
+                              borderRadius: 14,
+                              background: "rgba(0,0,0,0.06)",
+                            }}
+                          >
+                            <i className="bi bi-person-check" />
+                          </div>
+                          <div
+                            className="text-secondary"
+                            style={{ fontSize: 13 }}
+                          >
+                            active
+                          </div>
+                          <div className="fw-bold" style={{ fontSize: 20 }}>
+                            {userscounts?.activatedEmployeeCount}
+                          </div>
                         </div>
+                      </div>
+
+                      <div className="col-md-6">
                         <div
-                          className="text-secondary"
-                          style={{ fontSize: 13 }}
+                          className="rounded-4 p-3"
+                          style={{
+                            backgroundColor: darkMode ? "#174864" : "#fff",
+                          }}
                         >
-                          inactive
-                        </div>
-                        <div className="fw-bold" style={{ fontSize: 20 }}>
-                          {userscounts?.deactivatedEmployeeCount}
+                          <div
+                            className="d-flex align-items-center justify-content-center mb-2"
+                            style={{
+                              width: 44,
+                              height: 44,
+                              borderRadius: 14,
+                              background: "rgba(0,0,0,0.06)",
+                            }}
+                          >
+                            <i className="bi bi-person-x" />
+                          </div>
+                          <div
+                            className="text-secondary"
+                            style={{ fontSize: 13 }}
+                          >
+                            inactive
+                          </div>
+                          <div className="fw-bold" style={{ fontSize: 20 }}>
+                            {userscounts?.deactivatedEmployeeCount}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -336,7 +335,7 @@ export default function DashBoardCharts() {
                 </div>
               </div>
             </div>
-          </div>
+          ) : undefined}
         </div>
       </div>
       {loading && <p>Loading...</p>}

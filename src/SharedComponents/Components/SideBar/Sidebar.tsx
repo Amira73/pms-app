@@ -87,7 +87,7 @@ export default function SideBar() {
                 Users
               </MenuItem>
             )}
-            {/* {loginData?.userGroup == "Manager" && ( )} */}
+            {loginData?.userGroup == "Manager" && (
               <MenuItem
                 className={
                   location.pathname === "/projects-system" ? "active-menu" : ""
@@ -97,7 +97,7 @@ export default function SideBar() {
               >
                 Projects System
               </MenuItem>
-           
+            )}
             <MenuItem
               className={
                 location.pathname === "/projects-manage" ? "active-menu" : ""
@@ -108,27 +108,15 @@ export default function SideBar() {
               My Projects
             </MenuItem>
             {/* {loginData?.userGroup == "Manager" && (   )} */}
-              <MenuItem
-                className={location.pathname === "/tasks" ? "active-menu" : ""}
-                icon={<MdChecklist size={20} />}
-                component={<Link to="/dashboard/tasks" />}
-              >
-                All Tasks
-              </MenuItem>
+            <MenuItem
+              className={location.pathname === "/tasks" ? "active-menu" : ""}
+              icon={<MdChecklist size={20} />}
+              component={<Link to="/dashboard/tasks" />}
+            >
+              All Tasks
+            </MenuItem>
+
          
-            {loginData?.userGroup != "Manager" && (
-              <MenuItem
-                className={
-                  location.pathname === "/dashboard/my-tasks"
-                    ? "active-menu"
-                    : ""
-                }
-                icon={<MdTaskAlt size={20} />}
-                component={<Link to="/dashboard/my-tasks" />}
-              >
-                My Tasks
-              </MenuItem>
-            )}
           </Menu>
         </Sidebar>
       </div>
