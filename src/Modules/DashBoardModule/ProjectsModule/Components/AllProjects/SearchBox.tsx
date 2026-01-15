@@ -57,7 +57,7 @@ export default function SearchBox({
 
     <input
       type="text"
-      className={`${styles.searchInput} ${darkMode ? styles.searchInputDark : ""}`}
+      className={`${styles.searchInput}   `}
       placeholder={placeholder}
       value={query}
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}

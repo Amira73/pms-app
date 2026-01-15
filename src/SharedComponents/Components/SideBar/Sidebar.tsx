@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { FaProjectDiagram } from "react-icons/fa";
 import {
@@ -10,13 +9,15 @@ import {
 } from "react-icons/md";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Link, useLocation } from "react-router-dom";
+import type { AuthContextType } from "../../../Services/AuthContextType";
+import { useAuth } from "../../../Context/AuthContext";
 // import { useAuth } from "../../../Context/AuthContext";
 // import type { AuthContextType } from "../../../Services/AuthContextType";
 
 export default function SideBar() {
   const location = useLocation();
   const [isCollapse, setIsCollapse] = useState(false);
-  // const { loginData }: AuthContextType = useAuth();
+  const { loginData }: AuthContextType = useAuth()!;
 
   const handleCollapse = () => {
     setIsCollapse(!isCollapse);
@@ -77,26 +78,26 @@ export default function SideBar() {
               Home
             </MenuItem>
 
-            {/* {loginData?.userGroup == "Manager" && ()} */}
-            <MenuItem
-              className={location.pathname === "/users" ? "active-menu" : ""}
-              icon={<MdPeople size={20} />}
-              component={<Link to="/dashboard/users" />}
-            >
-              Users
-            </MenuItem>
-
-            {/* {loginData?.userGroup == "Manager" && ()} */}
-            <MenuItem
-              className={
-                location.pathname === "/projects-system" ? "active-menu" : ""
-              }
-              icon={<FaProjectDiagram size={18} />}
-              component={<Link to="/dashboard/projects-system" />}
-            >
-              Projects System
-            </MenuItem>
-
+            {loginData?.userGroup == "Manager" && (
+              <MenuItem
+                className={location.pathname === "/users" ? "active-menu" : ""}
+                icon={<MdPeople size={20} />}
+                component={<Link to="/dashboard/users" />}
+              >
+                Users
+              </MenuItem>
+            )}
+            {loginData?.userGroup == "Manager" && (
+              <MenuItem
+                className={
+                  location.pathname === "/projects-system" ? "active-menu" : ""
+                }
+                icon={<FaProjectDiagram size={18} />}
+                component={<Link to="/dashboard/projects-system" />}
+              >
+                Projects System
+              </MenuItem>
+            )}
             <MenuItem
               className={
                 location.pathname === "/projects-manage" ? "active-menu" : ""
@@ -106,7 +107,7 @@ export default function SideBar() {
             >
               My Projects
             </MenuItem>
-            {/* {loginData?.userGroup == "Manager" && ( )} */}
+            {/* {loginData?.userGroup == "Manager" && (   )} */}
             <MenuItem
               className={location.pathname === "/tasks" ? "active-menu" : ""}
               icon={<MdChecklist size={20} />}
@@ -115,17 +116,7 @@ export default function SideBar() {
               All Tasks
             </MenuItem>
 
-            {/* {loginData?.userGroup != "Manager" && ( )} */}
-              {/* <MenuItem
-                className={
-                  location.pathname === "/dashboard/my-tasks" ? "active-menu" : ""
-                }
-                icon={<MdTaskAlt size={20} />}
-                component={<Link to="/dashboard/my-tasks" />}
-              >
-                My Tasks
-              </MenuItem> */}
-           
+         
           </Menu>
         </Sidebar>
       </div>
