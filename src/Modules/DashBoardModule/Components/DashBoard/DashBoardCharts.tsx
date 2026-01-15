@@ -21,6 +21,8 @@ type UsersCountResponse = {
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function DashBoardCharts() {
+  
+
   const role = localStorage.getItem("userGroup");
   const isManager = role === "Manager";
   const [counts, setCounts] = useState<CountResponse | null>(null);
@@ -98,9 +100,9 @@ export default function DashBoardCharts() {
         label: "Tasks",
         data: [counts?.toDo ?? 0, counts?.inProgress ?? 0, counts?.done ?? 0],
 
-        backgroundColor: ["#F5F7E6", "#EEF0FF", "#F8E9F2"],
+        backgroundColor: ["#EEF0FF", "#F5F7E6'", "#F8E9F2"],
         // borderColor: [
-        // '#F5F7E6#F5F7E6',
+        // 'rgba(154, 183, 195, 1)',
         // 'rgba(54, 162, 235, 1)',
         // 'rgba(255, 206, 86, 1)',],
         borderWidth: 1,
