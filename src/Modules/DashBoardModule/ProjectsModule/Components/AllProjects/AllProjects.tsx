@@ -147,55 +147,80 @@ export default function AllProjects() {
       </Modal>
 
       {/* Modal Details */}
-      <Modal show={show2} onHide={handleClose2} size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title> Project Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="p-3 rounded-4 bg-light">
-            <div className="bg-white rounded-4 p-3 shadow-sm mb-3">
-              <div className="d-flex justify-content-between align-items-start gap-3">
-                <div>
-                  <h5 className="mb-1">{projectName}</h5>
-                  <p className="text-muted mb-0">{projectDes}</p>
-                </div>
-                <span className="badge text-bg-secondary px-3 py-2 rounded-pill">
-                  Info
-                </span>
-              </div>
-            </div>
-            <div className="bg-white rounded-4 p-3 shadow-sm">
-              <div className="d-flex justify-content-between align-items-start py-2 border-bottom">
-                <span className="text-muted fw-semibold">Title</span>
-                <span className="fw-medium text-end">{projectName}</span>
-              </div>
-              <div className="d-flex justify-content-between align-items-start py-2 border-bottom">
-                <span className="text-muted fw-semibold">Description</span>
-                <span className="fw-medium text-end" style={{ maxWidth: 420 }}>
-                  {projectDes}
-                </span>
-              </div>
-              <div className="d-flex justify-content-between align-items-start py-2 border-bottom">
-                <span className="text-muted fw-semibold">Created At</span>
-                <span className="fw-medium text-end">
-                  {new Date(projectDate).toLocaleString()}
-                </span>
-              </div>
-              <div className="d-flex justify-content-between align-items-start py-2">
-                <span className="text-muted fw-semibold">Last Updated</span>
-                <span className="fw-medium text-end">
-                  {new Date(projectDatemod).toLocaleString()}
-                </span>
-              </div>
-            </div>
+    <Modal show={show2} onHide={handleClose2} size="lg" centered>
+  <Modal.Header
+    closeButton
+    className={darkMode ? "bg-dark text-white border-secondary" : ""}
+    closeVariant={darkMode ? "white" : undefined}
+  >
+    <Modal.Title>Project Details</Modal.Title>
+  </Modal.Header>
+
+  <Modal.Body className={darkMode ? "bg-dark text-white" : ""}>
+    <div className={`p-3 rounded-4 ${darkMode ? "bg-black bg-opacity-25" : "bg-light"}`}>
+      
+      {/* Top Card */}
+      <div
+        className={`rounded-4 p-3 shadow-sm mb-3 ${
+          darkMode ? "bg-secondary bg-opacity-10 border border-secondary" : "bg-white"
+        }`}
+      >
+        <div className="d-flex justify-content-between align-items-start gap-3">
+          <div>
+            <h5 className="mb-1">{projectName}</h5>
+            <p className={`mb-0 ${darkMode ? "text-white-50" : "text-muted"}`}>
+              {projectDes}
+            </p>
           </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="outline-danger" onClick={handleClose2}>
-            Cancel
-          </Button>
-        </Modal.Footer>
-      </Modal>
+
+          <span className={`badge px-3 py-2 rounded-pill ${darkMode ? "text-bg-light" : "text-bg-secondary"}`}>
+            Info
+          </span>
+        </div>
+      </div>
+
+      {/* Details Card */}
+      <div
+        className={`rounded-4 p-3 shadow-sm ${
+          darkMode ? "bg-secondary bg-opacity-10 border border-secondary" : "bg-white"
+        }`}
+      >
+        <div className={`d-flex justify-content-between align-items-start py-2 ${darkMode ? "border-secondary" : "border-bottom"}`}>
+          <span className={`${darkMode ? "text-white-50" : "text-muted"} fw-semibold`}>Title</span>
+          <span className="fw-medium text-end">{projectName}</span>
+        </div>
+
+        <div className={`d-flex justify-content-between align-items-start py-2 border-bottom ${darkMode ? "border-secondary" : ""}`}>
+          <span className={`${darkMode ? "text-white-50" : "text-muted"} fw-semibold`}>Description</span>
+          <span className="fw-medium text-end" style={{ maxWidth: 420 }}>
+            {projectDes}
+          </span>
+        </div>
+
+        <div className={`d-flex justify-content-between align-items-start py-2 border-bottom ${darkMode ? "border-secondary" : ""}`}>
+          <span className={`${darkMode ? "text-white-50" : "text-muted"} fw-semibold`}>Created At</span>
+          <span className="fw-medium text-end">
+            {new Date(projectDate).toLocaleString()}
+          </span>
+        </div>
+
+        <div className="d-flex justify-content-between align-items-start py-2">
+          <span className={`${darkMode ? "text-white-50" : "text-muted"} fw-semibold`}>Last Updated</span>
+          <span className="fw-medium text-end">
+            {new Date(projectDatemod).toLocaleString()}
+          </span>
+        </div>
+      </div>
+    </div>
+  </Modal.Body>
+
+  <Modal.Footer className={darkMode ? "bg-dark border-secondary" : ""}>
+    <Button variant={darkMode ? "outline-light" : "outline-danger"} onClick={handleClose2}>
+      Cancel
+    </Button>
+  </Modal.Footer>
+</Modal>
+
 
       <Header
         title="Projects"
