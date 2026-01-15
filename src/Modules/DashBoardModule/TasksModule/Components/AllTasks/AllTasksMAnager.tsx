@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import NoData from "../../../../../SharedComponents/Components/NoData/NoData";
 
 import styles from "./AllTasks.module.css";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Spinner } from "react-bootstrap";
 import DeleteConfirmation from "../../../../../SharedComponents/Components/DeleteConfirmation/DeleteConfirmation";
 import { toast } from "react-toastify";
 import PaginationBar from "../../../ProjectsModule/Components/AllProjects/PaginationBar";
@@ -39,6 +39,7 @@ export default function AllTasksMAnager() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [showMenu, setShowMenu] = useState<number | null>(null);
+   const [isLoading, setIsLoading] = useState(false);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -127,6 +128,7 @@ export default function AllTasksMAnager() {
 
   const getAllTasks = async () => {
     try {
+       setIsLoading(true);
       const response = await http.get(TASK_URLS.GET_TASKS_BY_MANAGER, {
         params: { pageNumber: 1, pageSize: 10, title: search },
       });
@@ -137,6 +139,9 @@ export default function AllTasksMAnager() {
       console.error("Failed to load tasks", error);
       setTotalResults(0);
       setTotalPages(1);
+    }
+    finally {
+      setIsLoading(false);
     }
   };
 
@@ -155,9 +160,18 @@ export default function AllTasksMAnager() {
 
   const deleteTask = async () => {
     try {
+      
       const response = await http.delete(TASK_URLS.DELETE_TASK(taskId), {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+
+        
+        
       });
+      handleClose();
+    toast.success("Task deleted successfully");
+      await getAllTasks();
+      
+
     } catch (error) {}
   };
 
@@ -247,7 +261,16 @@ export default function AllTasksMAnager() {
               </tr>
             </thead>
             <tbody>
-              {tasksList.length > 0 ? (
+
+                       {isLoading ? (
+   <div
+      className="position-absolute top-50 start-50 translate-middle"
+      style={{ zIndex: 10 }}
+    >
+      <Spinner animation="border" variant="success" />
+    </div>
+            ) : 
+              tasksList.length > 0 ? (
                 tasksList.map((task) => (
                   <tr key={task.id}>
                     <td>{task.title}</td>
@@ -419,22 +442,26 @@ export default function AllTasksMAnager() {
 
       </div>
 
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Delete Task</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <DeleteConfirmation name={taskName} deleteItem="Task" />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button variant="danger" onClick={deleteTask}>
-            Delete
-          </Button>
-        </Modal.Footer>
-      </Modal>
+  <Modal show={show} onHide={handleClose} centered size="lg">
+  <Modal.Header closeButton>
+    <Modal.Title>Delete Task</Modal.Title>
+  </Modal.Header>
+
+  <Modal.Body className="py-3">
+    <DeleteConfirmation name={taskName} deleteItem="Task" />
+  </Modal.Body>
+
+  <Modal.Footer>
+    <Button variant="secondary" onClick={handleClose}>
+      Cancel
+    </Button>
+    <Button variant="danger" onClick={deleteTask}>
+      Delete
+    </Button>
+  </Modal.Footer>
+</Modal>
+
+      
 
       <Modal
         show={showStatusModal}
