@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { USERS_URL } from "../../../../Services/Api/ApisUrls";
 
 export default function CreateNewAccount() {
+   const [loading, setLoading] = useState(false);
 
     const [profileImage, setProfileImage] = useState<File | null>(null);
     const onDrop = (acceptedFiles: File[]) => {
@@ -32,6 +33,7 @@ export default function CreateNewAccount() {
    
     const onSubmit = async (data: any) => {
       try {
+          setLoading(true);
         const formData = new FormData();
 
         // append form fields
@@ -60,6 +62,9 @@ export default function CreateNewAccount() {
         console.log(error);
         toast.error(error.response.data.message, { theme: "colored" });
       }
+       finally {
+      setLoading(false);
+    }
     };
 
 

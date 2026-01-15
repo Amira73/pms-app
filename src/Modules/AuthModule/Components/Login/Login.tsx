@@ -8,6 +8,7 @@ import validation from "../../../../Services/Validation";
 import type { AuthField } from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 import AuthForm from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 import { useAuth } from "../../../../Context/AuthContext";
+import { useState } from "react";
 
 type LoginForm = {
   email: string;
@@ -16,6 +17,7 @@ type LoginForm = {
 
 export default function Login() {
   let navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
   const { saveLoginData } = useAuth()!;
 
   const fields: AuthField<LoginForm>[] = [
@@ -45,6 +47,7 @@ export default function Login() {
 
   const onSubmit = async (data: LoginForm) => {
     try {
+      setLoading(true);
       const res = await http.post(USERS_URL.LOGIN, data);
 
       toast.success("Login successful ");
@@ -62,6 +65,9 @@ export default function Login() {
         return;
       }
     }
+    finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -69,6 +75,7 @@ export default function Login() {
       title="Login"
       fields={fields}
       onSubmit={onSubmit}
+       loading={loading}
       submitLabel="Login"
       footer={
         <div className="d-flex justify-content-between mt-3 ">
