@@ -203,3 +203,67 @@
     text-align: left;
     cursor: pointer;
 }
+
+.actionButton:focus, 
+.actionButton:active,
+.actionButton:hover {
+  background-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* حل مشكلة اللون الأبيض في النقاط */
+.dotsWrapper {
+  cursor: pointer;
+  padding: 5px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  background: transparent !important; /* ضمان الشفافية */
+  border-radius: 4px;
+}
+
+.dotsWrapper:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* تنسيق الكارت ليكون غامق مثل الصورة */
+.cardCustom {
+  background-color: #1a1d21 !important; /* لون غامق احترافي */
+  color: #ffffff !important;
+  border: 1px solid #2d3238 !important;
+}
+
+.labelMuted {
+  color: #9ea5ad !important; /* لون رمادي خفيف للعناوين */
+}
+
+/* القائمة المنبثقة غامقة */
+.actionMenuCustom {
+  position: absolute;
+  right: 0;
+  top: 30px;
+  background-color: #212529;
+  border: 1px solid #444;
+  border-radius: 6px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  z-index: 1050;
+  min-width: 130px;
+  overflow: hidden;
+}
+
+.menuItem {
+  width: 100%;
+  padding: 10px 15px;
+  background: none;
+  border: none;
+  color: #fff;
+  text-align: left;
+  display: block;
+  font-size: 14px;
+}
+
+.menuItem:hover {
+  background-color: #343a40;
+}
