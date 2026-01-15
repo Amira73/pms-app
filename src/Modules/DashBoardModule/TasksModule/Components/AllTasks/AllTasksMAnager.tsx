@@ -193,15 +193,17 @@ export default function AllTasksMAnager() {
 
   return (
     <>
-      <Header
-        btn_text="Add New Task"
-        title="Tasks"
-        onBtnClick={() =>
-          navigate("/dashboard/tasks/add", {
-            state: { mode: "add" },
-          })
-        }
-      />
+      <div className="header-wrapper ">
+        <Header
+          btn_text="Add New Task"
+          title="Tasks"
+          onBtnClick={() =>
+            navigate("/dashboard/tasks/add", {
+              state: { mode: "add" },
+            })
+          }
+        />
+      </div>
       {/* <div className="container-fluid">
         <div className="d-flex justify-content-between align-items-center bg-white border border-1 p-3">
           <h1>Tasks</h1>
@@ -238,12 +240,24 @@ export default function AllTasksMAnager() {
           <table className="table table-striped">
             <thead className="py-3">
               <tr className="table-header-row primary-color-bg2 py-3">
-                <th scope="col">Title<i className="fa-solid fa-sort ms-2"></i></th>
-                <th scope="col">Status<i className="fa-solid fa-sort ms-2"></i></th>
-                <th scope="col">User<i className="fa-solid fa-sort ms-2"></i></th>
-                <th scope="col">Project<i className="fa-solid fa-sort ms-2"></i></th>
-                <th scope="col">Date Created<i className="fa-solid fa-sort ms-2"></i></th>
-                <th scope="col">Actions<i className="fa-solid fa-sort ms-2"></i></th>
+                <th scope="col">
+                  Title<i className="fa-solid fa-sort ms-2"></i>
+                </th>
+                <th scope="col">
+                  Status<i className="fa-solid fa-sort ms-2"></i>
+                </th>
+                <th scope="col">
+                  User<i className="fa-solid fa-sort ms-2"></i>
+                </th>
+                <th scope="col">
+                  Project<i className="fa-solid fa-sort ms-2"></i>
+                </th>
+                <th scope="col">
+                  Date Created<i className="fa-solid fa-sort ms-2"></i>
+                </th>
+                <th scope="col">
+                  Actions<i className="fa-solid fa-sort ms-2"></i>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -328,10 +342,10 @@ export default function AllTasksMAnager() {
             tasksList.map((task) => (
               <div
                 key={task.id}
-                className="card mb-3 border-0 shadow-sm rounded-4 p-3 bg-white"
+                className="card mb-3 border-0 shadow-sm rounded-4 p-3"
               >
                 <div className="d-flex justify-content-between align-items-start mb-2">
-                  <h6 className="fw-bold text-dark m-0">{task.title}</h6>
+                  <h6 className="fw-bold  m-0">{task.title}</h6>
                   <div className="dropdown">
                     <i
                       className="fa-solid fa-ellipsis-vertical cursor-pointer p-1"
@@ -415,8 +429,6 @@ export default function AllTasksMAnager() {
             </tr>
           )}
         </div>
-
-
       </div>
 
       <Modal show={show} onHide={handleClose} centered>

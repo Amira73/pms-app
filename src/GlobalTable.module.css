@@ -61,3 +61,39 @@
     align-items: center;
     justify-content: center;
 }
+
+/* استهداف الحاوية الجديدة */
+.header-wrapper {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+/* استهداف الزرار داخل الهيدر */
+.header-wrapper header button {
+    transition: all 0.3s ease-in-out;
+    white-space: nowrap; /* يمنع النص إنه ينزل سطرين */
+}
+
+/* لما الشاشة تكون في حدود 1200px (وقت زحمة السايدبار) */
+@media (max-width: 1250px) {
+    .header-wrapper header button {
+        padding: 6px 15px !important; /* تقليل الحشو */
+        font-size: 14px !important;   /* تصغير الخط */
+        transform: scale(0.9);        /* تصغير الحجم بنسبة 10% */
+        transform-origin: right;      /* التصغير يلم ناحية اليمين */
+    }
+    
+    .header-wrapper header h3 {
+        font-size: 1.5rem !important; /* تصغير العنوان شوية لو لسه خبط في الزرار */
+    }
+}
+
+/* للموبايل */
+@media (max-width: 768px) {
+    .header-wrapper header button {
+        padding: 5px 10px !important;
+        transform: scale(0.85);
+        font-size: 12px !important;
+    }
+}
