@@ -290,13 +290,13 @@ export default function AllTasksMAnager() {
                             </button>
                           </li>
                           <li>
-                            <button
+                            {/* <button
                               className="dropdown-item"
                               onClick={() => openStatusModal(task)}
                             >
                               <i className="fa-solid fa-arrows-rotate"></i>{" "}
                               Change Status
-                            </button>
+                            </button> */}
                           </li>
                           <li>
                             <button
