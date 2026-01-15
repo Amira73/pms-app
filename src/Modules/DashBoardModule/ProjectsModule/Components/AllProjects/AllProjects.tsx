@@ -237,11 +237,12 @@ export default function AllProjects() {
 
           <tbody>
             {isLoading ? (
-              <tr>
-                <td colSpan={6} className={globalStyles.emptyState}>
-                  <Spinner animation="border" role="status" variant="success" />
-                </td>
-              </tr>
+   <div
+      className="position-absolute top-50 start-50 translate-middle"
+      style={{ zIndex: 10 }}
+    >
+      <Spinner animation="border" variant="success" />
+    </div>
             ) : projects.length > 0 ? (
               projects.map((project, idx) => (
                 <tr key={project.id || idx}>
@@ -329,9 +330,14 @@ export default function AllProjects() {
       {/* --- 2. الكروت للموبايل (تظهر في d-md-none) --- */}
       <div className="d-block d-md-none mx-4 mt-3">
         {isLoading ? (
-          <div className="text-center p-5">
-            <Spinner animation="border" variant="success" />
-          </div>
+     <tr>
+                <td colSpan={6}>
+                  {/* استخدام الـ Overlay للتوسط المريح */}
+                  <div className={globalStyles.emptyState}>
+                    <Spinner animation="border" variant="success" />
+                  </div>
+                </td>
+              </tr>
         ) : projects.length > 0 ? (
           projects.map((project, idx) => (
             <div
