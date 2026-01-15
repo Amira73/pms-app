@@ -103,6 +103,7 @@ export default function TaskForm() {
         const res = await http.post(TASK_URLS.CREATE_TASK, data);
         toast.success("Task created successfully!");
         savedTask = res.data;
+        console.log("saved task",savedTask)
       }
 
       // Navigate back to tasks list with refresh signal
