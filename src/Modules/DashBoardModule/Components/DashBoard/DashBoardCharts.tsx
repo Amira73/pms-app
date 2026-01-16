@@ -100,7 +100,7 @@ export default function DashBoardCharts() {
         label: "Tasks",
         data: [counts?.toDo ?? 0, counts?.inProgress ?? 0, counts?.done ?? 0],
 
-        backgroundColor: ["#7d83aeff", "#696e44ff'", "#904873ff"],
+        backgroundColor: ["#7d83aeff", "#417999ff'", "#904873ff"],
         // borderColor: [
         // 'rgba(154, 183, 195, 1)',
         // 'rgba(54, 162, 235, 1)',
