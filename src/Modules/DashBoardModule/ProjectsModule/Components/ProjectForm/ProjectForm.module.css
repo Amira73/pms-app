@@ -9,7 +9,7 @@
   background: none;
   border: none;
   color: #6c757d;
-  font-size: 24px;
+  font-size: 18px;
   cursor: pointer;
   padding: 0;
   margin-bottom: 8px;
@@ -17,4 +17,28 @@
 
 .back-btn:hover {
   text-decoration: underline;
+}
+.pageHeaderDark {
+  color: #e2e8f0;
+}
+
+.backBtnDark {
+  color: #e2e8f0;
+}
+.backBtnDark:hover {
+  opacity: 0.9;
+}
+.form-control::placeholder {
+  color: #94a3b8;
+}
+
+.pageHeaderLight {
+  background: #ffffff !important;
+  border: 1px solid #eef2f7;
+}
+
+.pageHeaderDark {
+  background: #0b1220 !important;  /* أسود/غامق شيك */
+  border: 1px solid #1e293b;
+  color: #e5e7eb;
 }

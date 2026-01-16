@@ -25,6 +25,7 @@ import AllTasks from "./Modules/DashBoardModule/TasksModule/Components/AllTasks/
 import TaskForm from "./Modules/DashBoardModule/TasksModule/Components/TaskForm/TaskForm";
 import TaskDetails from "./Modules/DashBoardModule/TasksModule/Components/TaskDetails/TaskDetails";
 import MyTasks from "./Modules/DashBoardModule/TasksModule/Components/MyTasks/MyTasks";
+import ThemeProvider from "./ThemeProvider";
 
 function App() {
   const routes = createBrowserRouter([
@@ -62,15 +63,50 @@ function App() {
         { path: "dashboard", element: <DashBoard /> },
 
         // Manager routes
-        { path: "projects-system", element: <ProjectsSystem /> },
+       { 
+  path: "projects-system",
+  element: (
+    <ProtectedRoute allowedRoles={["Manager"]}>
+      <ProjectsSystem />
+    </ProtectedRoute>
+  )
+},
         { path: "projects-manage", element: <AllProjects /> },
-        { path: "projects/add", element: <ProjectForm /> },
-        { path: "projects/edit/:id", element: <ProjectForm /> },
+        { path: "projects/add", element:
+          (
+    <ProtectedRoute allowedRoles={["Manager"]}>
+           <ProjectForm />
+   </ProtectedRoute>) },
+        { path: "projects/edit/:id", element: 
+         (
+    <ProtectedRoute allowedRoles={["Manager"]}>
+        <ProjectForm /> 
+        </ProtectedRoute>)
+      
+      },
         { path: "tasks", element: <AllTasks /> },
-        { path: "tasks/add", element: <TaskForm /> },
-        { path: "tasks/edit/:id", element: <TaskForm /> },
+        { path: "tasks/add", 
+
+          
+          element: 
+              (
+    <ProtectedRoute allowedRoles={["Manager"]}>
+          <TaskForm /> 
+          </ProtectedRoute>)
+
+        
+        },
+        { path: "tasks/edit/:id", element: 
+                (
+    <ProtectedRoute allowedRoles={["Manager"]}>
+          <TaskForm /> 
+          </ProtectedRoute>)
+      },
         { path: "tasks/:id", element: <TaskDetails /> },
-        { path: "users", element: <Users /> },
+        { path: "users", element:           (
+    <ProtectedRoute allowedRoles={["Manager"]}>
+          <Users /> 
+          </ProtectedRoute>) },
         { path: "change-password", element: <ChangePassword /> },
 
         { path: "profile", element: <Profile /> },
@@ -82,7 +118,11 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={routes} />;
+return (
+    
+      <RouterProvider router={routes} />
+  
+  );
 }
 
 export default App;

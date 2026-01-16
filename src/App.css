@@ -60,6 +60,12 @@ html, body {
 *::after {
   box-sizing: border-box;
 }
+.primarycolorbg2{
+  background-color: #315951E5 !important;
+  color: #eef7f3 !important;
+  text-align: center;
+  
+}
 
 .primarycolorbg,
 .primarycolorbg:hover,
@@ -268,3 +274,111 @@ html, body {
   .bg-outlet{
     background-color: #f5f5f5;
   }
+
+  [data-bs-theme="dark"] header.bg-white {
+  background-color: #15181d !important;
+}
+
+[data-bs-theme="dark"] header .text-black {
+  color: #f1f5f9 !important;
+}
+
+[data-bs-theme="dark"] .primarycolorbg {
+  background-color: #f3a21b !important; /* زرار */
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-bs-theme="dark"] .primarycolorbg:hover {
+  filter: brightness(1.05);
+}
+
+/* لو icon بيعمل inherit غلط */
+[data-bs-theme="dark"] .primarycolorbg i {
+  color: #ffffff !important;
+}
+.app-light {
+  background: #f6f7fb;
+  min-height: 100vh;
+}
+
+.app-dark {
+  background: #0b1220;
+  min-height: 100vh;
+  color: #e5e7eb;
+}
+
+.app-dark .card-surface {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+}
+
+.app-dark .form-control,
+.app-dark .form-select {
+  background: #0b1220;
+  border: 1px solid #1e293b;
+  color: #e5e7eb;
+}
+
+.app-dark .form-control::placeholder,
+.app-dark textarea::placeholder {
+  color: #94a3b8;
+}
+
+.app-dark .text-muted {
+  color: #94a3b8 !important;
+}
+
+.app-dark .border-top {
+  border-top: 1px solid #1e293b !important;
+}
+
+
+
+
+.app-light {
+  background: #f6f7fb;
+  min-height: 100vh;
+}
+
+.app-dark {
+  background: #0b1220;
+  min-height: 100vh;
+  color: #e5e7eb;
+}
+
+/* Card surface */
+.app-dark .card-surface {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+}
+
+/* Inputs / Selects */
+.app-dark .form-control,
+.app-dark .form-select {
+  background: #0b1220;
+  border: 1px solid #1e293b;
+  color: #e5e7eb;
+}
+
+.app-dark .form-control::placeholder,
+.app-dark textarea::placeholder {
+  color: #94a3b8;
+}
+
+.app-dark .form-control:focus,
+.app-dark .form-select:focus {
+  border-color: #334155;
+  box-shadow: 0 0 0 0.2rem rgba(148, 163, 184, 0.15);
+}
+
+/* Muted text + border */
+.app-dark .text-muted {
+  color: #94a3b8 !important;
+}
+
+.app-dark .border-top {
+  border-top: 1px solid #1e293b !important;
+}
+
+

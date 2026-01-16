@@ -32,7 +32,6 @@ export default function ForgetPassword() {
 
       toast.success(res.data?.message || "OTP sent to your email ✅");
 
-      // التوجه لصفحة الـ Reset لإدخال الكود الجديد
       navigate("/reset-password");
     } catch (err) {
       const msg = axios.isAxiosError(err)

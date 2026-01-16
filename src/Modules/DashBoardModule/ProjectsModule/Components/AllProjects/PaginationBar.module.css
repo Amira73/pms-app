@@ -1,26 +1,31 @@
 .bar {
   width: 100%;
-  background: #fff;
-  border-radius: 12px;
-  padding: 14px 18px;
-
+  box-sizing: border-box;
+  background-color: #fff;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  justify-content: flex-end; /* كله في اليمين زي الصورة */
-  gap: 18px;
+  padding: 15px 25px;
 
-  border: 1px solid #eef2f7;
+  /* position: fixed; */
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  border-radius: 15px 15px 0 0;
+  border-top: 1px solid #eee;
+
 }
 
-.left {
+/* .left {
   display: flex;
   align-items: center;
   gap: 10px;
 
   color: #6b7280;
-  font-size: 22px;
+  font-size: 18px;
   white-space: nowrap;
-}
+} */
 
 .selectWrap {
   display: inline-flex;
@@ -28,7 +33,6 @@
   gap: 8px;
 }
 
-/* الـ select شكل pill صغير زي الصورة */
 .select {
   appearance: none;
   -webkit-appearance: none;
@@ -38,8 +42,8 @@
   background: #fff;
   border-radius: 999px;
 
-  padding: 6px 28px 6px 12px; /* مساحة للسهم */
-  font-size:22px;
+  padding: 6px 28px 6px 12px;
+  font-size: 22px;
   color: #111827;
   line-height: 1;
 
@@ -47,7 +51,6 @@
   outline: none;
 }
 
-/* سهم dropdown بسيط داخل الـ select */
 .selectContainer {
   position: relative;
   display: inline-flex;
@@ -62,7 +65,6 @@
   font-size: 12px;
 }
 
-/* الجزء بتاع Page + الأسهم */
 .right {
   display: flex;
   align-items: center;
@@ -73,7 +75,6 @@
   white-space: nowrap;
 }
 
-/* أزرار الأسهم خفيفة جدًا (من غير دايرة) */
 .iconBtn {
   border: none;
   background: transparent;
@@ -95,9 +96,75 @@
   cursor: not-allowed;
 }
 
-/* لو محتاجة تفصلي بينهم بخط خفيف */
 .divider {
   width: 1px;
   height: 18px;
   background: #eef2f7;
+}
+
+.customSelect {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.selectField {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-color: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 4px 30px 4px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.customSelect i {
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+  font-size: 10px;
+  color: #000;
+}
+
+.barDark {
+  background: #0f172a;
+  border: 1px solid #1f2937;
+  color: #e2e8f0;
+  border-top: none;
+}
+
+/* Select */
+.customSelectDark {
+  border: 1px solid #1f2937;
+  background: #111827;
+  border-radius: 10px;
+}
+
+.selectFieldDark {
+  background: transparent;
+  color: #e2e8f0;
+}
+
+.selectFieldDark option {
+  background: #000;
+  color: #e2e8f0;
+}
+
+/* Buttons */
+.iconBtnDark {
+  border: 1px solid #000;
+  background: #111827;
+}
+
+.iconBtnDark:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Icons */
+.iconWhite {
+  color: #fff !important;
 }
