@@ -100,7 +100,7 @@ export default function DashBoardCharts() {
         label: "Tasks",
         data: [counts?.toDo ?? 0, counts?.inProgress ?? 0, counts?.done ?? 0],
 
-        backgroundColor: ["#EEF0FF", "#F5F7E6'", "#F8E9F2"],
+        backgroundColor: ["#7d83aeff", "#696e44ff'", "#904873ff"],
         // borderColor: [
         // 'rgba(154, 183, 195, 1)',
         // 'rgba(54, 162, 235, 1)',
@@ -128,7 +128,7 @@ export default function DashBoardCharts() {
             <div
               className=" rounded-4 p-3 shadow-sm"
               style={{
-                backgroundColor: darkMode ? "#222" : "#fff",
+                backgroundColor: darkMode ? "#0b1220" : "#fff",
                 boxShadow: darkMode
                   ? "0 2px 4px rgba(255, 255, 255, 0.65)"
                   : "none",
@@ -251,7 +251,7 @@ export default function DashBoardCharts() {
               <div
                 className=" rounded-4 p-3 shadow-sm"
                 style={{
-                  backgroundColor: darkMode ? "#222" : "#fff",
+                  backgroundColor: darkMode ? "#0b1220" : "#fff",
                   boxShadow: darkMode
                     ? "0 2px 4px rgba(255, 255, 255, 0.65)"
                     : "none",
