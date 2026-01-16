@@ -44,15 +44,10 @@ export default function CreateNewAccount() {
       if (profileImage) {
         formData.append("profileImage", profileImage);
       }
-      let token = localStorage.getItem("token");
-      await http.post(USERS_URL.CREATE, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await http.post(USERS_URL.REGISTER, formData);
 
       toast.success("Account created successfully", { theme: "colored" });
-      navigate("/auth/login");
+      navigate("/auth/verify-account");
     } catch (error: any) {
       console.log(error);
       toast.error(error.response.data.message, { theme: "colored" });
