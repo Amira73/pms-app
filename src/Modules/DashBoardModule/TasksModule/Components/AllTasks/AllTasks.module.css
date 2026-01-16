@@ -65,3 +65,30 @@
 
   
 
+/* استهداف زرار الإضافة داخل الهيدر */
+header button, 
+.header-wrapper button {
+    transition: all 0.3s ease-in-out;
+    white-space: nowrap;
+}
+
+/* لما تكون الشاشة أصغر من 1200px (وقت ما السايدبار بياخد مساحة) */
+@media (max-width: 1200px) {
+    header button, 
+    .header-wrapper button {
+        padding: 8px 15px !important; /* تقليل المسافات الداخلية */
+        font-size: 20px !important;    /* تصغير الخط سيكا */
+        transform: scale(0.9);         /* تصغير الحجم ككل بنسبة 10% */
+        transform-origin: right;       /* التصغير يكون ناحية اليمين */
+    }
+}
+
+/* في الشاشات الأصغر (الموبايل) */
+@media (max-width: 768px) {
+    header button, 
+    .header-wrapper button {
+        padding: 5px 10px !important;
+        font-size: 20px !important;
+        transform: scale(0.85);
+    }
+}

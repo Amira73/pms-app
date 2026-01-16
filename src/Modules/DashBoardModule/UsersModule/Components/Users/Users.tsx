@@ -5,6 +5,7 @@ import NoData from "../../../../../SharedComponents/Components/NoData/NoData";
 import PaginationBar from "../../../ProjectsModule/Components/AllProjects/PaginationBar";
 import SearchBox from "../../../ProjectsModule/Components/AllProjects/SearchBox";
 import styles from "../UsersForm.module.css";
+import globalStyles from "../../../../../GlobalTable.module.css";
 
 interface User {
   id: number;
@@ -490,7 +491,10 @@ export default function Users() {
                                       : "fa-user-check text-success"
                                   } me-2`}
                                 ></i>
-                               Block
+                                {
+                                user.status === "Active"
+                                      ? "Block"
+                                      : "Un Block"}
                               </button>
                             </div>
                           )}

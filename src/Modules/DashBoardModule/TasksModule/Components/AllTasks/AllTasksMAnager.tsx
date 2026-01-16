@@ -9,13 +9,14 @@ import { useNavigate } from "react-router-dom";
 import NoData from "../../../../../SharedComponents/Components/NoData/NoData";
 
 import styles from "./AllTasks.module.css";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Spinner } from "react-bootstrap";
 import DeleteConfirmation from "../../../../../SharedComponents/Components/DeleteConfirmation/DeleteConfirmation";
 import { toast } from "react-toastify";
 import PaginationBar from "../../../ProjectsModule/Components/AllProjects/PaginationBar";
 import SearchBox from "../../../ProjectsModule/Components/AllProjects/SearchBox";
 import Header from "../../../../../SharedComponents/Components/Header/Header";
-
+//  التنسيقات الجديدة
+import globalStyles from "../../../../../GlobalTable.module.css";
 
 type Task = {
   id: number;
@@ -31,14 +32,14 @@ type User = { id: number; userName: string };
 type Project = { id: number; title: string };
 
 export default function AllTasksMAnager() {
- const navigate = useNavigate();
+  const navigate = useNavigate();
   const [tasksList, setTasksList] = useState<Task[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [showMenu, setShowMenu] = useState<number | null>(null);
-
+   const [isLoading, setIsLoading] = useState(false);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -127,6 +128,7 @@ export default function AllTasksMAnager() {
 
   const getAllTasks = async () => {
     try {
+       setIsLoading(true);
       const response = await http.get(TASK_URLS.GET_TASKS_BY_MANAGER, {
         params: { pageNumber: 1, pageSize: 10, title: search },
       });
@@ -137,6 +139,9 @@ export default function AllTasksMAnager() {
       console.error("Failed to load tasks", error);
       setTotalResults(0);
       setTotalPages(1);
+    }
+    finally {
+      setIsLoading(false);
     }
   };
 
@@ -155,9 +160,18 @@ export default function AllTasksMAnager() {
 
   const deleteTask = async () => {
     try {
+      
       const response = await http.delete(TASK_URLS.DELETE_TASK(taskId), {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+
+        
+        
       });
+      handleClose();
+    toast.success("Task deleted successfully");
+      await getAllTasks();
+      
+
     } catch (error) {}
   };
 
@@ -166,12 +180,10 @@ export default function AllTasksMAnager() {
     getUsersAndProjects();
   }, [search, pageNumber, pageSize]);
 
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-GB");
   };
-
 
   // Helper to map IDs to names
   const getUserName = (id: number | undefined) =>
@@ -195,12 +207,17 @@ export default function AllTasksMAnager() {
 
   return (
     <>
-      <Header btn_text="Add New Task" title="Tasks" 
-      onBtnClick={() =>
-     navigate("/dashboard/tasks/add", {
-      state: { mode: "add" },
-    })
-  } />
+      <div className="header-wrapper ">
+        <Header
+          btn_text="Add New Task"
+          title="Tasks"
+          onBtnClick={() =>
+            navigate("/dashboard/tasks/add", {
+              state: { mode: "add" },
+            })
+          }
+        />
+      </div>
       {/* <div className="container-fluid">
         <div className="d-flex justify-content-between align-items-center bg-white border border-1 p-3">
           <h1>Tasks</h1>
@@ -227,128 +244,236 @@ export default function AllTasksMAnager() {
           <button className="rounded-5 bg-white px-4">Filter</button>
         </div> */}
 
-        <SearchBox onSearch={handleSearch} debounceMs={400} />
-
+        <div className="mx-4">
+          <SearchBox onSearch={handleSearch} debounceMs={500} />
+        </div>
         {/* Tasks Table */}
-        <div className="table-responsive mx-4 overflow-hidden vh-100">
-         
-        <table className="table table-striped">
-          <thead className="py-3">
-            <tr className="table-header-row primary-color-bg2 py-3">
-           
-                  <th scope="col">Title</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">User</th>
-                  <th scope="col">Project</th>
-                  <th scope="col">Date Created</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tasksList.length > 0 ? (
-                  tasksList.map((task) => (
-                    <tr key={task.id}>
-                      <td>{task.title}</td>
-                      <td>
-                        <span
-                          className={`${styles.statusBadge} ${getStatusClass(
-                            task.status
-                          )}`}
-                        >
-                          {task.status}
-                        </span>
-                      </td>
+        <div
+          className={`${globalStyles.tableContainer} d-none d-md-block mx-4 mt-0`}
+        >
+          <table className="table table-striped">
+            <thead className="py-3">
+              <tr className="table-header-row primary-color-bg2 py-3">
+                <th scope="col">
+                  Title<i className="fa-solid fa-sort ms-2"></i>
+                </th>
+                <th scope="col">
+                  Status<i className="fa-solid fa-sort ms-2"></i>
+                </th>
+                <th scope="col">
+                  User<i className="fa-solid fa-sort ms-2"></i>
+                </th>
+                <th scope="col">
+                  Project<i className="fa-solid fa-sort ms-2"></i>
+                </th>
+                <th scope="col">
+                  Date Created<i className="fa-solid fa-sort ms-2"></i>
+                </th>
+                <th scope="col">
+                  Actions<i className="fa-solid fa-sort ms-2"></i>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
 
-                      <td>{getUserName(task.employee?.id)}</td>
-                      <td>{getProjectTitle(task.project?.id)}</td>
-                      <td>{formatDate(task.creationDate)}</td>
-                      <td>
-                        <div className="dropdown">
-                          <i
-                            className="fa-solid fa-ellipsis-vertical cursor-pointer"
-                            data-bs-toggle="dropdown"
-                          />
-                          <ul className="dropdown-menu">
-                            <li>
-                              <button
-                                className="dropdown-item"
-                                onClick={() => getTaskById(task.id)}
-                              >
-                                <i className="fa-solid fa-eye"></i> View
-                              </button>
-                            </li>
-                            <li>
-                              <button
-                                className="dropdown-item"
-                                onClick={() =>
-                                  navigate(`/dashboard/tasks/edit/${task.id}`)
-                                }
-                              >
-                                <i className="fa-solid fa-edit"></i> Edit
-                              </button>
-                            </li>
-                            <li>
-                              <button
-                                className="dropdown-item"
-                                onClick={() => openStatusModal(task)}
-                              >
-                                <i className="fa-solid fa-arrows-rotate"></i>{" "}
-                                Change Status
-                              </button>
-                            </li>
-                            <li>
-                              <button
-                                onClick={() => handleShow(task)}
-                                className="dropdown-item text-danger"
-                              >
-                                <i className="fa-solid fa-trash"></i> Delete
-                              </button>
-                            </li>
-                          </ul>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={6}>
-                      <NoData />
+                       {isLoading ? (
+   <div
+      className="position-absolute top-50 start-50 translate-middle"
+      style={{ zIndex: 10 }}
+    >
+      <Spinner animation="border" variant="success" />
+    </div>
+            ) : 
+              tasksList.length > 0 ? (
+                tasksList.map((task) => (
+                  <tr key={task.id}>
+                    <td>{task.title}</td>
+                    <td>
+                      <span
+                        className={`${styles.statusBadge} ${getStatusClass(
+                          task.status
+                        )}`}
+                      >
+                        {task.status}
+                      </span>
+                    </td>
+
+                    <td>{getUserName(task.employee?.id)}</td>
+                    <td>{getProjectTitle(task.project?.id)}</td>
+                    <td>{formatDate(task.creationDate)}</td>
+                    <td>
+                      <div className="dropdown">
+                        <i
+                          className="fa-solid fa-ellipsis-vertical cursor-pointer"
+                          data-bs-toggle="dropdown"
+                        />
+                        <ul className="dropdown-menu">
+                          <li>
+                            <button
+                              className="dropdown-item"
+                              onClick={() => getTaskById(task.id)}
+                            >
+                              <i className="fa-solid fa-eye"></i> View
+                            </button>
+                          </li>
+                          <li>
+                            <button
+                              className="dropdown-item"
+                              onClick={() =>
+                                navigate(`/dashboard/tasks/edit/${task.id}`)
+                              }
+                            >
+                              <i className="fa-solid fa-edit"></i> Edit
+                            </button>
+                          </li>
+                          <li>
+                            {/* <button
+                              className="dropdown-item"
+                              onClick={() => openStatusModal(task)}
+                            >
+                              <i className="fa-solid fa-arrows-rotate"></i>{" "}
+                              Change Status
+                            </button> */}
+                          </li>
+                          <li>
+                            <button
+                              onClick={() => handleShow(task)}
+                              className="dropdown-item text-danger"
+                            >
+                              <i className="fa-solid fa-trash"></i> Delete
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
                     </td>
                   </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-     
-        <PaginationBar
-          totalResults={totalResults}
-          pageNumber={pageNumber}
-          pageSize={pageSize}
-          onPageChange={(p) => setPageNumber(p)}
-          onPageSizeChange={(size) => {
-            setPageSize(size);
-            setPageNumber(1);
-          }}
-        />
-    </div>
-     
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={6} className="text-center py-5">
+                    <NoData />
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
 
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Delete Task</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <DeleteConfirmation name={taskName} deleteItem="Task" />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button variant="danger" onClick={deleteTask}>
-            Delete
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        {/* Responsive Cards for Mobile View */}
+        <div className="d-block d-md-none mx-4 mt-3">
+          {tasksList.length > 0 ? (
+            tasksList.map((task) => (
+              <div
+                key={task.id}
+                className="card mb-3 border-0 shadow-sm rounded-4 p-3"
+              >
+                <div className="d-flex justify-content-between align-items-start mb-2">
+                  <h6 className="fw-bold  m-0">{task.title}</h6>
+                  <div className="dropdown">
+                    <i
+                      className="fa-solid fa-ellipsis-vertical cursor-pointer p-1"
+                      data-bs-toggle="dropdown"
+                    />
+                    <ul className="dropdown-menu">
+                      <li>
+                        <button
+                          className="dropdown-item"
+                          onClick={() => getTaskById(task.id)}
+                        >
+                          View
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          className="dropdown-item"
+                          onClick={() =>
+                            navigate(`/dashboard/tasks/edit/${task.id}`)
+                          }
+                        >
+                          Edit
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          className="dropdown-item"
+                          onClick={() => openStatusModal(task)}
+                        >
+                          Change Status
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          className="dropdown-item text-danger"
+                          onClick={() => handleShow(task)}
+                        >
+                          Delete
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <span
+                  className={`${styles.statusBadge} ${getStatusClass(
+                    task.status
+                  )} mb-3`}
+                  style={{ width: "fit-content" }}
+                >
+                  {task.status}
+                </span>
+
+                <div className="small text-muted border-top pt-2">
+                  <div className="d-flex justify-content-between mb-1">
+                    <span>User:</span>
+                    <span className="text-dark fw-medium">
+                      {getUserName(task.employee?.id)}
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-between mb-1">
+                    <span>Project:</span>
+                    <span className="text-dark fw-medium">
+                      {getProjectTitle(task.project?.id)}
+                    </span>
+                  </div>
+                  <div className="d-flex justify-content-between">
+                    <span>Joined:</span>
+                    <span className="text-dark fw-medium">
+                      {formatDate(task.creationDate)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={6} className="text-center py-5">
+                <NoData />
+              </td>
+            </tr>
+          )}
+        </div>
+      </div>
+
+  <Modal show={show} onHide={handleClose} centered size="lg">
+  <Modal.Header closeButton>
+    <Modal.Title>Delete Task</Modal.Title>
+  </Modal.Header>
+
+  <Modal.Body className="py-3">
+    <DeleteConfirmation name={taskName} deleteItem="Task" />
+  </Modal.Body>
+
+  <Modal.Footer>
+    <Button variant="secondary" onClick={handleClose}>
+      Cancel
+    </Button>
+    <Button variant="danger" onClick={deleteTask}>
+      Delete
+    </Button>
+  </Modal.Footer>
+</Modal>
+
+      
 
       <Modal
         show={showStatusModal}
@@ -442,4 +567,3 @@ export default function AllTasksMAnager() {
     </>
   );
 }
-

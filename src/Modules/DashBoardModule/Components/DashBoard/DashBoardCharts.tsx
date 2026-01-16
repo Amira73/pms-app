@@ -21,6 +21,8 @@ type UsersCountResponse = {
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function DashBoardCharts() {
+  
+
   const role = localStorage.getItem("userGroup");
   const isManager = role === "Manager";
   const [counts, setCounts] = useState<CountResponse | null>(null);
@@ -98,9 +100,9 @@ export default function DashBoardCharts() {
         label: "Tasks",
         data: [counts?.toDo ?? 0, counts?.inProgress ?? 0, counts?.done ?? 0],
 
-        backgroundColor: ["#F5F7E6", "#EEF0FF", "#F8E9F2"],
+        backgroundColor: ["#7d83aeff", "#417999ff'", "#904873ff"],
         // borderColor: [
-        // '#F5F7E6#F5F7E6',
+        // 'rgba(154, 183, 195, 1)',
         // 'rgba(54, 162, 235, 1)',
         // 'rgba(255, 206, 86, 1)',],
         borderWidth: 1,
@@ -126,7 +128,7 @@ export default function DashBoardCharts() {
             <div
               className=" rounded-4 p-3 shadow-sm"
               style={{
-                backgroundColor: darkMode ? "#222" : "#fff",
+                backgroundColor: darkMode ? "#0b1220" : "#fff",
                 boxShadow: darkMode
                   ? "0 2px 4px rgba(255, 255, 255, 0.65)"
                   : "none",
@@ -249,7 +251,7 @@ export default function DashBoardCharts() {
               <div
                 className=" rounded-4 p-3 shadow-sm"
                 style={{
-                  backgroundColor: darkMode ? "#222" : "#fff",
+                  backgroundColor: darkMode ? "#0b1220" : "#fff",
                   boxShadow: darkMode
                     ? "0 2px 4px rgba(255, 255, 255, 0.65)"
                     : "none",
