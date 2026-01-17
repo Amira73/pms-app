@@ -169,8 +169,8 @@ export default function DashBoardCharts() {
                           <i className="bi bi-graph-up" />
                         </div>
                         <div
-                          className="text-secondary"
-                          style={{ fontSize: 13 }}
+                         style={{ fontSize: 13 ,  color: darkMode ? "#fff" : "#000", }}
+                          
                         >
                           Progress
                         </div>
@@ -199,8 +199,8 @@ export default function DashBoardCharts() {
                           <i className="bi bi-clipboard-check" />
                         </div>
                         <div
-                          className="text-secondary"
-                          style={{ fontSize: 13 }}
+                          
+                          style={{ fontSize: 13 ,  color: darkMode ? "#fff" : "#000", }}
                         >
                           Tasks Number
                         </div>
@@ -229,8 +229,8 @@ export default function DashBoardCharts() {
                           <i className="bi bi-folder2-open" />
                         </div>
                         <div
-                          className="text-secondary"
-                          style={{ fontSize: 13 }}
+                        
+                         style={{ fontSize: 13 ,  color: darkMode ? "#fff" : "#000", }}
                         >
                           Projects Number
                         </div>
@@ -292,8 +292,8 @@ export default function DashBoardCharts() {
                             <i className="bi bi-person-check" />
                           </div>
                           <div
-                            className="text-secondary"
-                            style={{ fontSize: 13 }}
+                           style={{ fontSize: 13 ,  color: darkMode ? "#fff" : "#000", }}
+                          
                           >
                             active
                           </div>
@@ -322,8 +322,8 @@ export default function DashBoardCharts() {
                             <i className="bi bi-person-x" />
                           </div>
                           <div
-                            className="text-secondary"
-                            style={{ fontSize: 13 }}
+                           style={{ fontSize: 13 ,  color: darkMode ? "#fff" : "#000", }}
+                          
                           >
                             inactive
                           </div>

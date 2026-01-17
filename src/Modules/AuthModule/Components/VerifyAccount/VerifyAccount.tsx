@@ -1,19 +1,33 @@
 import { useState } from "react";
 import type { AuthField } from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 import AuthForm from "../../../../SharedComponents/Components/AuthForm/AuthForm";
+import { http } from "../../../../Services/Api/httpInstance";
+import { Navigate, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type VerifyAccountForm = {
   email: string;
-  seed: string; // غير otp إلى seed
-  password: string;
-  confirmPassword: string;
+  code: string; 
 };
 
 export default function ResetPassword() {
   const [loading] = useState(false);
-
-  const onSubmit = (data: VerifyAccountForm) => {
-    // TODO: implement verification logic
+  let navigate = useNavigate();
+  const onSubmit =  async (data: VerifyAccountForm) => {
+     try {
+          let response = await http.put("https://upskilling-egypt.com:3003/api/v1/Users/verify",
+            data
+          );
+          
+          navigate("/auth/login");
+          toast.success("Account verifyied successfully ", {
+            position: "top-right",
+            autoClose: 4000,
+            theme: "light",
+          });
+        } catch (error) {
+          toast.error(error.response.data.message);
+        }
     console.log("VerifyAccount submit", data);
   };
 
@@ -32,16 +46,12 @@ export default function ResetPassword() {
       },
     },
     {
-      name: "seed",
+      name: "code",
       label: "OTP Code",
       type: "text",
       placeholder: "Enter OTP Code",
       rules: {
         required: "OTP code is required",
-        pattern: {
-          value: /^[0-9]+$/,
-          message: "OTP must contain only numbers",
-        },
       },
     },
   ];

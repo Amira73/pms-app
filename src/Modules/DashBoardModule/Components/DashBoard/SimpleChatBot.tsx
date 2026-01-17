@@ -75,79 +75,214 @@ export default function SimpleChatBot() {
         inputBorder: "rgba(0,0,0,0.12)",
       };
 
-  const replies = useMemo(
-    () => [
-      { keywords: ["ameera", "اميره", "أميره"], reply: "❤️ بحبك يا أميره" },
-  { keywords: ["nadia", "ناديه", "نادية"], reply: "❤️😎 بحبك يا بشمهندسة نادية" },
-  { keywords: ["amira", "أميرة"], reply: "❤️ يا أحلى أميرة" },
-  { keywords: ["mohamed", "محمد"], reply: "👑 يا باشا محمد نورت" },
-  { keywords: ["ahmed", "احمد", "أحمد"], reply: "🔥 يا أحمد يا جامد" },
+ const replies = useMemo(
+  () => [
+    // ---- Names ----
+    { keywords: ["ameera", "amira"], reply: "❤️ Love you, Ameera!" },
+    { keywords: ["nadia"], reply: "😎 Much respect, Engineer Nadia!" },
+    { keywords: ["mohamed"], reply: "👑 Welcome, Mohamed!" },
+    { keywords: ["ahmed"], reply: "🔥 Ahmed, you’re awesome!" },
 
-  // ---- Company / Team ----
-  { keywords: ["upskilling", "ابسكيلنج", "ابسكلنج", "up skill"], reply: "❤️✌️ Upskilling أحلى مكان وهيكبر ويبقى قد الدنيا" },
-  { keywords: ["team", "فريق", "التيم"], reply: "🤝 التيم جامد… يلا نكسر الدنيا!" },
+    // ---- Company / Team ----
+    {
+      keywords: ["upskilling", "upskill"],
+      reply: "🚀 Upskilling is a great place to learn and grow."
+    },
+    {
+      keywords: ["team", "the team"],
+      reply:
+        "🤝 Thank you team for your dedication and great teamwork."
+    },
 
-  // ---- Greetings ----
-  { keywords: ["اهلا", "أهلا", "هلا", "hello", "hi", "hey", "welcome"], reply: "❤️ أهلا بيك يا حبيب قلبي" },
-  { keywords: ["صباح", "morning"], reply: "☀️ صباح الفل والياسمين" },
-  { keywords: ["مساء", "evening"], reply: "🌙 مساء الورد" },
+    // ---- Greetings ----
+    {
+      keywords: ["hello", "hi", "hey", "welcome"],
+      reply: "👋 Hello! Nice to see you."
+    },
+    {
+      keywords: ["morning", "good morning"],
+      reply: "☀️ Good morning! Have a great day."
+    },
+    {
+      keywords: ["evening", "good evening"],
+      reply: "🌙 Good evening!"
+    },
 
-  // ---- Love / Emo ----
-  { keywords: ["بحبك", "love you", "حب"], reply: "💖 وأنا كمان والله!" },
-  { keywords: ["قلب", "heart", "<3"], reply: "❤️❤️❤️" },
-  { keywords: ["زعل", "sad", "مضايق"], reply: "😔 متزعلش… احكيلي بس" },
-  { keywords: ["فرحان", "happy", "مبسوط"], reply: "🥳 جامد! مبروك يا بطل" },
+    // ---- Feelings ----
+    {
+      keywords: ["love", "love you"],
+      reply: "💖 Love you too!"
+    },
+    {
+      keywords: ["sad", "upset"],
+      reply: "😔 I’m here if you want to talk."
+    },
+    {
+      keywords: ["happy", "excited"],
+      reply: "🥳 That’s great! Congrats!"
+    },
 
-  // ---- Compliments / Thanks ----
-  { keywords: ["مجهود", "effort", "شغل", "جامد", "عاش"], reply: "تسلم يا كبير ❤️😎 ربنا يكرمك" },
-  { keywords: ["شكرا", "شكرًا", "thanks", "thank", "اوكي", "ok", "تمام"], reply: "العفو 🙌" },
+    // ---- Thanks / Compliments ----
+    {
+      keywords: ["thanks", "thank you"],
+      reply: "You’re welcome 🙌"
+    },
+    {
+      keywords: ["great", "awesome", "nice work"],
+      reply: "😎 Thanks! Glad you like it."
+    },
 
-  // ---- Help / Navigation ----
-  { keywords: ["help", "مساعدة", "ساعد", "ازاي", "كيفية", "how", "ايه ده"], reply: "قولي عايز/ة إيه: tasks / projects / users / dashboard / login" },
-  { keywords: ["dashboard", "داشبورد"], reply: "📊 الداشبورد بيعرض الإحصائيات والـ charts ومؤشرات الأداء." },
+    // ---- Help ----
+    {
+      keywords: ["help", "how", "what is"],
+      reply:
+        "🤔 How can I help? Try: tasks, projects, users, dashboard, login."
+    },
+    {
+      keywords: ["dashboard"],
+      reply:
+        "📊 The dashboard shows stats, charts, and performance data."
+    },
 
-  // ---- Tasks ----
-  { keywords: ["task", "tasks", "تاسك", "تاسكات", "مهام"], reply: "📌 المهام: من صفحة Tasks تقدري تضيفي Task جديدة من زر + وتتابعي حالتها." },
-  { keywords: ["todo", "to do", "to-do", "تودو"], reply: "🟡 ToDo يعني لسه متعملتش." },
-  { keywords: ["inprogress", "in progress", "قيد التنفيذ"], reply: "🔵 In Progress يعني شغالين عليها دلوقتي." },
-  { keywords: ["done", "تم", "خلصت"], reply: "🟢 Done يعني المهمة اتقفلت ✅" },
+    // ---- Tasks ----
+    {
+      keywords: ["task", "tasks"],
+      reply:
+        "📌 You can manage tasks from the Tasks page."
+    },
+    {
+      keywords: ["todo"],
+      reply: "🟡 To Do means not started yet."
+    },
+    {
+      keywords: ["in progress"],
+      reply: "🔵 In Progress means work is ongoing."
+    },
+    {
+      keywords: ["done", "completed"],
+      reply: "🟢 Done means the task is finished."
+    },
 
-  // ---- Projects ----
-  { keywords: ["project", "projects", "مشروع", "مشاريع"], reply: "📁 المشاريع: من صفحة Projects تقدري تضيفي مشروع جديد وتربطيه بالمهام." },
-  { keywords: ["add project", "اضافة مشروع", "إضافة مشروع"], reply: "➕ لإضافة مشروع: افتحي Projects > Add New Project واملَي العنوان والوصف." },
-  { keywords: ["edit project", "تعديل مشروع"], reply: "✏️ للتعديل: افتحي قائمة الـ 3 نقط > Edit." },
-  { keywords: ["delete project", "حذف مشروع"], reply: "🗑️ للحذف: 3 نقط > Delete وتأكيد الحذف." },
+    // ---- Projects ----
+    {
+      keywords: ["project", "projects"],
+      reply:
+        "📁 Projects help you organize tasks together."
+    },
+    {
+      keywords: ["add project"],
+      reply:
+        "➕ Go to Projects and click Add New Project."
+    },
+    {
+      keywords: ["edit project"],
+      reply:
+        "✏️ Use the menu and select Edit."
+    },
+    {
+      keywords: ["delete project"],
+      reply:
+        "🗑️ Use the menu and confirm delete."
+    },
 
-  // ---- Users ----
-  { keywords: ["user", "users", "مستخدم", "مستخدمين"], reply: "👥 المستخدمين: تقدري تشوفي Active/Inactive من صفحة Users." },
-  { keywords: ["active", "نشط"], reply: "✅ Active يعني المستخدم شغال على السيستم." },
-  { keywords: ["inactive", "غير نشط"], reply: "⛔ Inactive يعني المستخدم متوقف أو مش مفعل." },
+    // ---- Users ----
+    {
+      keywords: ["user", "users"],
+      reply:
+        "👥 You can manage users from the Users page."
+    },
+    {
+      keywords: ["active"],
+      reply: "✅ Active means the user is enabled."
+    },
+    {
+      keywords: ["inactive"],
+      reply: "⛔ Inactive means the user is disabled."
+    },
 
-  // ---- Auth / Errors ----
-  { keywords: ["login", "تسجيل", "دخول", "auth", "token"], reply: "🔐 لو في مشكلة Login: اتأكدي من token في localStorage وإن الـ API بيرجع 200 مش 401." },
-  { keywords: ["401", "unauthorized"], reply: "🚫 401: غالبًا token غلط/منتهي أو مش بيتبعت في Authorization header." },
-  { keywords: ["403", "forbidden"], reply: "🚫 403: انتِ authenticated بس مش عندك صلاحية." },
-  { keywords: ["404", "not found"], reply: "🔎 404: endpoint غلط أو resource مش موجود." },
-  { keywords: ["500", "server error"], reply: "💥 500: مشكلة من السيرفر… جربي تشوفي logs أو جرّبي تاني." },
+    // ---- Auth / Errors ----
+    {
+      keywords: ["login", "auth", "token"],
+      reply:
+        "🔐 Check your token and make sure you are logged in."
+    },
+    {
+      keywords: ["401", "unauthorized"],
+      reply:
+        "🚫 401 means your token is invalid or expired."
+    },
+    {
+      keywords: ["403", "forbidden"],
+      reply:
+        "🚫 403 means you don’t have permission."
+    },
+    {
+      keywords: ["404"],
+      reply:
+        "🔎 404 means the resource was not found."
+    },
+    {
+      keywords: ["500"],
+      reply:
+        "💥 500 is a server error. Please try again."
+    },
 
-  // ---- Git ----
-  { keywords: ["git", "جيت"], reply: "🐙 قولي عايزة pull ولا merge ولا stash؟" },
-  { keywords: ["stash", "ستاش"], reply: "📦 git stash = يحفظ شغلك مؤقتًا… وبعدها git stash pop يرجعه." },
-  { keywords: ["pull", "بول"], reply: "⬇️ git pull origin dev (أو main) عشان تنزلي آخر تحديث." },
-  { keywords: ["merge", "ميرج"], reply: "🔀 git merge origin/dev عشان تدمجي تحديثات dev على برانشك." },
-  { keywords: ["conflict", "كونفليكت", "تعارض"], reply: "⚠️ لو حصل conflict: صلّحي الملفات، git add . ثم git commit." },
+    // ---- Git ----
+    {
+      keywords: ["git"],
+      reply:
+        "🐙 Do you want to pull, merge, or stash?"
+    },
+    {
+      keywords: ["pull"],
+      reply:
+        "⬇️ Use git pull to get the latest updates."
+    },
+    {
+      keywords: ["merge"],
+      reply:
+        "🔀 Use git merge to combine branches."
+    },
+    {
+      keywords: ["conflict"],
+      reply:
+        "⚠️ Fix conflicts, then commit your changes."
+    },
 
-  // ---- UI / Bootstrap ----
-  { keywords: ["bootstrap", "بوتستراب"], reply: "🧩 Bootstrap: استخدمي classes زي d-flex, justify-content-between, rounded-4." },
-  { keywords: ["dark mode", "دارك مود"], reply: "🌙 للدارك مود: ممكن data-bs-theme='dark' على الـ body أو root." },
-  { keywords: ["spinner", "لودينج", "loading"], reply: "⏳ حطي Spinner وقت ما البيانات بتتحمّل عشان تجربة المستخدم تبقى أحسن." },
+    // ---- UI ----
+    {
+      keywords: ["bootstrap"],
+      reply:
+        "🧩 Bootstrap helps with layout and styling."
+    },
+    {
+      keywords: ["dark mode"],
+      reply:
+        "🌙 Dark mode improves night viewing."
+    },
+    {
+      keywords: ["loading", "spinner"],
+      reply:
+        "⏳ Show a spinner while loading data."
+    },
 
-  // ---- Fun ----
-  { keywords: ["ضحك", "lol", "😂", "هههه"], reply: "😂😂 ضحكتيني والله" },
-  { keywords: ["سلام", "bye", "باي"], reply: "👋 باي يا جميل.. أشوفك قريب" },
-    ],
-    []
-  );
+    // ---- Fun ----
+    {
+      keywords: ["lol", "haha"],
+      reply: "😂 That made me laugh!"
+    },
+    {
+      keywords: ["bye", "goodbye"],
+      reply: "👋 Bye! See you soon."
+    },
+     {
+      keywords: ["شكرا"],
+      reply: "العفو يا صديقي .. يومك سعيد "
+    }
+  ],
+  []
+);
+
 
   const wantsTasksCount = (text: string) => {
     const t = normalize(text);

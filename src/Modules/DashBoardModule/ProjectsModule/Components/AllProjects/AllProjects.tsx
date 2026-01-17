@@ -8,7 +8,6 @@ import { Button, Modal } from "react-bootstrap";
 import DeleteConfirmation from "../../../../../SharedComponents/Components/DeleteConfirmation/DeleteConfirmation";
 import { http } from "../../../../../Services/Api/httpInstance";
 import { USERS_URL } from "../../../../../Services/Api/ApisUrls";
-import type { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import { useMode } from "../../../../../Context/ModeContext";
