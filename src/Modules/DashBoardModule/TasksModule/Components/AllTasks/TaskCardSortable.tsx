@@ -16,8 +16,8 @@ export type ApiTask = {
 export default function TaskCardSortable({ task }: { task: ApiTask }) {
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } =
     useSortable({
-      id: task.id, // لازم unique
-      data: { status: task.status }, // هنستفيد منها
+      id: task.id, 
+      data: { status: task.status },
     });
 
   const style: React.CSSProperties = {

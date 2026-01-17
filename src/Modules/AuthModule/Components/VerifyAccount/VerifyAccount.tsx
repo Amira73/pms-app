@@ -1,11 +1,9 @@
 import { useState } from "react";
 import type { AuthField } from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 import AuthForm from "../../../../SharedComponents/Components/AuthForm/AuthForm";
-import axios from "axios";
 import { http } from "../../../../Services/Api/httpInstance";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { USERS_URL } from "../../../../Services/Api/ApisUrls";
 
 type VerifyAccountForm = {
   email: string;
