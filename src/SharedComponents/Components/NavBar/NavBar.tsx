@@ -1,29 +1,27 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
-// import { MdOutlineWbSunny } from "react-icons/md";
-// import { BsMoonStarsFill } from "react-icons/bs";
+import { MdOutlineWbSunny } from "react-icons/md";
+import { BsMoonStarsFill } from "react-icons/bs";
 import { FiLock, FiLogOut } from "react-icons/fi";
 import { HiBell, HiChevronDown } from "react-icons/hi";
 // import type { AuthContextType } from "../../../Services/AuthContextType";
 import { useAuth } from "../../../Context/AuthContext";
 // import logo from "/public/navLogo.svg";
-import userImg from "/public/Ellipse 18.png";
 import type { AuthContextType } from "../../../Services/AuthContextType";
-
+import { useMode } from "../../../Context/ModeContext";
+import styles from "./NavBar.module.css";
 
 export default function NavBar() {
   const navigate = useNavigate();
 
- const { loginData , logOutUser } : AuthContextType = useAuth();
+  const { loginData, logOutUser, currentUser }: AuthContextType = useAuth()!;
 
- 
- 
-  // const { darkMode, setDarkMode } = useMode();
+  const { darkMode, setDarkMode } = useMode();
 
-  // const handleDarkMode = () => {
-  //   setDarkMode(!darkMode);
-  // };
+  const handleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
   // =========== LogOut ========
   const logOut = () => {
@@ -33,23 +31,29 @@ export default function NavBar() {
 
   // ===========================
   useEffect(() => {
-    // // console.log("Login Data in Navbar:", loginData);
+    console.log("Login Data in Navbar:", loginData);
   }, []);
 
   return (
     <>
       <div
-        className="d-flex w-100 justify-content-between align-items-center py-2 bg-white
+        className="d-flex w-100 justify-content-between align-items-center shadow  py-2 
        "
+        style={{
+            backgroundColor: darkMode ? "#222" : "#fff",
+            boxShadow: darkMode
+              ? "0 2px 4px rgba(255, 255, 255, 0.65)"
+              : "none",
+          }}
       >
         <div
           className="d-flex align-items-center p-2 rounded-3"
-          // style={{
-          //   backgroundColor: darkMode ? "#ccc" : "#fff",
-          //   boxShadow: darkMode
-          //     ? "0 2px 4px rgba(255, 255, 255, 0.65)"
-          //     : "none",
-          // }}
+          style={{
+            backgroundColor: darkMode ? "#ccc" : "#fff",
+            boxShadow: darkMode
+              ? "0 2px 4px rgba(255, 255, 255, 0.65)"
+              : "none",
+          }}
         >
           <img src="/navLogo.svg" className="img-fluid " alt="PMS" />
         </div>
@@ -73,7 +77,7 @@ export default function NavBar() {
           </div>
 
           {/* Dark & light mode toggle icon */}
-          {/* <div className={styles.toggleContainer} onClick={handleDarkMode}>
+          <div className={styles.toggleContainer} onClick={handleDarkMode}>
             <div className={styles.toggleContainer} onClick={handleDarkMode}>
               <MdOutlineWbSunny
                 className={`${styles.icon} ${styles.sun} ${
@@ -90,7 +94,7 @@ export default function NavBar() {
                 color="#EF9B28"
               />
             </div>
-          </div> */}
+          </div>
           {/* <!-- Divider --> */}
           <div
             className="border-start mx-2"
@@ -106,20 +110,22 @@ export default function NavBar() {
           <div
             className="d-flex gap-3 align-items-center "
             style={{ cursor: "pointer" }}
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate("/dashboard/profile")}
           >
             <img
-              src={userImg}
+              src={`${"https://upskilling-egypt.com:3003/"}/${
+                currentUser?.imagePath
+              }`}
               alt="user"
               className="rounded-circle"
               width="40"
               height="40"
             />
             <div className="d-flex flex-column">
-              <span>{loginData?.id}</span>
-              <small className="">{"nadia.mohamed.taha166@gmail.com"}</small>
+              <small className="">{loginData?.userEmail}</small>
+
               <span className="text-muted fw-light">
-                {loginData?.email}
+                {loginData?.userGroup}
               </span>
             </div>
           </div>
@@ -132,26 +138,26 @@ export default function NavBar() {
             >
               <HiChevronDown
                 size={18}
-                // color={darkMode ? "#f8f9fa" : "#212529"}
+                color={darkMode ? "#f8f9fa" : "#212529"}
               />
             </button>
             <ul className="dropdown-menu dropdown-menu-start shadow-lg">
               <li>
-                {/* ${darkMode ? `text-whtie` : `text-secondary`} */}
+             
                 <button
                   className={`dropdown-item d-flex align-items-center gap-2
                    
                     `}
                   onClick={() => {
-                    navigate("/change-password");
+                    navigate("/dashboard/change-password");
                   }}
-                  // color={darkMode ? "#f8f9fa" : "#212529"}
+                  color={darkMode ? "#f8f9fa" : "#212529"}
                 >
                   <FiLock size={18} /> Change Password
                 </button>
               </li>
               <li>
-                {/* ${ darkMode ? "text-light" : "text-danger" } */}
+               
                 <button
                   className={`dropdown-item d-flex align-items-center gap-2 `}
                   style={{
@@ -164,8 +170,8 @@ export default function NavBar() {
                       icon: "warning",
                       confirmButtonText: "Logout",
                       showCloseButton: true,
-                      // background: darkMode ? "#2c2c2c" : "#fff",
-                      // color: darkMode ? "#fff" : "#000",
+                      background: darkMode ? "#2c2c2c" : "#fff",
+                      color: darkMode ? "#fff" : "#000",
                     }).then((result: { isConfirmed: boolean }) => {
                       if (result.isConfirmed) {
                         logOut();
@@ -175,7 +181,7 @@ export default function NavBar() {
                 >
                   <FiLogOut
                     size={18}
-                    // color={darkMode ? "#ffffff" : "#dc3545"}
+                    color={darkMode ? "#ffffff" : "#dc3545"}
                   />
                   Logout
                 </button>

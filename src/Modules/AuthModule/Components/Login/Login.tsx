@@ -1,4 +1,3 @@
-
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -9,6 +8,7 @@ import validation from "../../../../Services/Validation";
 import type { AuthField } from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 import AuthForm from "../../../../SharedComponents/Components/AuthForm/AuthForm";
 import { useAuth } from "../../../../Context/AuthContext";
+import { useState } from "react";
 
 type LoginForm = {
   email: string;
@@ -17,8 +17,8 @@ type LoginForm = {
 
 export default function Login() {
   let navigate = useNavigate();
-  const { saveLoginData } = useAuth();
-
+    const [loading, setLoading] = useState(false);
+  const { saveLoginData } = useAuth()!;
 
   const fields: AuthField<LoginForm>[] = [
     {
@@ -26,7 +26,9 @@ export default function Login() {
       label: "E-mail",
       type: "email",
       placeholder: "Enter your E-mail",
-      rules: { required: validation.EMAIL_VALIDATION.required },
+      rules: {
+        required: validation.EMAIL_VALIDATION.required,
+      },
     },
     {
       name: "password",
@@ -37,19 +39,34 @@ export default function Login() {
     },
   ];
 
+  function decodeJwt(token: string) {
+  const base64Url = token.split(".")[1];
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  return JSON.parse(decodeURIComponent(escape(atob(base64))));
+}
+
   const onSubmit = async (data: LoginForm) => {
     try {
+      setLoading(true);
       const res = await http.post(USERS_URL.LOGIN, data);
 
       toast.success("Login successful ");
       console.log(res.data);
       localStorage.setItem("token", res.data.token);
+         const decoded = decodeJwt(res.data.token);
+  localStorage.setItem("userGroup", decoded.userGroup);
       console.log(res.data.token);
       saveLoginData();
       navigate("/dashboard");
-    } catch (err) {
-      console.log("error", err);
-      toast.error("Something went wrong ");
+    } catch (err: any) {
+      const serverMessage = err.response?.data?.message;
+      if (serverMessage) {
+        toast.error(serverMessage);
+        return;
+      }
+    }
+    finally {
+      setLoading(false);
     }
   };
 
@@ -58,6 +75,7 @@ export default function Login() {
       title="Login"
       fields={fields}
       onSubmit={onSubmit}
+       loading={loading}
       submitLabel="Login"
       footer={
         <div className="d-flex justify-content-between mt-3 ">

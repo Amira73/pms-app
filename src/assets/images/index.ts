@@ -13,6 +13,7 @@ import auth9 from "./auth9.png";
 import auth10 from "./auth10 (1).png";
 import auth11 from "./auth11.png";
 import noData from './nodata.png'
+import noData3 from './nodata3.png'
 
 export const IMAGES = {
   topRight,
@@ -28,5 +29,6 @@ export const IMAGES = {
   auth9,
   auth10,
   auth11,
-  noData
+  noData,
+  noData3
 } as const;
