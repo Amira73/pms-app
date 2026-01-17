@@ -32,7 +32,7 @@ export default function ForgetPassword() {
 
       toast.success(res.data?.message || "OTP sent to your email ✅");
 
-      navigate("/reset-password");
+      navigate("/auth/reset-password");
     } catch (err) {
       const msg = axios.isAxiosError(err)
         ? err.response?.data?.message || "Failed to send request ❌"

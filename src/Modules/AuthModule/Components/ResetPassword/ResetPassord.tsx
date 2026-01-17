@@ -77,7 +77,7 @@ export default function ResetPassword() {
       toast.success("Password reset successful ✅");
 
       // التوجه لصفحة تسجيل الدخول
-      navigate("/login");
+      navigate("/auth/login");
     } catch (err) {
       let errorMessage = "Password reset failed ❌";
       if (axios.isAxiosError(err)) {
