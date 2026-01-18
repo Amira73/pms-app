@@ -13,7 +13,7 @@ import Spinner from "react-bootstrap/Spinner";
 import { useMode } from "../../../../../Context/ModeContext";
 import { useAuth } from "../../../../../Context/AuthContext";
 
-//  التنسيقات الجديدة
+// التنسيقات الجديدة
 import globalStyles from "../../../../../GlobalTable.module.css";
 
 type Task = {
@@ -66,7 +66,7 @@ export default function AllProjects() {
     try {
       const res = await getManagerProjectsFun(
         { pageSize, pageNumber, title: search },
-        role
+        role,
       );
       setProectsList(res?.data ?? []);
       setTotalResults(res?.totalNumberOfRecords ?? 0);
@@ -120,7 +120,6 @@ export default function AllProjects() {
     load();
   }, [search, pageNumber, pageSize]);
 
-  // متغيرات الألوان للـ Scrollbar
   const themeVars = {
     "--scrollbar-track": darkMode ? "#212529" : "#f1f1f1",
     "--scrollbar-thumb": darkMode ? "#495057" : "#888",
@@ -146,80 +145,96 @@ export default function AllProjects() {
       </Modal>
 
       {/* Modal Details */}
-    <Modal show={show2} onHide={handleClose2} size="lg" centered>
-  <Modal.Header
-    closeButton
-    className={darkMode ? "bg-dark text-white border-secondary" : ""}
-    closeVariant={darkMode ? "white" : undefined}
-  >
-    <Modal.Title>Project Details</Modal.Title>
-  </Modal.Header>
-
-  <Modal.Body className={darkMode ? "bg-dark text-white" : ""}>
-    <div className={`p-3 rounded-4 ${darkMode ? "bg-black bg-opacity-25" : "bg-light"}`}>
-      
-      {/* Top Card */}
-      <div
-        className={`rounded-4 p-3 shadow-sm mb-3 ${
-          darkMode ? "bg-secondary bg-opacity-10 border border-secondary" : "bg-white"
-        }`}
-      >
-        <div className="d-flex justify-content-between align-items-start gap-3">
-          <div>
-            <h5 className="mb-1">{projectName}</h5>
-            <p className={`mb-0 ${darkMode ? "text-white-50" : "text-muted"}`}>
-              {projectDes}
-            </p>
+      <Modal show={show2} onHide={handleClose2} size="lg" centered>
+        <Modal.Header
+          closeButton
+          className={darkMode ? "bg-dark text-white border-secondary" : ""}
+          closeVariant={darkMode ? "white" : undefined}
+        >
+          <Modal.Title>Project Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className={darkMode ? "bg-dark text-white" : ""}>
+          <div
+            className={`p-3 rounded-4 ${darkMode ? "bg-black bg-opacity-25" : "bg-light"}`}
+          >
+            <div
+              className={`rounded-4 p-3 shadow-sm mb-3 ${darkMode ? "bg-secondary bg-opacity-10 border border-secondary" : "bg-white"}`}
+            >
+              <div className="d-flex justify-content-between align-items-start gap-3">
+                <div>
+                  <h5 className="mb-1">{projectName}</h5>
+                  <p
+                    className={`mb-0 ${darkMode ? "text-white-50" : "text-muted"}`}
+                  >
+                    {projectDes}
+                  </p>
+                </div>
+                <span
+                  className={`badge px-3 py-2 rounded-pill ${darkMode ? "text-bg-light" : "text-bg-secondary"}`}
+                >
+                  Info
+                </span>
+              </div>
+            </div>
+            <div
+              className={`rounded-4 p-3 shadow-sm ${darkMode ? "bg-secondary bg-opacity-10 border border-secondary" : "bg-white"}`}
+            >
+              <div
+                className={`d-flex justify-content-between align-items-start py-2 ${darkMode ? "border-secondary" : "border-bottom"}`}
+              >
+                <span
+                  className={`${darkMode ? "text-white-50" : "text-muted"} fw-semibold`}
+                >
+                  Title
+                </span>
+                <span className="fw-medium text-end">{projectName}</span>
+              </div>
+              <div
+                className={`d-flex justify-content-between align-items-start py-2 border-bottom ${darkMode ? "border-secondary" : ""}`}
+              >
+                <span
+                  className={`${darkMode ? "text-white-50" : "text-muted"} fw-semibold`}
+                >
+                  Description
+                </span>
+                <span className="fw-medium text-end" style={{ maxWidth: 420 }}>
+                  {projectDes}
+                </span>
+              </div>
+              <div
+                className={`d-flex justify-content-between align-items-start py-2 border-bottom ${darkMode ? "border-secondary" : ""}`}
+              >
+                <span
+                  className={`${darkMode ? "text-white-50" : "text-muted"} fw-semibold`}
+                >
+                  Created At
+                </span>
+                <span className="fw-medium text-end">
+                  {new Date(projectDate).toLocaleString()}
+                </span>
+              </div>
+              <div className="d-flex justify-content-between align-items-start py-2">
+                <span
+                  className={`${darkMode ? "text-white-50" : "text-muted"} fw-semibold`}
+                >
+                  Last Updated
+                </span>
+                <span className="fw-medium text-end">
+                  {new Date(projectDatemod).toLocaleString()}
+                </span>
+              </div>
+            </div>
           </div>
-
-          <span className={`badge px-3 py-2 rounded-pill ${darkMode ? "text-bg-light" : "text-bg-secondary"}`}>
-            Info
-          </span>
-        </div>
-      </div>
-
-      {/* Details Card */}
-      <div
-        className={`rounded-4 p-3 shadow-sm ${
-          darkMode ? "bg-secondary bg-opacity-10 border border-secondary" : "bg-white"
-        }`}
-      >
-        <div className={`d-flex justify-content-between align-items-start py-2 ${darkMode ? "border-secondary" : "border-bottom"}`}>
-          <span className={`${darkMode ? "text-white-50" : "text-muted"} fw-semibold`}>Title</span>
-          <span className="fw-medium text-end">{projectName}</span>
-        </div>
-
-        <div className={`d-flex justify-content-between align-items-start py-2 border-bottom ${darkMode ? "border-secondary" : ""}`}>
-          <span className={`${darkMode ? "text-white-50" : "text-muted"} fw-semibold`}>Description</span>
-          <span className="fw-medium text-end" style={{ maxWidth: 420 }}>
-            {projectDes}
-          </span>
-        </div>
-
-        <div className={`d-flex justify-content-between align-items-start py-2 border-bottom ${darkMode ? "border-secondary" : ""}`}>
-          <span className={`${darkMode ? "text-white-50" : "text-muted"} fw-semibold`}>Created At</span>
-          <span className="fw-medium text-end">
-            {new Date(projectDate).toLocaleString()}
-          </span>
-        </div>
-
-        <div className="d-flex justify-content-between align-items-start py-2">
-          <span className={`${darkMode ? "text-white-50" : "text-muted"} fw-semibold`}>Last Updated</span>
-          <span className="fw-medium text-end">
-            {new Date(projectDatemod).toLocaleString()}
-          </span>
-        </div>
-      </div>
-    </div>
-  </Modal.Body>
-
-  <Modal.Footer className={darkMode ? "bg-dark border-secondary" : ""}>
-    <Button variant={darkMode ? "outline-light" : "outline-danger"} onClick={handleClose2}>
-      Cancel
-    </Button>
-  </Modal.Footer>
-</Modal>
-
+        </Modal.Body>
+        <Modal.Footer className={darkMode ? "bg-dark border-secondary" : ""}>
+          <Button
+            variant={darkMode ? "outline-light" : "outline-danger"}
+            onClick={handleClose2}
+          >
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <Header
         title="Projects"
@@ -233,12 +248,12 @@ export default function AllProjects() {
         <SearchBox onSearch={handleSearch} debounceMs={500} />
       </div>
 
-      {/* --- 1. الجدول (يظهر في الشاشات الكبيرة فقط d-md-block) --- */}
+      {/* --- 1. الجدول (Desktop) --- */}
       <div
         className={`${globalStyles.tableResponsive} table-responsive d-none d-md-block mx-4`}
       >
         <table className="table table-striped">
-          <thead className="py-3">
+          <thead>
             <tr className="table-header-row primary-color-bg2 py-3">
               <th className="py-2">
                 Title <i className="fa-solid fa-sort ms-2"></i>
@@ -258,15 +273,13 @@ export default function AllProjects() {
               <th className="py-2"></th>
             </tr>
           </thead>
-
           <tbody>
             {isLoading ? (
-   <div
-      className="position-absolute top-50 start-50 translate-middle"
-      style={{ zIndex: 10 }}
-    >
-      <Spinner animation="border" variant="success" />
-    </div>
+              <tr>
+                <td colSpan={6} className="text-center py-5">
+                  <Spinner animation="border" variant="success" />
+                </td>
+              </tr>
             ) : projects.length > 0 ? (
               projects.map((project, idx) => (
                 <tr key={project.id || idx}>
@@ -284,7 +297,7 @@ export default function AllProjects() {
                   <td>
                     {new Date(project.creationDate).toLocaleDateString(
                       "en-GB",
-                      { day: "2-digit", month: "short", year: "numeric" }
+                      { day: "2-digit", month: "short", year: "numeric" },
                     )}
                   </td>
                   <td>
@@ -295,9 +308,7 @@ export default function AllProjects() {
                           data-bs-toggle="dropdown"
                         >
                           <i
-                            className={`fa-solid fa-ellipsis-vertical ${
-                              darkMode ? "text-white" : "text-dark"
-                            }`}
+                            className={`fa-solid fa-ellipsis-vertical ${darkMode ? "text-white" : "text-dark"}`}
                           ></i>
                         </button>
                         <ul className="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
@@ -351,24 +362,17 @@ export default function AllProjects() {
         </table>
       </div>
 
-      {/* --- 2. الكروت للموبايل (تظهر في d-md-none) --- */}
+      {/* --- 2. الكروت (Mobile) --- */}
       <div className="d-block d-md-none mx-4 mt-3">
         {isLoading ? (
-     <tr>
-                <td colSpan={6}>
-                  {/* استخدام الـ Overlay للتوسط المريح */}
-                  <div className={globalStyles.emptyState}>
-                    <Spinner animation="border" variant="success" />
-                  </div>
-                </td>
-              </tr>
+          <div className="text-center py-5">
+            <Spinner animation="border" variant="success" />
+          </div>
         ) : projects.length > 0 ? (
           projects.map((project, idx) => (
             <div
               key={project.id || idx}
-              className={`card mb-3 border-0 shadow-sm rounded-4 p-3 ${
-                darkMode ? "bg-dark text-white" : "bg-white text-dark"
-              }`}
+              className={`card mb-3 border-0 shadow-sm rounded-4 p-3 ${darkMode ? "bg-dark text-white" : "bg-white text-dark"}`}
             >
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <h6 className="fw-bold m-0">{project.title}</h6>
@@ -430,7 +434,7 @@ export default function AllProjects() {
                   <span className="fw-medium">
                     {new Date(project.creationDate).toLocaleDateString(
                       "en-GB",
-                      { day: "2-digit", month: "short", year: "numeric" }
+                      { day: "2-digit", month: "short", year: "numeric" },
                     )}
                   </span>
                 </div>
@@ -438,11 +442,9 @@ export default function AllProjects() {
             </div>
           ))
         ) : (
-          <tr>
-            <td colSpan={6} className="text-center py-5">
-              <NoData />
-            </td>
-          </tr>
+          <div className="text-center py-5">
+            <NoData />
+          </div>
         )}
       </div>
 
