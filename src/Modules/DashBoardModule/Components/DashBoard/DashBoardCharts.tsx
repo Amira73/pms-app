@@ -21,13 +21,11 @@ type UsersCountResponse = {
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function DashBoardCharts() {
-  
-
   const role = localStorage.getItem("userGroup");
   const isManager = role === "Manager";
   const [counts, setCounts] = useState<CountResponse | null>(null);
   const [userscounts, setusersCounts] = useState<UsersCountResponse | null>(
-    null
+    null,
   );
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -64,33 +62,39 @@ export default function DashBoardCharts() {
     }
   };
 
-  useEffect(() => {
-    let mounted = true;
+// DashBoardCharts.tsx
+useEffect(() => {
+  let mounted = true;
 
-    (async () => {
-      setLoading(true);
-      setErrorMsg(null);
-
-      try {
-        const [tasksData, usersData] = await Promise.all([
-          getCount(),
-          getUsersCount(),
-        ]);
-        if (!mounted) return;
-
-        setCounts(tasksData);
-        setusersCounts(usersData);
-      } catch (e) {
-        if (mounted) setErrorMsg((e as Error).message);
-      } finally {
-        if (mounted) setLoading(false);
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      // نطلب بيانات المهام دائماً
+      const tasksData = await getCount();
+      
+      // نطلب بيانات المستخدمين فقط لو هو Manager
+      let usersData = null;
+      if (isManager) {
+        usersData = await getUsersCount();
       }
-    })();
 
-    return () => {
-      mounted = false;
-    };
-  }, []);
+      if (mounted) {
+        setCounts(tasksData);
+        if (usersData) setusersCounts(usersData);
+      }
+    } catch (e) {
+      if (mounted) setErrorMsg((e as Error).message);
+    } finally {
+      if (mounted) setLoading(false);
+    }
+  };
+
+  fetchData();
+
+  return () => { mounted = false; };
+}, [isManager]); // أضف isManager هنا
+
+
 
   const chartData = {
     labels: ["To Do ", "In Progress", "Done"],
@@ -169,8 +173,10 @@ export default function DashBoardCharts() {
                           <i className="bi bi-graph-up" />
                         </div>
                         <div
-                         style={{ fontSize: 13 ,  color: darkMode ? "#fff" : "#000", }}
-                          
+                          style={{
+                            fontSize: 13,
+                            color: darkMode ? "#fff" : "#000",
+                          }}
                         >
                           Progress
                         </div>
@@ -199,8 +205,10 @@ export default function DashBoardCharts() {
                           <i className="bi bi-clipboard-check" />
                         </div>
                         <div
-                          
-                          style={{ fontSize: 13 ,  color: darkMode ? "#fff" : "#000", }}
+                          style={{
+                            fontSize: 13,
+                            color: darkMode ? "#fff" : "#000",
+                          }}
                         >
                           Tasks Number
                         </div>
@@ -229,8 +237,10 @@ export default function DashBoardCharts() {
                           <i className="bi bi-folder2-open" />
                         </div>
                         <div
-                        
-                         style={{ fontSize: 13 ,  color: darkMode ? "#fff" : "#000", }}
+                          style={{
+                            fontSize: 13,
+                            color: darkMode ? "#fff" : "#000",
+                          }}
                         >
                           Projects Number
                         </div>
@@ -292,8 +302,10 @@ export default function DashBoardCharts() {
                             <i className="bi bi-person-check" />
                           </div>
                           <div
-                           style={{ fontSize: 13 ,  color: darkMode ? "#fff" : "#000", }}
-                          
+                            style={{
+                              fontSize: 13,
+                              color: darkMode ? "#fff" : "#000",
+                            }}
                           >
                             active
                           </div>
@@ -322,8 +334,10 @@ export default function DashBoardCharts() {
                             <i className="bi bi-person-x" />
                           </div>
                           <div
-                           style={{ fontSize: 13 ,  color: darkMode ? "#fff" : "#000", }}
-                          
+                            style={{
+                              fontSize: 13,
+                              color: darkMode ? "#fff" : "#000",
+                            }}
                           >
                             inactive
                           </div>

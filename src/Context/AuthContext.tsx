@@ -62,15 +62,18 @@ export default function AuthContextProvider({ children }: PropsWithChildren) {
   };
 
   // effect on mount
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      saveLoginData();
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    saveLoginData();
+    // ابعت الطلب فقط لو البيانات مش موجودة فعلاً
+    if (!currentUser) {
       getCurrentUser();
-    } else {
-      setLoginData(null);
-      setIsLoading(false);
     }
-  }, []);
+  } else {
+    setIsLoading(false);
+  }
+}, []); 
 
 
   // value to provide
